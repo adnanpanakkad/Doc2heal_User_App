@@ -1,12 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
+
 import 'package:doc2heal/screens/user_detailes_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:doc2heal/widgets/common/button.dart';
 import 'package:doc2heal/widgets/common/rich_text.dart';
 import 'package:doc2heal/widgets/common/textfield.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SingupScreen extends StatelessWidget {
   SingupScreen({super.key});
@@ -48,11 +49,11 @@ class SingupScreen extends StatelessWidget {
                         ],
                       ),
                       CustomTextfield(
-                           validation: (value) => Validator.validateEmail(value),
+                          validation: (value) => Validator.validateEmail(value),
                           controller: emailController,
                           hintText: "Enter Your Email"),
                       CustomTextfield(
-                           validation: (value) =>
+                          validation: (value) =>
                               Validator.validatePassword(value),
                           controller: passwordController,
                           hintText: "Enter Your Password"),
@@ -72,16 +73,17 @@ class SingupScreen extends StatelessWidget {
                     CustomButton(
                         text: "Sign up",
                         onTap: () async {
-                          // if (formKey.currentState!.validate()) {
-                          //   await Sharedpref.instence.setAuthDetaials(
-                          //       emailController.text.trim(),
-                          //       passwordController.text.trim());
+                          if (formKey.currentState!.validate()) {
+                            // Save credentials to shared preferences
+                            await saveCredentials(emailController.text.trim(),
+                                passwordController.text.trim());
 
-                          //   Navigator.of(context)
-                          //       .pushReplacement(MaterialPageRoute(
-                          //     builder: (context) => UserDetailsScreen(),
-                          //   ));
-                          // }
+                            // Navigate to UserDetailsScreen
+                            Navigator.of(context)
+                                .pushReplacement(MaterialPageRoute(
+                              builder: (context) => UserDetailsScreen(),
+                            ));
+                          }
                         }),
                     InkWell(
                       onTap: () {
@@ -100,5 +102,11 @@ class SingupScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> saveCredentials(String email, String password) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('email', email);
+    prefs.setString('password', password);
   }
 }

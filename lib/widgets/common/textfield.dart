@@ -3,15 +3,16 @@ import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextfield extends StatelessWidget {
-  const CustomTextfield(
-      {super.key,
-      this.controller,
-      required this.hintText,
-      this.validation,
-      this.suffixIcon,
-      this.keyboardType,
-      this.readOnly,
-      this.onChanged});
+  const CustomTextfield({
+    super.key,
+    this.controller,
+    required this.hintText,
+    this.validation,
+    this.suffixIcon,
+    this.keyboardType,
+    this.readOnly,
+    this.onChanged,
+  });
   final TextEditingController? controller;
   final Widget? suffixIcon;
   final TextInputType? keyboardType;
