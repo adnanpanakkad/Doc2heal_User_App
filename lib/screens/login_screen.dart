@@ -1,4 +1,7 @@
+import 'package:doc2heal/screens/user_detailes_screen.dart';
+import 'package:doc2heal/services/exception/network.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:doc2heal/screens/signup_screen.dart';
@@ -15,38 +18,43 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  String _email = "";
+  String _password = "";
+  void _handlelogin(){
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+ if (user == null) {
+    print('User is currently signed out!');
+ } else {
+    print('User is signed in!');
+ }
+});
+  }
+  // void _handleLogin() async {
+  //   _email = _auth.currentUser!.email!;
+    
+  //   try {
+  //     UserCredential userCredential =
+  //         await _auth.createUserWithEmailAndPassword(
+  //       email: _email,
+  //       password: _password,
+  //     );
+  //     print("user registered");
+  //   } catch (e) {
+  //     print('error in registration');
+  //   }
+  // }
+
+
   @override
   void initState() {
     super.initState();
-    checkInternetConnectivity();
-  }
-
-  void checkInternetConnectivity() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.none) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("No Internet Connection"),
-            content:
-                Text("Please check your internet connection and try again."),
-            actions: <Widget>[
-              TextButton(
-                child: Text("OK"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
+    ConnectivityUtils.checkInternetConnectivity(context);
   }
 
   @override
@@ -107,42 +115,25 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     CustomButton(
-                        text: "Sign In",
+                        text: "Sign in",
                         onTap: () {
                           if (formKey.currentState!.validate()) {
-                            //   User? user = await Repo.userSignin(
-                            //       emailController.text.trim(),
-                            //       passwordController.text.trim());
-                            //   if (user != null) {
-                            //     await Sharedpref.instence.addUserId(user.id!);
-                            //     await Sharedpref.instence.setAuthDetaials(
-                            //         emailController.text.trim(),
-                            //         passwordController.text.trim());
-                            //     FirebaseHelper.getFirebaseMessagingToken();
-                            //     Navigator.of(context).push(MaterialPageRoute(
-                            //       builder: (context) =>
-                            //           CustomBottamSheet(user: user),
-                            //     ));
-                            //   } else {
-                            //     Snacbar.authSnack(
-                            //         "Failed to find user, Check your password and username",
-                            //         context);
-                            //   }
-                            // } else {
-                            //   Snacbar.authSnack("Fill all fields", context);
-                            // const CoustomSnackbar(message: 'fill all colums');
+                           // _handleLogin();
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => UserDetailsScreen()));
                           }
                         }),
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SingupScreen(),
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => SignupScreen(),
                         ));
                       },
                       child: richText(
                           context: context,
                           firstTxt: "Don't have an Account?  ",
-                          secondTxt: "Sign-up"),
+                          secondTxt: "Sign up"),
                     )
                   ],
                 ),

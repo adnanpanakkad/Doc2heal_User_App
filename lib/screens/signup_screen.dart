@@ -1,19 +1,44 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:doc2heal/screens/user_detailes_screen.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:doc2heal/widgets/common/button.dart';
 import 'package:doc2heal/widgets/common/rich_text.dart';
 import 'package:doc2heal/widgets/common/textfield.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class SingupScreen extends StatelessWidget {
-  SingupScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
+
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  String _email = "";
+  String _password = "";
+  void _handleSingnup() async {
+    _email = emailController.text;
+    _password = passwordController.text;
+    try {
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
+        email: _email,
+        password: _password,
+      );
+      print("user registered");
+    } catch (e) {
+      print('error in registration');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,15 +99,10 @@ class SingupScreen extends StatelessWidget {
                         text: "Sign up",
                         onTap: () async {
                           if (formKey.currentState!.validate()) {
-                            // Save credentials to shared preferences
-                            await saveCredentials(emailController.text.trim(),
-                                passwordController.text.trim());
-
-                            // Navigate to UserDetailsScreen
-                            Navigator.of(context)
-                                .pushReplacement(MaterialPageRoute(
-                              builder: (context) => UserDetailsScreen(),
-                            ));
+                            _handleSingnup();
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => UserDetailsScreen()));
                           }
                         }),
                     InkWell(
@@ -92,7 +112,7 @@ class SingupScreen extends StatelessWidget {
                       child: richText(
                           context: context,
                           firstTxt: "Already have an Account?  ",
-                          secondTxt: "Login"),
+                          secondTxt: "Sign in"),
                     )
                   ],
                 ),
@@ -102,11 +122,5 @@ class SingupScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Future<void> saveCredentials(String email, String password) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('email', email);
-    prefs.setString('password', password);
   }
 }
