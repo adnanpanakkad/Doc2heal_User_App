@@ -3,7 +3,6 @@ import 'package:doc2heal/services/exception/network.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:connectivity/connectivity.dart';
 import 'package:doc2heal/screens/signup_screen.dart';
 import 'package:doc2heal/widgets/common/button.dart';
 import 'package:doc2heal/widgets/common/rich_text.dart';
@@ -26,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String _email = "";
   String _password = "";
+
   void _handlelogin(){
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
  if (user == null) {
@@ -121,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                            // _handleLogin();
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
-                                    builder: (context) => UserDetailsScreen()));
+                                    builder: (context) => PersonalDetails()));
                           }
                         }),
                     InkWell(

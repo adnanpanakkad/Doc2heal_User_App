@@ -40,6 +40,7 @@ dependencies:
   firebase_core: ^2.28.0
   connectivity: ^3.0.6
   firebase_auth: ^4.19.0
+  google_fonts: ^6.2.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -69,6 +70,7 @@ flutter:
     - assets\Online Doctor-amico.png
     - assets\undraw_Mobile_encryption_re_yw3o.png
     - assets\Mobile login-pana.png
+    - assets\Ellipse 1.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

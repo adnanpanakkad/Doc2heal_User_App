@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import 'app_colors.dart';
 
 class CustomTextStyle {
@@ -17,7 +16,7 @@ class CustomTextStyle {
       fontSize: 17,
       fontWeight: FontWeight.w600,
       fontFamily: "Urbanist",
-      color:Appcolor.primaryColor);
+      color: Appcolor.primaryColor);
 
   static const TextStyle ultraBoldTextstyle = TextStyle(
       fontSize: 35, fontFamily: 'Urbanist', fontWeight: FontWeight.bold);

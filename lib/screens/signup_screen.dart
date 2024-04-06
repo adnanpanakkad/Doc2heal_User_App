@@ -102,7 +102,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             _handleSingnup();
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
-                                    builder: (context) => UserDetailsScreen()));
+                                    builder: (context) => PersonalDetails()));
                           }
                         }),
                     InkWell(
