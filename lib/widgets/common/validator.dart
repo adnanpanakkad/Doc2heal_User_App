@@ -17,4 +17,11 @@ class Validator {
     }
     return null;
   }
+  textFeildValidation(String value) {
+    if (value.isEmpty) {
+      return "Fill the field";
+    } else {
+      return null;
+    }
+  }
 }

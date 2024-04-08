@@ -1,13 +1,22 @@
 import 'dart:io';
 
 import 'package:doc2heal/utils/app_colors.dart';
+import 'package:doc2heal/widgets/common/validator.dart';
 import 'package:doc2heal/widgets/text_feildes/detail_text_feildes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PersonDetailTable extends StatelessWidget {
+class PersonDetailTable extends StatefulWidget {
   const PersonDetailTable({super.key, required this.onTap});
   final void Function()? onTap;
+
+  @override
+  State<PersonDetailTable> createState() => _PersonDetailTableState();
+}
+
+class _PersonDetailTableState extends State<PersonDetailTable> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -64,7 +73,7 @@ class PersonDetailTable extends StatelessWidget {
                             ],
                           ),
                           child: InkWell(
-                            onTap: onTap,
+                            onTap: widget.onTap,
                             child: const CircleAvatar(
                               radius: 20,
                               backgroundColor:
@@ -82,20 +91,20 @@ class PersonDetailTable extends StatelessWidget {
                 ],
               ),
             ),
-            const Expanded(
+            Expanded(
                 child: SizedBox(
               child: Padding(
                 padding: EdgeInsets.only(left: 30, right: 30),
                 child: Form(
-                  key: null,
+                  key: formKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       DetailTextfield(
                         text: "Full name",
                         //  controller: controller.nameController,
-                        //  validator: (value) =>
-                        // controller.textFeildValidation(value),
+                        validator: (value) =>
+                            Validator().textFeildValidation(value),
                       ),
                       SizedBox(
                         height: 20,
