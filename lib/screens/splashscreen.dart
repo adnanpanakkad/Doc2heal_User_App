@@ -1,4 +1,9 @@
+import 'package:doc2heal/screens/home_screen.dart';
+import 'package:doc2heal/screens/signup_screen.dart';
 import 'package:doc2heal/screens/swipe_screen.dart';
+import 'package:doc2heal/screens/user_detailes_screen.dart';
+import 'package:doc2heal/widgets/person_table/person_table.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -27,8 +32,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> gotosplash() async {
     await Future.delayed(Duration(seconds: 3));
-  
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (ctx) => const SwipeScrenn()));
+
+    if (FirebaseAuth.instance.currentUser != null) {
+      print('user is logged in/////////////');
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (ctx) => const HomeScreen()));
+    } else {
+      print('user not  logged in/////////');
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (ctx) => const SignupScreen()));
+    }
   }
 }

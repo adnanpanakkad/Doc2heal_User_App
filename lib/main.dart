@@ -1,5 +1,9 @@
+
 import 'package:doc2heal/firebase_options.dart';
+import 'package:doc2heal/screens/home_screen.dart';
 import 'package:doc2heal/screens/splashscreen.dart';
+import 'package:doc2heal/screens/swipe_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 

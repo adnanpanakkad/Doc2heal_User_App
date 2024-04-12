@@ -24,6 +24,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   String _email = "";
   String _password = "";
+
   void _handleSingnup() async {
     _email = emailController.text;
     _password = passwordController.text;
@@ -33,8 +34,14 @@ class _SignupScreenState extends State<SignupScreen> {
         email: _email,
         password: _password,
       );
-      print("user registered");
-    } catch (e) {
+  if (FirebaseAuth.instance.currentUser != null) {
+      print('user logged in/////////////');
+
+    } else {
+      print('user logged in failed/////////');
+    }
+    } 
+    catch (e) {
       print('error in registration');
     }
   }

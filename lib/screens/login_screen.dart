@@ -35,20 +35,6 @@ class _LoginScreenState extends State<LoginScreen> {
  }
 });
   }
-  // void _handleLogin() async {
-  //   _email = _auth.currentUser!.email!;
-    
-  //   try {
-  //     UserCredential userCredential =
-  //         await _auth.createUserWithEmailAndPassword(
-  //       email: _email,
-  //       password: _password,
-  //     );
-  //     print("user registered");
-  //   } catch (e) {
-  //     print('error in registration');
-  //   }
-  // }
 
 
   @override

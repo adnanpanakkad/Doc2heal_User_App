@@ -1,11 +1,14 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doc2heal/screens/home_screen.dart';
 import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/appbar/appbar.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
 import 'package:doc2heal/widgets/person_table/detail_tile.dart';
-import 'package:doc2heal/widgets/person_table/person_table.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
 class PersonalDetails extends StatefulWidget {
   const PersonalDetails({super.key});
@@ -15,15 +18,21 @@ class PersonalDetails extends StatefulWidget {
 }
 
 class _PersonalDetailsState extends State<PersonalDetails> {
+  File? seletedImage;
   final DateTime _selectedDate = DateTime.now();
   TextEditingController _nameController = TextEditingController();
+  TextEditingController _PhoneController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _genderController = TextEditingController();
+  TextEditingController _ageController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String? selectedGender; // Add a variable to store the selected gender
 
   // Define the method to handle the selected gender
   void selectGender(String? newValue) {
     setState(() {
-      selectedGender = newValue;
+      selectedGender = newValue ?? 'None';
+      _genderController.text = selectedGender!;
     });
   }
 
@@ -76,15 +85,16 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                 fontWeight: FontWeight.bold, fontSize: 15),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         SizedBox(
                           child: Stack(
                             alignment: const Alignment(1, 1),
                             children: [
                               CircleAvatar(
-                                backgroundImage:
-                                    AssetImage('assets/Ellipse 1.png'),
                                 radius: 55,
+                                backgroundImage: seletedImage == null
+                                    ? const AssetImage('assets/Ellipse 1.png')
+                                    : FileImage(seletedImage!) as ImageProvider,
                               ),
                               Container(
                                 decoration: BoxDecoration(
@@ -99,6 +109,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                   ],
                                 ),
                                 child: InkWell(
+                                  onTap: () {
+                                    imagepicker();
+                                  },
                                   child: const CircleAvatar(
                                     radius: 20,
                                     backgroundColor:
@@ -115,22 +128,20 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     DetailTile(
                       validator: (value) =>
                           Validator().textFeildValidation(value),
-
-                      keyboardType: TextInputType.number,
-                      // controllers: controller.phoneController,
+                      keyboardType: TextInputType.name,
+                      controllers: _nameController,
                       sub: 'full name',
                       hittext: 'Enter your full name',
                     ),
                     DetailTile(
                       validator: (value) =>
                           Validator().textFeildValidation(value),
-
+                      controllers: _PhoneController,
                       keyboardType: TextInputType.number,
-                      // controllers: controller.phoneController,
                       sub: 'Phone number',
                       hittext: 'Enter your phone number',
                     ),
@@ -141,7 +152,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       validator: (value) =>
                           Validator().textFeildValidation(value),
                       keyboardType: TextInputType.emailAddress,
-                      // controllers: controller.emailContorllers,
+                      controllers: _emailController,
                       sub: 'Email',
                       hittext: 'Enter your email address',
                     ),
@@ -149,19 +160,15 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       height: 10,
                     ),
                     DetailTile(
+                      controllers: _genderController,
                       validator: (value) =>
                           Validator().textFeildValidation(value),
                       sub: 'Gender',
                       hittext: "your Gender",
                       suffixicon: DropdownButton(
+                          value: selectedGender,
                           icon: const Icon(Icons.arrow_drop_down),
-                          iconDisabledColor:
-                              const Color.fromARGB(252, 103, 103, 103),
-                          items: [
-                            "Male",
-                            "Female",
-                            "Other"
-                          ] // Update options here
+                          items: ["None", "Male", "Female"]
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
@@ -176,24 +183,11 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                     DetailTile(
                       validator: (value) =>
                           Validator().textFeildValidation(value),
-
-                      // controllers: controller.birthController,
+                      controllers: _ageController,
                       sub: 'Age',
                       hittext: "Enter your Age",
                       keyboardType: TextInputType.number,
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    // DetailTile(
-                    //   validator: (value) =>
-                    //       Validator().textFeildValidation(value),
-
-                    //   keyboardType: TextInputType.number,
-                    //   //controllers: controller.expController,
-                    //   sub: 'Address',
-                    //   hittext: 'Enter your Address',
-                    // ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -211,8 +205,18 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         backgroundColor: Appcolor.primaryColor,
         onPressed: () {
           if (formKey.currentState!.validate()) {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+            CollectionReference collref =
+                FirebaseFirestore.instance.collection('user');
+            collref.add({
+              'name': _nameController.text,
+              'phone': _PhoneController.text,
+              'email': _emailController.text,
+              'gender': _genderController.text,
+              'age': _ageController.text,
+            });
+
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const HomeScreen()));
           }
         },
         label: const SizedBox(
@@ -225,5 +229,14 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         ),
       ),
     );
+  }
+
+  Future imagepicker() async {
+    final pikedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pikedImage == null) return;
+    setState(() {
+      seletedImage = File(pikedImage.path);
+    });
   }
 }
