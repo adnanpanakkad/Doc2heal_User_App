@@ -1,3 +1,4 @@
+import 'package:doc2heal/screens/bottombar_screens.dart';
 import 'package:doc2heal/screens/user_detailes_screen.dart';
 import 'package:doc2heal/services/exception/network.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
@@ -26,16 +27,15 @@ class _LoginScreenState extends State<LoginScreen> {
   String _email = "";
   String _password = "";
 
-  void _handlelogin(){
+  void _handlelogin() {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
- if (user == null) {
-    print('User is currently signed out!');
- } else {
-    print('User is signed in!');
- }
-});
+      if (user == null) {
+        print('User is currently signed out!');
+      } else {
+        print('User is signed in!');
+      }
+    });
   }
-
 
   @override
   void initState() {
@@ -104,15 +104,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         text: "Sign in",
                         onTap: () {
                           if (formKey.currentState!.validate()) {
-                           // _handleLogin();
+                            // _handleLogin();
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
-                                    builder: (context) => PersonalDetails()));
+                                    builder: (context) => BottombarScreens()));
                           }
                         }),
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => SignupScreen(),
                         ));
                       },

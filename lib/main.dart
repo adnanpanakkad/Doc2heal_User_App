@@ -1,4 +1,3 @@
-
 import 'package:doc2heal/firebase_options.dart';
 import 'package:doc2heal/screens/home_screen.dart';
 import 'package:doc2heal/screens/splashscreen.dart';

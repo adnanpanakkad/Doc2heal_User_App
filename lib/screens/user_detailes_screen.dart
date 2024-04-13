@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:doc2heal/screens/home_screen.dart';
+import 'package:doc2heal/screens/bottombar_screens.dart';
 import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/appbar/appbar.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
@@ -215,8 +215,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
               'age': _ageController.text,
             });
 
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const HomeScreen()));
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => const BottombarScreens(),
+            ));
           }
         },
         label: const SizedBox(
