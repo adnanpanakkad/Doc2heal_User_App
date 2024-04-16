@@ -22,26 +22,20 @@ class _SignupScreenState extends State<SignupScreen> {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  String _email = "";
-  String _password = "";
-
   void _handleSingnup() async {
-    _email = emailController.text;
-    _password = passwordController.text;
+    ;
     try {
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
-        email: _email,
-        password: _password,
+        email: emailController.text,
+        password: passwordController.text,
       );
-  if (FirebaseAuth.instance.currentUser != null) {
-      print('user logged in/////////////');
-
-    } else {
-      print('user logged in failed/////////');
-    }
-    } 
-    catch (e) {
+      if (FirebaseAuth.instance.currentUser != null) {
+        print('user logged in/////////////');
+      } else {
+        print('user logged in failed/////////');
+      }
+    } catch (e) {
       print('error in registration');
     }
   }

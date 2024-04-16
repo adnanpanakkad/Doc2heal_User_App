@@ -1,5 +1,4 @@
 import 'package:doc2heal/screens/bottombar_screens.dart';
-import 'package:doc2heal/screens/user_detailes_screen.dart';
 import 'package:doc2heal/services/exception/network.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,23 +23,30 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  String _email = "";
-  String _password = "";
-
-  void _handlelogin() {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user == null) {
-        print('User is currently signed out!');
-      } else {
-        print('User is signed in!');
-      }
-    });
-  }
-
   @override
   void initState() {
     super.initState();
     ConnectivityUtils.checkInternetConnectivity(context);
+  }
+
+  Future<void> _handleLogin() async {
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+      // Proceed to the next screen if login is successful
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => BottombarScreens(),
+        ),
+      );
+    } catch (e) {
+      // Handle any errors here
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login failed: ${e.toString()}')),
+      );
+    }
   }
 
   @override
@@ -104,10 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         text: "Sign in",
                         onTap: () {
                           if (formKey.currentState!.validate()) {
-                            // _handleLogin();
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => BottombarScreens()));
+                            _handleLogin();
                           }
                         }),
                     InkWell(

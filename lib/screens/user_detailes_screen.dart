@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doc2heal/model/user_model.dart';
 import 'package:doc2heal/screens/bottombar_screens.dart';
 import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/appbar/appbar.dart';
@@ -19,12 +19,12 @@ class PersonalDetails extends StatefulWidget {
 
 class _PersonalDetailsState extends State<PersonalDetails> {
   File? seletedImage;
-  final DateTime _selectedDate = DateTime.now();
   TextEditingController _nameController = TextEditingController();
   TextEditingController _PhoneController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
   TextEditingController _genderController = TextEditingController();
   TextEditingController _ageController = TextEditingController();
+  TextEditingController _addressController = TextEditingController();
+  TextEditingController _placeController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String? selectedGender; // Add a variable to store the selected gender
 
@@ -48,10 +48,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         child: ListView(
           children: [
             const SizedBox(
-              height: 20,
-            ),
-            const SizedBox(
-              height: 20,
+              height: 50,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
@@ -145,20 +142,6 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       sub: 'Phone number',
                       hittext: 'Enter your phone number',
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    DetailTile(
-                      validator: (value) =>
-                          Validator().textFeildValidation(value),
-                      keyboardType: TextInputType.emailAddress,
-                      controllers: _emailController,
-                      sub: 'Email',
-                      hittext: 'Enter your email address',
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
                     DetailTile(
                       controllers: _genderController,
                       validator: (value) =>
@@ -177,9 +160,6 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                           }).toList(),
                           onChanged: selectGender),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
                     DetailTile(
                       validator: (value) =>
                           Validator().textFeildValidation(value),
@@ -188,8 +168,21 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       hittext: "Enter your Age",
                       keyboardType: TextInputType.number,
                     ),
-                    const SizedBox(
-                      height: 10,
+                    DetailTile(
+                      validator: (value) =>
+                          Validator().textFeildValidation(value),
+                      keyboardType: TextInputType.emailAddress,
+                      controllers: _addressController,
+                      sub: 'Address',
+                      hittext: 'Enter your  Address',
+                    ),
+                    DetailTile(
+                      validator: (value) =>
+                          Validator().textFeildValidation(value),
+                      keyboardType: TextInputType.emailAddress,
+                      controllers: _placeController,
+                      sub: 'Place',
+                      hittext: 'Enter your  Place',
                     ),
                   ],
                 ),
@@ -205,15 +198,33 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         backgroundColor: Appcolor.primaryColor,
         onPressed: () {
           if (formKey.currentState!.validate()) {
+            // Create a User object with the form data
+            User user = User(
+              imagepath:
+                  'assets/Ellipse 1.png', // Assuming you want to set a default image path
+              name: _nameController.text,
+              phone: _PhoneController.text,
+              gender: _genderController.text,
+              age: _ageController.text,
+              address: _addressController.text,
+              place: _placeController.text,
+            );
+
+            // Convert the User object to a map to store in Firestore
+            Map<String, dynamic> userMap = {
+              'imagepath': user.imagepath,
+              'name': user.name,
+              'phone': user.phone,
+              'gender': user.gender,
+              'age': user.age,
+              'address': user.address,
+              'place': user.place,
+            };
+
+            // Add the user map to Firestore
             CollectionReference collref =
                 FirebaseFirestore.instance.collection('user');
-            collref.add({
-              'name': _nameController.text,
-              'phone': _PhoneController.text,
-              'email': _emailController.text,
-              'gender': _genderController.text,
-              'age': _ageController.text,
-            });
+            collref.add(userMap);
 
             Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) => const BottombarScreens(),

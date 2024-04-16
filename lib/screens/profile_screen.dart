@@ -1,7 +1,7 @@
 import 'package:doc2heal/screens/login_screen.dart';
+import 'package:doc2heal/screens/swipe_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -13,14 +13,11 @@ class ProfileScreen extends StatelessWidget {
             appBar: AppBar(
       actions: [
         GestureDetector(
-            onTap: () async {
-              try {
-                await FirebaseAuth.instance.signOut();
+            onTap: () {
+              FirebaseAuth.instance.signOut().then((value) {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => LoginScreen()));
-              } catch (e) {
-                print(e);
-              }
+                    MaterialPageRoute(builder: (context) => SwipeScrenn()));
+              });
             },
             child: Icon(Icons.logout))
       ],
