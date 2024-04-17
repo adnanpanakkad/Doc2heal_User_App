@@ -1,5 +1,5 @@
 class User {
-  String? imagepath = 'assets/Ellipse 1.png';
+  String? imagepath;
   String? name;
   String? phone;
   String? gender;

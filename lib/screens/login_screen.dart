@@ -29,26 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
     ConnectivityUtils.checkInternetConnectivity(context);
   }
 
-  Future<void> _handleLogin() async {
-    try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-      // Proceed to the next screen if login is successful
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => BottombarScreens(),
-        ),
-      );
-    } catch (e) {
-      // Handle any errors here
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login failed: ${e.toString()}')),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,16 +63,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ],
                       ),
-                      CustomTextfield(
-                          validation: (value) => Validator.validateEmail(value),
-                          hintText: "Enter Your Email",
-                          controller: emailController),
-                      CustomTextfield(
-                        validation: (value) =>
-                            Validator.validatePassword(value),
-                        hintText: "Enter Your Password",
-                        controller: passwordController,
-                      ),
+                      CustomButton(
+                          text: 'Sigin in with Google',
+                          onTap: () async {},
+                          imagpath: 'assets/2702602.png'),
+                      SizedBox(height: 20),
+                      CustomButton(
+                          text: 'Sigin in with Google',
+                          onTap: () async {},
+                          imagpath: 'assets/facebook_5968764.png'),
                     ],
                   ),
                 ),
@@ -106,16 +85,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    CustomButton(
-                        text: "Sign in",
-                        onTap: () {
-                          if (formKey.currentState!.validate()) {
-                            _handleLogin();
-                          }
-                        }),
+                    // CustomButton(
+                    //     text: "Sign in",
+                    //     onTap: () async {
+                    //       if (formKey.currentState!.validate()) {
+
+                    //       }
+                    //     }),
+
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => SignupScreen(),
                         ));
                       },

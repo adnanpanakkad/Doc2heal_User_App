@@ -22,23 +22,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  void _handleSingnup() async {
-    ;
-    try {
-      UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-      if (FirebaseAuth.instance.currentUser != null) {
-        print('user logged in/////////////');
-      } else {
-        print('user logged in failed/////////');
-      }
-    } catch (e) {
-      print('error in registration');
-    }
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -96,16 +80,15 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    CustomButton(
-                        text: "Sign up",
-                        onTap: () async {
-                          if (formKey.currentState!.validate()) {
-                            _handleSingnup();
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => PersonalDetails()));
-                          }
-                        }),
+                    // CustomButton(
+                    //     text: "Sign up",
+                    //     onTap: () async {
+                    //       if (formKey.currentState!.validate()) {
+                    //         Navigator.of(context).pushReplacement(
+                    //             MaterialPageRoute(
+                    //                 builder: (context) => PersonalDetails()));
+                    //       }
+                    //     }),
                     InkWell(
                       onTap: () {
                         Navigator.of(context).pop();

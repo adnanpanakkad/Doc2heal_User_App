@@ -3,14 +3,14 @@ import 'package:doc2heal/screens/second_intro_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class SwipeScrenn extends StatefulWidget {
-  const SwipeScrenn({super.key});
+class SwipeScreen extends StatefulWidget {
+  const SwipeScreen({super.key});
 
   @override
-  State<SwipeScrenn> createState() => _SwipeScrennState();
+  State<SwipeScreen> createState() => _SwipeScreenState();
 }
 
-class _SwipeScrennState extends State<SwipeScrenn> {
+class _SwipeScreenState extends State<SwipeScreen> {
   final PageController _controller = PageController();
   @override
   Widget build(BuildContext context) {

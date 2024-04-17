@@ -44,6 +44,8 @@ dependencies:
   image_picker: ^1.0.7
   get: ^4.6.6
   cloud_firestore: ^4.16.0
+  google_sign_in: ^6.2.1
+  flutter_facebook_auth: ^6.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -74,6 +76,8 @@ flutter:
     - assets\undraw_Mobile_encryption_re_yw3o.png
     - assets\Mobile login-pana.png
     - assets\Ellipse 1.png
+    - assets\2702602.png
+    - assets\facebook_5968764.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
