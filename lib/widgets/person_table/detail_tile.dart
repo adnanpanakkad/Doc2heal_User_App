@@ -49,7 +49,7 @@ class DetailTile extends StatelessWidget {
                       validator: validator,
                       controller: controllers,
                       readOnly: suffixicon == null ? false : true,
-                      cursorColor: Colors.yellow,
+                      cursorColor: Appcolor.primaryColor,
                       decoration: InputDecoration(
                           errorBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.transparent),

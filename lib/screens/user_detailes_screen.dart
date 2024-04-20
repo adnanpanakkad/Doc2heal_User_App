@@ -9,6 +9,7 @@ import 'package:doc2heal/widgets/person_table/detail_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:get/get.dart';
 
 class PersonalDetails extends StatefulWidget {
   const PersonalDetails({super.key});
@@ -35,7 +36,6 @@ class _PersonalDetailsState extends State<PersonalDetails> {
       _genderController.text = selectedGender!;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -246,9 +246,12 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   Future imagepicker() async {
     final pikedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pikedImage == null) return;
-    setState(() {
-      seletedImage = File(pikedImage.path);
-    });
+    if (pikedImage == null) {
+      Get.snackbar('Image not selected!!', 'Please select an image');
+    } else {
+      setState(() {
+        seletedImage = File(pikedImage.path);
+      });
+    }
   }
 }

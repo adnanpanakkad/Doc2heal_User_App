@@ -1,5 +1,7 @@
+import 'package:doc2heal/services/firebase/firebase_authentication.dart';
 import 'package:doc2heal/screens/bottombar_screens.dart';
 import 'package:doc2heal/services/exception/network.dart';
+import 'package:doc2heal/widgets/common/google_auth.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             SizedBox(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Form(
                   key: formKey,
                   child: Column(
@@ -45,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       Container(
                         width: 250,
-                        height: 300,
+                        height: 250,
                         decoration: const BoxDecoration(
                             image: DecorationImage(
                                 image: AssetImage(
@@ -55,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Padding(
                             padding: EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 10),
+                                vertical: 10, horizontal: 10),
                             child: Text(
                               "Login to your\nAccount",
                               style: CustomTextStyle.ultraBoldTextstyle,
@@ -63,15 +65,49 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ],
                       ),
+                      CustomTextfield(
+                          validation: (value) => Validator.validateEmail(value),
+                          hintText: "Enter Your Email",
+                          controller: emailController),
+                      CustomTextfield(
+                        validation: (value) =>
+                            Validator.validatePassword(value),
+                        hintText: "Enter Your Password",
+                        controller: passwordController,
+                      ),
+                      const SizedBox(height: 20),
                       CustomButton(
-                          text: 'Sigin in with Google',
-                          onTap: () async {},
-                          imagpath: 'assets/2702602.png'),
-                      SizedBox(height: 20),
-                      CustomButton(
-                          text: 'Sigin in with Google',
-                          onTap: () async {},
-                          imagpath: 'assets/facebook_5968764.png'),
+                          text: 'Login',
+                          onTap: () async {
+                            if (formKey.currentState!.validate()) {
+                              // Perform login only if form validation passes
+                              await AuthenticationRepository.userEmailLogin(
+                                  emailController.text,
+                                  passwordController.text);
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          BottombarScreens()));
+                            }
+                          }),
+                      const SizedBox(height: 30),
+                      const Text('OR'),
+                      const SizedBox(height: 15),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          AuthButton(
+                              text: 'Sigin with Google',
+                              onTap: () async {
+                                AuthenticationRepository.googleSignIn();
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            BottombarScreens()));
+                              },
+                              imagpath: 'assets/2702602.png'),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -79,24 +115,16 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             SizedBox(
               width: double.infinity,
-              height: 150,
+              height: 80,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    // CustomButton(
-                    //     text: "Sign in",
-                    //     onTap: () async {
-                    //       if (formKey.currentState!.validate()) {
-
-                    //       }
-                    //     }),
-
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => SignupScreen(),
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const SignupScreen(),
                         ));
                       },
                       child: richText(

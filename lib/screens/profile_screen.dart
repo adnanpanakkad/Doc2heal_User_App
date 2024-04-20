@@ -14,8 +14,8 @@ class ProfileScreen extends StatelessWidget {
             appBar: AppBar(
       actions: [
         GestureDetector(
-            onTap: () {
-              
+            onTap: () async {
+              FirebaseAuth.instance.signOut();
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (ctx) => const LoginScreen()),
                   (route) => false);

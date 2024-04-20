@@ -23,7 +23,7 @@ class CustomTextfield extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
       child: TextFormField(
         onChanged: onChanged,
         readOnly: readOnly ?? false,
@@ -36,13 +36,13 @@ class CustomTextfield extends StatelessWidget {
             borderSide: BorderSide(
               color: Colors.red,
             ),
-            borderRadius: BorderRadius.all(Radius.circular(30)),
+            borderRadius: BorderRadius.all(Radius.circular(18)),
           ),
           focusedErrorBorder: const OutlineInputBorder(
             borderSide: BorderSide(
               color: Colors.red,
             ),
-            borderRadius: BorderRadius.all(Radius.circular(30)),
+            borderRadius: BorderRadius.all(Radius.circular(18)),
           ),
           contentPadding: const EdgeInsets.all(20),
           hintText: hintText,
@@ -53,10 +53,10 @@ class CustomTextfield extends StatelessWidget {
             borderSide: BorderSide(
               color: Color.fromARGB(255, 210, 210, 210),
             ),
-            borderRadius: BorderRadius.all(Radius.circular(30)),
+            borderRadius: BorderRadius.all(Radius.circular(18)),
           ),
           focusedBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(30)),
+            borderRadius: BorderRadius.all(Radius.circular(18)),
             borderSide: BorderSide(
               color: Appcolor.primaryColor,
             ),
