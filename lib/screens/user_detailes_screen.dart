@@ -36,6 +36,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
       _genderController.text = selectedGender!;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -196,10 +197,10 @@ class _PersonalDetailsState extends State<PersonalDetails> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Appcolor.primaryColor,
-        onPressed: () {
+        onPressed: () async {
           if (formKey.currentState!.validate()) {
             // Create a User object with the form data
-            User user = User(
+            UserModel user = UserModel(
               imagepath:
                   'assets/Ellipse 1.png', // Assuming you want to set a default image path
               name: _nameController.text,
@@ -227,7 +228,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
             collref.add(userMap);
 
             Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => const BottombarScreens(),
+              builder: (context) => BottombarScreens(),
             ));
           }
         },
@@ -247,7 +248,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     final pikedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pikedImage == null) {
-      Get.snackbar('Image not selected!!', 'Please select an image');
+      const ScaffoldMessenger(child: Text('image not selected'));
     } else {
       setState(() {
         seletedImage = File(pikedImage.path);

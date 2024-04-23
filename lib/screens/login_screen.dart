@@ -1,6 +1,6 @@
 import 'package:doc2heal/services/firebase/firebase_authentication.dart';
 import 'package:doc2heal/screens/bottombar_screens.dart';
-import 'package:doc2heal/services/exception/network.dart';
+import 'package:doc2heal/services/network.dart';
 import 'package:doc2heal/widgets/common/google_auth.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -83,7 +83,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               // Perform login only if form validation passes
                               await AuthenticationRepository.userEmailLogin(
                                   emailController.text,
-                                  passwordController.text);
+                                  passwordController.text,
+                                  context);
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                       builder: (context) =>
@@ -99,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           AuthButton(
                               text: 'Sigin with Google',
                               onTap: () async {
-                                AuthenticationRepository.googleSignIn();
+                                await AuthenticationRepository.googleSignIn();
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                         builder: (context) =>

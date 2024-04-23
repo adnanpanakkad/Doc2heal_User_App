@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:doc2heal/services/firebase/firebase_authentication.dart';
 import 'package:doc2heal/screens/login_screen.dart';
 import 'package:doc2heal/screens/user_detailes_screen.dart';
@@ -9,7 +7,6 @@ import 'package:doc2heal/widgets/common/google_auth.dart';
 import 'package:doc2heal/widgets/common/rich_text.dart';
 import 'package:doc2heal/widgets/common/textfield.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
-import 'package:doc2heal/widgets/person_table/person_table.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +16,6 @@ class SignupScreen extends StatefulWidget {
   @override
   State<SignupScreen> createState() => _SignupScreenState();
 }
-
 class _SignupScreenState extends State<SignupScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -79,7 +75,8 @@ class _SignupScreenState extends State<SignupScreen> {
                             if (formKey.currentState!.validate()) {
                               AuthenticationRepository.userEmailSignup(
                                   emailController.text,
-                                  passwordController.text);
+                                  passwordController.text,
+                                  context);
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                       builder: (context) => PersonalDetails()));

@@ -1,4 +1,4 @@
-class User {
+class UserModel {
   String? imagepath;
   String? name;
   String? phone;
@@ -7,7 +7,7 @@ class User {
   String? address;
   String? place;
 
-  User({
+  UserModel({
     required this.imagepath,
     required this.name,
     required this.phone,
