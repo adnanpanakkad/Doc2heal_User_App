@@ -1,7 +1,7 @@
 import 'package:doc2heal/services/firebase/firebase_authentication.dart';
 import 'package:doc2heal/screens/bottombar_screens.dart';
 import 'package:doc2heal/services/network.dart';
-import 'package:doc2heal/widgets/common/google_auth.dart';
+import 'package:doc2heal/widgets/common/auth_button.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

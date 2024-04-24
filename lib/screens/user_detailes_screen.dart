@@ -9,7 +9,6 @@ import 'package:doc2heal/widgets/person_table/detail_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:get/get.dart';
 
 class PersonalDetails extends StatefulWidget {
   const PersonalDetails({super.key});
@@ -200,32 +199,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         onPressed: () async {
           if (formKey.currentState!.validate()) {
             // Create a User object with the form data
-            UserModel user = UserModel(
-              imagepath:
-                  'assets/Ellipse 1.png', // Assuming you want to set a default image path
-              name: _nameController.text,
-              phone: _PhoneController.text,
-              gender: _genderController.text,
-              age: _ageController.text,
-              address: _addressController.text,
-              place: _placeController.text,
-            );
-
-            // Convert the User object to a map to store in Firestore
-            Map<String, dynamic> userMap = {
-              'imagepath': user.imagepath,
-              'name': user.name,
-              'phone': user.phone,
-              'gender': user.gender,
-              'age': user.age,
-              'address': user.address,
-              'place': user.place,
-            };
-
-            // Add the user map to Firestore
-            CollectionReference collref =
-                FirebaseFirestore.instance.collection('user');
-            collref.add(userMap);
+           
 
             Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) => BottombarScreens(),

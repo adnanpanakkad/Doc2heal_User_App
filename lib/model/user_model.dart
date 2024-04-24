@@ -1,11 +1,13 @@
+
 class UserModel {
   String? imagepath;
-  String? name;
-  String? phone;
-  String? gender;
-  String? age;
-  String? address;
-  String? place;
+  final String name;
+  final String phone;
+  final String gender;
+  final String age;
+  final String address;
+  final String place;
+  final bool isUser;
 
   UserModel({
     required this.imagepath,
@@ -15,5 +17,32 @@ class UserModel {
     required this.age,
     required this.address,
     required this.place,
+    required this.isUser,
   });
+
+  // Factory constructor to create UserModel from JSON data
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      imagepath: json['imagepath'],
+      name: json['name'],
+      phone: json['phone'],
+      gender: json['gender'],
+      age: json['age'],
+      address: json['address'],
+      place: json['place'],
+      isUser: json['isUser'],
+    );
+  }
+  Map<String, dynamic> toJson() {
+    return {
+      'imagepath': imagepath,
+      'name': name,
+      'phone': phone,
+      'gender': gender,
+      'age': age,
+      'address': address,
+      'place': place,
+      'isUser': isUser,
+    };
+  }
 }

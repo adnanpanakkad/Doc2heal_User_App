@@ -3,7 +3,7 @@ import 'package:doc2heal/screens/login_screen.dart';
 import 'package:doc2heal/screens/user_detailes_screen.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:doc2heal/widgets/common/button.dart';
-import 'package:doc2heal/widgets/common/google_auth.dart';
+import 'package:doc2heal/widgets/common/auth_button.dart';
 import 'package:doc2heal/widgets/common/rich_text.dart';
 import 'package:doc2heal/widgets/common/textfield.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
