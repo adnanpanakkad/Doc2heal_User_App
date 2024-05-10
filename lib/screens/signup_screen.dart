@@ -1,6 +1,7 @@
 import 'package:doc2heal/services/firebase/firebase_authentication.dart';
 import 'package:doc2heal/screens/login_screen.dart';
 import 'package:doc2heal/screens/user_detailes_screen.dart';
+import 'package:doc2heal/services/firebase/firestore.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:doc2heal/widgets/common/button.dart';
 import 'package:doc2heal/widgets/common/auth_button.dart';
@@ -17,7 +18,6 @@ class SignupScreen extends StatefulWidget {
   State<SignupScreen> createState() => _SignupScreenState();
 }
 class _SignupScreenState extends State<SignupScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -70,9 +70,10 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       const SizedBox(height: 20),
                       CustomButton(
-                          text: 'Sign-in',
+                          text: 'Sign-up',
                           onTap: () async {
                             if (formKey.currentState!.validate()) {
+                              
                               AuthenticationRepository.userEmailSignup(
                                   emailController.text,
                                   passwordController.text,

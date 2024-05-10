@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doc2heal/model/user_model.dart';
 import 'package:doc2heal/screens/bottombar_screens.dart';
+import 'package:doc2heal/services/firebase/firestore.dart';
 import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/appbar/appbar.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
@@ -198,10 +199,20 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         backgroundColor: Appcolor.primaryColor,
         onPressed: () async {
           if (formKey.currentState!.validate()) {
-            // Create a User object with the form data
-           
+            UserModel user = UserModel(
+              profilepath: seletedImage!.path,
+              name: _nameController.text.trim(),
+              phone: _PhoneController.text.trim(),
+              gender: _genderController.text.trim(),
+              age: _ageController.text.trim(),
+              address: _addressController.text.trim(),
+              place: _placeController.text.trim(),
+              isUser: true,
+            );
 
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
+            await UserRepository().saveUserData(user, '1'); // Pass userId here
+
+            await Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) => BottombarScreens(),
             ));
           }

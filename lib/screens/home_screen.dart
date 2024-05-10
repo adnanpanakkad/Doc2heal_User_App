@@ -2,7 +2,6 @@ import 'package:doc2heal/screens/login_screen.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
