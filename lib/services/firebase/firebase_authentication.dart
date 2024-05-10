@@ -1,6 +1,6 @@
 import 'dart:developer';
-import 'package:doc2heal/screens/bottombar_screens.dart';
-import 'package:doc2heal/screens/login_screen.dart';
+import 'package:doc2heal/presentation/screens/bottombar_screens.dart';
+import 'package:doc2heal/presentation/screens/login_screen.dart';
 import 'package:doc2heal/widgets/common/custom_snacbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

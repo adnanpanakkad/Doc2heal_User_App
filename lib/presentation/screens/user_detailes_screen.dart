@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doc2heal/model/user_model.dart';
-import 'package:doc2heal/screens/bottombar_screens.dart';
+import 'package:doc2heal/presentation/screens/bottombar_screens.dart';
 import 'package:doc2heal/services/firebase/firestore.dart';
 import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/appbar/appbar.dart';

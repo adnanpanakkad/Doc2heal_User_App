@@ -1,15 +1,15 @@
 import 'package:doc2heal/services/firebase/firebase_authentication.dart';
-import 'package:doc2heal/screens/bottombar_screens.dart';
+import 'package:doc2heal/presentation/screens/bottombar_screens.dart';
 import 'package:doc2heal/services/network.dart';
 import 'package:doc2heal/widgets/common/auth_button.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:doc2heal/screens/signup_screen.dart';
+import 'package:doc2heal/presentation/screens/signup_screen.dart';
 import 'package:doc2heal/widgets/common/button.dart';
 import 'package:doc2heal/widgets/common/rich_text.dart';
 import 'package:doc2heal/widgets/common/textfield.dart';
-import '../../utils/app_text_styles.dart';
+import '../../../utils/app_text_styles.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
