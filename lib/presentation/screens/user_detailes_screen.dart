@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doc2heal/model/user_model.dart';
+import 'package:doc2heal/presentation/bloc/profile_bloc/profile_bloc.dart';
 import 'package:doc2heal/presentation/screens/bottombar_screens.dart';
 import 'package:doc2heal/services/firebase/firestore.dart';
 import 'package:doc2heal/utils/app_colors.dart';
@@ -8,34 +8,24 @@ import 'package:doc2heal/widgets/appbar/appbar.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
 import 'package:doc2heal/widgets/person_table/detail_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
 
-class PersonalDetails extends StatefulWidget {
-  const PersonalDetails({super.key});
 
-  @override
-  State<PersonalDetails> createState() => _PersonalDetailsState();
-}
 
-class _PersonalDetailsState extends State<PersonalDetails> {
+class PersonalDetails extends StatelessWidget {
+  PersonalDetails({super.key});
   File? seletedImage;
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _PhoneController = TextEditingController();
-  TextEditingController _genderController = TextEditingController();
-  TextEditingController _ageController = TextEditingController();
-  TextEditingController _addressController = TextEditingController();
-  TextEditingController _placeController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _genderController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _placeController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  String? selectedGender; // Add a variable to store the selected gender
 
-  // Define the method to handle the selected gender
-  void selectGender(String? newValue) {
-    setState(() {
-      selectedGender = newValue ?? 'None';
-      _genderController.text = selectedGender!;
-    });
-  }
+  final List<String> items = ['None', 'Male', 'Female'];
+  final String selectGender = 'None';
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +98,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                 ),
                                 child: InkWell(
                                   onTap: () {
-                                    imagepicker();
+                                    //  imagepicker();
                                   },
                                   child: const CircleAvatar(
                                     radius: 20,
@@ -138,28 +128,40 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                     DetailTile(
                       validator: (value) =>
                           Validator().textFeildValidation(value),
-                      controllers: _PhoneController,
+                      controllers: _phoneController,
                       keyboardType: TextInputType.number,
                       sub: 'Phone number',
                       hittext: 'Enter your phone number',
                     ),
-                    DetailTile(
-                      controllers: _genderController,
-                      validator: (value) =>
-                          Validator().textFeildValidation(value),
-                      sub: 'Gender',
-                      hittext: "your Gender",
-                      suffixicon: DropdownButton(
-                          value: selectedGender,
+                    BlocListener<ProfileBloc, ProfileState>(
+                      listener: (context, state) {
+                        if (state is GenderPickState) {
+                          _genderController.text = state.selectGender;
+                        }
+                      },
+                      child: DetailTile(
+                        controllers: _genderController,
+                        validator: (value) =>
+                            Validator().textFeildValidation(value),
+                        sub: 'Gender',
+                        hittext: "your Gender",
+                        suffixicon: DropdownButton(
+                          value: selectGender,
                           icon: const Icon(Icons.arrow_drop_down),
-                          items: ["None", "Male", "Female"]
+                          items: items
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
+                              value: value.toString(),
+                              child: Text(value.toString()),
                             );
                           }).toList(),
-                          onChanged: selectGender),
+                          onChanged: (String? newValue) {
+                            context
+                                .read<ProfileBloc>()
+                                .add(GenderPickEvent(selectGender: newValue!));
+                          },
+                        ),
+                      ),
                     ),
                     DetailTile(
                       validator: (value) =>
@@ -202,7 +204,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
             UserModel user = UserModel(
               profilepath: seletedImage!.path,
               name: _nameController.text.trim(),
-              phone: _PhoneController.text.trim(),
+              phone: _phoneController.text.trim(),
               gender: _genderController.text.trim(),
               age: _ageController.text.trim(),
               address: _addressController.text.trim(),
@@ -229,15 +231,5 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     );
   }
 
-  Future imagepicker() async {
-    final pikedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pikedImage == null) {
-      const ScaffoldMessenger(child: Text('image not selected'));
-    } else {
-      setState(() {
-        seletedImage = File(pikedImage.path);
-      });
-    }
-  }
+
 }

@@ -1,12 +1,11 @@
 import 'package:doc2heal/firebase_options.dart';
-import 'package:doc2heal/presentation/screens/home_screen.dart';
+import 'package:doc2heal/presentation/bloc/profile_bloc/profile_bloc.dart';
 import 'package:doc2heal/presentation/screens/splashscreen.dart';
-import 'package:doc2heal/presentation/screens/swipe_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() async {
+void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -20,11 +19,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData.light(),
-      debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ProfileBloc(),
+        ),
+      ],
+      child: MaterialApp(
+        theme: ThemeData.light(),
+        debugShowCheckedModeBanner: false,
+        home: const SplashScreen(),
+      ),
     );
   }
 }
