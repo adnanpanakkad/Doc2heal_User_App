@@ -4,7 +4,12 @@ abstract class ProfileState {}
 
 final class ProfileInitial extends ProfileState {}
 
-final class GenderPickState extends ProfileState {
+class GenderPickState extends ProfileState {
   String selectGender;
   GenderPickState({required this.selectGender});
+}
+
+class ImagePickState extends ProfileState {
+  String selectedImage;
+  ImagePickState({required this.selectedImage});
 }

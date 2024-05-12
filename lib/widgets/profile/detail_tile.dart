@@ -1,9 +1,24 @@
-import 'package:doc2heal/presentation/screens/login_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class DetailCard extends StatelessWidget {
-  const DetailCard({super.key});
+class CustomDetailCard extends StatelessWidget {
+  final IconData? iconData;
+  final Color? boxcolor;
+  final Color? iconcolor;
+  final IconData? iconButtonIcon; // Change this to IconData?
+  final String? text;
+  final void Function()? onTap;
+
+  const CustomDetailCard({
+    super.key,
+    required this.iconData,
+    required this.iconButtonIcon, // Use this for the IconButton icon
+    required this.text,
+    required this.onTap,
+    this.boxcolor,
+    this.iconcolor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,31 +36,40 @@ class DetailCard extends StatelessWidget {
       ),
       height: MediaQuery.of(context).size.height * 0.1,
       width: MediaQuery.of(context).size.width * 1,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(left: 30),
-            child: Icon(Icons.access_alarm), // Replace with your desired icon
-          ),
-          const Expanded(
-            child: Center(
-              child: Text(
-                'Log out',
-                style: TextStyle(fontSize: 16),
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                  color: boxcolor, borderRadius: BorderRadius.circular(30)),
+              child: Icon(
+                iconData,
+                color: iconcolor,
               ),
             ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => LoginScreen()));
-              // Add your onPressed logic here
-            },
-          ),
-        ],
+            Expanded(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 130),
+                  child: Text(
+                    text!,
+                    style: CustomTextStyle.buttonTextStyle,
+                  ),
+                ),
+              ),
+            ),
+            IconButton(
+              iconSize: 16,
+              icon: Icon(
+                  iconButtonIcon), // Use the new iconData for the IconButton
+              onPressed: onTap,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.only(top: 25, left: 10, right: 15),
         child: Scaffold(
           body: SingleChildScrollView(
             child: Column(
@@ -36,54 +36,25 @@ class HomeScreen extends StatelessWidget {
                       style: CustomTextStyle.buttonTextStyle,
                     ),
                     Text(
-                      'see All',
+                      'seeall',
                       style: TextStyle(color: Colors.blue),
                     ),
                   ],
                 ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Icon(
-                      Icons.heart_broken,
-                      size: 70,
-                    ),
-                    Icon(
-                      Icons.legend_toggle_rounded,
-                      size: 70,
-                    ),
-                    Icon(
-                      Icons.abc,
-                      size: 70,
-                    ),
-                    Icon(
-                      Icons.abc,
-                      size: 70,
-                    ),
-                  ],
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics:
+                      const NeverScrollableScrollPhysics(), 
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4, // Number of columns
+                  ),
+                  itemCount: 4, // Number of items in the grid
+                  itemBuilder: (BuildContext context, int index) {
+                    // Replace 'Icons.star' with the desired icon for each item
+                    return const Icon(Icons.star, size: 70);
+                  },
                 ),
                 const SizedBox(height: 10),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Icon(
-                      Icons.abc,
-                      size: 70,
-                    ),
-                    Icon(
-                      Icons.abc,
-                      size: 70,
-                    ),
-                    Icon(
-                      Icons.abc,
-                      size: 70,
-                    ),
-                    // Icon(
-                    //   Icons.abc,
-                    //   size: 70,
-                    // ),
-                  ],
-                ),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

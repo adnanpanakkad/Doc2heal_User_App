@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doc2heal/presentation/screens/login_screen.dart';
+import 'package:doc2heal/widgets/profile/center_container.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
@@ -39,7 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(top: 30, left: 10, right: 10),
+          padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -68,7 +70,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 },
               ),
               const SizedBox(height: 20),
-              const DetailCard(),
+              const CenterContainer(),
+              CustomDetailCard(
+                  boxcolor: Colors.purple,
+                  iconcolor: Colors.white,
+                  iconData: Icons.error,
+                  iconButtonIcon: Icons.arrow_forward_ios,
+                  text: 'About',
+                  onTap: () {}),
+              const SizedBox(height: 20),
+              Text(
+                'Account',
+                style: CustomTextStyle.buttonTextStyle,
+              ),
+              SizedBox(height: 20),
+              CustomDetailCard(
+                  iconcolor: Colors.red,
+                  iconData: Icons.logout_outlined,
+                  iconButtonIcon: Icons.arrow_forward_ios,
+                  text: 'logout',
+                  onTap: () {}),
             ],
           ),
         ),

@@ -31,5 +31,8 @@ class UserRepository {
       throw 'not found data';
     }
   }
+  Future <void> imagePicker()async{
+    
+  }
 }
 

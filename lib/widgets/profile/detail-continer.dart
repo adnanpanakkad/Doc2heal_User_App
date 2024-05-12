@@ -25,12 +25,12 @@ class DetailContainer extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
+          const Padding(
+            padding: EdgeInsets.only(left: 10),
             child: CircleAvatar(
               radius: 50,
               backgroundImage:
-                  AssetImage(profilepic), // Use your own image here
+                  AssetImage('assets/Ellipse 1.png'), // Use your own image here
             ),
           ),
           const SizedBox(width: 30),

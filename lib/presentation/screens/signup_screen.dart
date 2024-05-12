@@ -17,8 +17,8 @@ class SignupScreen extends StatefulWidget {
   @override
   State<SignupScreen> createState() => _SignupScreenState();
 }
-class _SignupScreenState extends State<SignupScreen> {
 
+class _SignupScreenState extends State<SignupScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -73,7 +73,6 @@ class _SignupScreenState extends State<SignupScreen> {
                           text: 'Sign-up',
                           onTap: () async {
                             if (formKey.currentState!.validate()) {
-                              
                               AuthenticationRepository.userEmailSignup(
                                   emailController.text,
                                   passwordController.text,

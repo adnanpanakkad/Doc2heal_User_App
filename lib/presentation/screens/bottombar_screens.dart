@@ -31,7 +31,7 @@ class BottombarScreensState extends State<BottombarScreens> {
         children: _pages,
       ),
       bottomNavigationBar: Container(
-        margin: EdgeInsets.all(20),
+        margin: EdgeInsets.all(10),
         height: screenWidth * .155,
         decoration: BoxDecoration(
           color: Colors.white,

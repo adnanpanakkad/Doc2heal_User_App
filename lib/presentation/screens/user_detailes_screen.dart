@@ -11,8 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
-
 class PersonalDetails extends StatelessWidget {
   PersonalDetails({super.key});
   File? seletedImage;
@@ -200,24 +198,23 @@ class PersonalDetails extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Appcolor.primaryColor,
         onPressed: () async {
-          if (formKey.currentState!.validate()) {
-            UserModel user = UserModel(
-              profilepath: seletedImage!.path,
-              name: _nameController.text.trim(),
-              phone: _phoneController.text.trim(),
-              gender: _genderController.text.trim(),
-              age: _ageController.text.trim(),
-              address: _addressController.text.trim(),
-              place: _placeController.text.trim(),
-              isUser: true,
-            );
+          //if (formKey.currentState!.validate()) {
+          // UserModel user = UserModel(
+          //   profilepath: seletedImage!.path,
+          //   name: _nameController.text.trim(),
+          //   phone: _phoneController.text.trim(),
+          //   gender: _genderController.text.trim(),
+          //   age: _ageController.text.trim(),
+          //   address: _addressController.text.trim(),
+          //   place: _placeController.text.trim(),
+          // );
 
-            await UserRepository().saveUserData(user, '1'); // Pass userId here
+          //await UserRepository().saveUserData(user, '1'); // Pass userId here
 
-            await Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => BottombarScreens(),
-            ));
-          }
+          await Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => BottombarScreens(),
+          ));
+          //  }
         },
         label: const SizedBox(
           child: Row(
@@ -230,6 +227,4 @@ class PersonalDetails extends StatelessWidget {
       ),
     );
   }
-
-
 }
