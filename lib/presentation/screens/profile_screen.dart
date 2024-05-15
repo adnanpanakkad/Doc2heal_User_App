@@ -89,7 +89,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   iconData: Icons.logout_outlined,
                   iconButtonIcon: Icons.arrow_forward_ios,
                   text: 'logout',
-                  onTap: () {}),
+                  onTap: () {
+                    FirebaseAuth.instance.signOut();
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => LoginScreen()));
+                  }),
             ],
           ),
         ),
