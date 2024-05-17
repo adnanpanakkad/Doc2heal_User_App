@@ -81,10 +81,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           onTap: () async {
                             if (formKey.currentState!.validate()) {
                               // Perform login only if form validation passes
-                              await AuthenticationRepository.userEmailLogin(
+                              await AuthenticationRepository().userLogin(
                                   emailController.text,
-                                  passwordController.text,
-                                  context);
+                                  passwordController.text);
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                       builder: (context) =>
@@ -100,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           AuthButton(
                               text: 'Sigin with Google',
                               onTap: () async {
-                                await AuthenticationRepository.googleSignIn();
+                                await AuthenticationRepository().googleSignIn();
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                         builder: (context) =>

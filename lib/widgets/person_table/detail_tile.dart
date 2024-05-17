@@ -82,6 +82,7 @@ class DetailTile extends StatelessWidget {
           height: 0,
           thickness: 0.5,
           indent: 12,
+          endIndent: 12,
           color: Color.fromARGB(255, 170, 170, 170),
         ),
         SizedBox(height: 10),

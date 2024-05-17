@@ -73,10 +73,10 @@ class _SignupScreenState extends State<SignupScreen> {
                           text: 'Sign-up',
                           onTap: () async {
                             if (formKey.currentState!.validate()) {
-                              AuthenticationRepository.userEmailSignup(
-                                  emailController.text,
-                                  passwordController.text,
-                                  context);
+                              AuthenticationRepository().userSignup(
+                                emailController.text,
+                                passwordController.text,
+                              );
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                       builder: (context) => PersonalDetails()));
@@ -91,7 +91,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           AuthButton(
                               text: 'Sigin with Google',
                               onTap: () async {
-                                await AuthenticationRepository.googleSignIn();
+                                await AuthenticationRepository().googleSignIn();
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                         builder: (context) =>

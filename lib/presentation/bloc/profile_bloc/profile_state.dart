@@ -9,7 +9,7 @@ class GenderPickState extends ProfileState {
   GenderPickState({required this.selectGender});
 }
 
-class ImagePickState extends ProfileState {
-  String selectedImage;
-  ImagePickState({required this.selectedImage});
+final class SucessfullyPicimageEvent extends ProfileState {
+  final String profilepath;
+  SucessfullyPicimageEvent({required this.profilepath});
 }

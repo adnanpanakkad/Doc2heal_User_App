@@ -7,7 +7,7 @@ class GenderPickEvent extends ProfileEvent {
   GenderPickEvent({required this.selectGender});
 }
 
-class ImagePickEvent extends ProfileEvent {
-  String selectedImage;
-  ImagePickEvent({required this.selectedImage});
+class PicUserImgEvent extends ProfileEvent {
+  String profilepath;
+  PicUserImgEvent({required this.profilepath});
 }

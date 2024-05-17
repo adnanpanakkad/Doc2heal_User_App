@@ -1,38 +1,46 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doc2heal/model/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class UserRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-
-  /// function to save user data to Firestore
-  Future<void> saveUserData(UserModel user, String id) async { // Added String type for id parameter
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  User? user = FirebaseAuth.instance.currentUser;
+  User? get authUser => _auth.currentUser;
+  Future<UserModel?> saveUserData(UserModel user, String id) async {
     try {
       await _db.collection("user").doc(id).set(user.toJson());
     } catch (e) {
       throw 'not saved';
     }
+    return null;
   }
 
-  /// Function to fetch user data from Firestore by user ID
-  Future<UserModel> getUserById(String userId, String s) async {
+  Future<DocumentSnapshot> getUserDetails(String id) async {
     try {
-      DocumentSnapshot userSnapshot =
-          await _db.collection("user").doc(userId).get();
-
-      if (userSnapshot.exists) {
-        Map<String, dynamic> userData =
-            userSnapshot.data() as Map<String, dynamic>;
-
-        return UserModel.fromJson(userData);
-      } else {
-        throw Exception('User not found');
-      }
+      DocumentSnapshot snapshot = await _db.collection("user").doc(id).get();
+      // final snapshot = await _db
+      //     .collection("doctor")
+      //     .doc(authenticationRepository.authUser!.uid)
+      //     .get();
+      return snapshot;
     } catch (e) {
-      throw 'not found data';
+      throw Exception(e);
     }
   }
-  Future <void> imagePicker()async{
-    
+
+  Future<String> getImageUrl(
+    File imageFile,
+  ) async {
+    String uniqueName = DateTime.now().millisecond.toString();
+    final Reference storageReference =
+        FirebaseStorage.instance.ref().child('userimages/$uniqueName');
+    final UploadTask uploadTask = storageReference.putFile(imageFile);
+    final TaskSnapshot snapshot = await uploadTask.whenComplete(() {});
+    final String imageUrl = await snapshot.ref.getDownloadURL();
+    return imageUrl;
   }
 }
-

@@ -6,7 +6,7 @@ class UserModel {
   final String age;
   final String address;
   final String place;
-  
+  final String id;
 
   UserModel({
     required this.profilepath,
@@ -16,6 +16,7 @@ class UserModel {
     required this.age,
     required this.address,
     required this.place,
+    required this.id,
   });
 
   // Factory constructor to create UserModel from JSON data
@@ -28,6 +29,7 @@ class UserModel {
       age: json['age'],
       address: json['address'],
       place: json['place'],
+      id: json['id'],
     );
   }
   Map<String, dynamic> toJson() {
@@ -39,6 +41,7 @@ class UserModel {
       'age': age,
       'address': address,
       'place': place,
+      'id': id,
     };
   }
 }

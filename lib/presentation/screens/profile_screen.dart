@@ -17,19 +17,19 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late Future<UserModel> _userModelFuture;
+  //late Future<UserModel> _userModelFuture;
 
   @override
   void initState() {
     super.initState();
-    _userModelFuture = UserRepository().getUserById('0', 'user');
+    //_userModelFuture = UserRepository().getUserById('0', 'user');
   }
 
-  Future<UserModel> _loadUserData() async {
+  Future<UserModel> () async {
     final _db = FirebaseFirestore.instance.collection('user');
     try {
       // Replace 'your_user_id' with the actual user ID
-      return await UserRepository().getUserById('0', 'user');
+     // return await UserRepository().getUserById('0', 'user');
     } catch (e) {
       // Handle error
       throw 'Error fetching user data: $e';
@@ -50,25 +50,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 style: CustomTextStyle.highboldTxtStyle,
               ),
               const SizedBox(height: 20),
-              FutureBuilder<UserModel>(
-                future: _userModelFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator(); // Show loading indicator while fetching data
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else {
-                    final user = snapshot.data!;
-                    return DetailContainer(
-                      profilepic: user
-                          .profilepath!, // Assuming profile pic URL is stored in user model
-                      name: user.name,
-                      email: user.age,
-                      phone: user.phone,
-                    );
-                  }
-                },
-              ),
+              // FutureBuilder<UserModel>(
+              //   future: _userModelFuture,
+              //   builder: (context, snapshot) {
+              //     if (snapshot.connectionState == ConnectionState.waiting) {
+              //       return const CircularProgressIndicator(); // Show loading indicator while fetching data
+              //     } else if (snapshot.hasError) {
+              //       return Text('Error: ${snapshot.error}');
+              //     } else {
+              //       final user = snapshot.data!;
+              //       return DetailContainer(
+              //         profilepic: user
+              //             .profilepath!, // Assuming profile pic URL is stored in user model
+              //         name: user.name,
+              //         email: user.age,
+              //         phone: user.phone,
+              //       );
+              //     }
+              //   },
+              // ),
               const SizedBox(height: 20),
               const CenterContainer(),
               CustomDetailCard(

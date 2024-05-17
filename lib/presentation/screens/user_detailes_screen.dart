@@ -5,8 +5,10 @@ import 'package:doc2heal/presentation/screens/bottombar_screens.dart';
 import 'package:doc2heal/services/firebase/firestore.dart';
 import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/appbar/appbar.dart';
+import 'package:doc2heal/widgets/avathar_picker.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
 import 'package:doc2heal/widgets/person_table/detail_tile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -72,46 +74,7 @@ class PersonalDetails extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        SizedBox(
-                          child: Stack(
-                            alignment: const Alignment(1, 1),
-                            children: [
-                              CircleAvatar(
-                                radius: 55,
-                                backgroundImage: seletedImage == null
-                                    ? const AssetImage('assets/Ellipse 1.png')
-                                    : FileImage(seletedImage!) as ImageProvider,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      spreadRadius: 5,
-                                      blurRadius: 10,
-                                      offset: const Offset(0, 3),
-                                    ),
-                                  ],
-                                ),
-                                child: InkWell(
-                                  onTap: () {
-                                    //  imagepicker();
-                                  },
-                                  child: const CircleAvatar(
-                                    radius: 20,
-                                    backgroundColor:
-                                        Color.fromARGB(255, 229, 229, 229),
-                                    child: Icon(
-                                      Icons.add,
-                                      color: Appcolor.primaryColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        ProfileAvathar(),
                       ],
                     ),
                     const SizedBox(height: 30),
@@ -198,18 +161,19 @@ class PersonalDetails extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Appcolor.primaryColor,
         onPressed: () async {
-          //if (formKey.currentState!.validate()) {
-          // UserModel user = UserModel(
-          //   profilepath: seletedImage!.path,
-          //   name: _nameController.text.trim(),
-          //   phone: _phoneController.text.trim(),
-          //   gender: _genderController.text.trim(),
-          //   age: _ageController.text.trim(),
-          //   address: _addressController.text.trim(),
-          //   place: _placeController.text.trim(),
-          // );
-
-          //await UserRepository().saveUserData(user, '1'); // Pass userId here
+          if (formKey.currentState!.validate()) {
+            UserModel user = UserModel(
+              profilepath: seletedImage!.path,
+              name: _nameController.text.trim(),
+              phone: _phoneController.text.trim(),
+              gender: _genderController.text.trim(),
+              age: _ageController.text.trim(),
+              address: _addressController.text.trim(),
+              place: _placeController.text.trim(),
+              id: authUser!.uid,
+            );
+          }
+          await UserRepository().saveUserData(authUser,);
 
           await Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (context) => BottombarScreens(),
