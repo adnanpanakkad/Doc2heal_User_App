@@ -32,9 +32,11 @@ class UserRepository {
     }
   }
 
-  Future<String> getImageUrl(
-    File imageFile,
-  ) async {
+  Stream<QuerySnapshot<Map<String, dynamic>>> getDoctors() {
+    return _db.collection("doctor").snapshots();
+  }
+
+  Future<String> getImageUrl(File imageFile) async {
     String uniqueName = DateTime.now().millisecond.toString();
     final Reference storageReference =
         FirebaseStorage.instance.ref().child('userimages/$uniqueName');

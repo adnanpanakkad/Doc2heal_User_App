@@ -23,7 +23,9 @@ class PersonalDetails extends StatelessWidget {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _placeController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  User? get authUser => _auth.currentUser;
   final List<String> items = ['None', 'Male', 'Female'];
   final String selectGender = 'None';
 
@@ -74,7 +76,7 @@ class PersonalDetails extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        ProfileAvathar(),
+                        ProfileAvathar(), //imge picker
                       ],
                     ),
                     const SizedBox(height: 30),
@@ -172,13 +174,14 @@ class PersonalDetails extends StatelessWidget {
               place: _placeController.text.trim(),
               id: authUser!.uid,
             );
-          }
-          await UserRepository().saveUserData(authUser,);
 
-          await Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => BottombarScreens(),
-          ));
-          //  }
+            // Assuming UserRepository is accessible here
+            await UserRepository().saveUserData(user, authUser!.uid);
+
+            await Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => BottombarScreens(),
+            ));
+          }
         },
         label: const SizedBox(
           child: Row(

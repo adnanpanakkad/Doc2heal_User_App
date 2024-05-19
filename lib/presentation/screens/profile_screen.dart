@@ -1,103 +1,81 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doc2heal/presentation/screens/login_screen.dart';
 import 'package:doc2heal/widgets/profile/center_container.dart';
+import 'package:doc2heal/widgets/profile/detail-continer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
-import 'package:doc2heal/widgets/profile/detail-continer.dart';
 import 'package:doc2heal/widgets/profile/detail_tile.dart';
 import 'package:doc2heal/services/firebase/firestore.dart';
 import 'package:doc2heal/model/user_model.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key});
+class ProfileScreen extends StatelessWidget {
+  final String uid;
 
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  //late Future<UserModel> _userModelFuture;
-
-  @override
-  void initState() {
-    super.initState();
-    //_userModelFuture = UserRepository().getUserById('0', 'user');
-  }
-
-  Future<UserModel> () async {
-    final _db = FirebaseFirestore.instance.collection('user');
-    try {
-      // Replace 'your_user_id' with the actual user ID
-     // return await UserRepository().getUserById('0', 'user');
-    } catch (e) {
-      // Handle error
-      throw 'Error fetching user data: $e';
-    }
-  }
+  ProfileScreen({required this.uid});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Settings',
-                style: CustomTextStyle.highboldTxtStyle,
+    // return FutureBuilder<Map<DocumentSnapshot, dynamic>>(
+    //   future: UserRepository().getUserDetails(uid) as,
+    //   builder: (BuildContext context,
+    //       AsyncSnapshot<Map<DocumentSnapshot, dynamic>> snapshot) {
+    //     if (snapshot.connectionState == ConnectionState.done) {
+    //       if (snapshot.hasError) {
+    //         return Text('Error: ${snapshot.error}');
+    //       } else {
+    //         var userData = snapshot.data!;
+            return Scaffold(
+              body: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // DetailContainer(
+                      //   profilepic: userData['profilePic'],
+                      //   name: userData['name'],
+                      //   email: userData['email'],
+                      //   phone: userData['phone'],
+                      // ),
+                      const SizedBox(height: 20),
+                      const CenterContainer(),
+                      CustomDetailCard(
+                        boxcolor: Colors.purple,
+                        iconcolor: Colors.white,
+                        iconData: Icons.error,
+                        iconButtonIcon: Icons.arrow_forward_ios,
+                        text: 'About',
+                        onTap: () {},
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        'Account',
+                        style: CustomTextStyle.buttonTextStyle,
+                      ),
+                      SizedBox(height: 20),
+                      CustomDetailCard(
+                        iconcolor: Colors.red,
+                        iconData: Icons.logout_outlined,
+                        iconButtonIcon: Icons.arrow_forward_ios,
+                        text: 'Logout',
+                        onTap: () {
+                          FirebaseAuth.instance.signOut();
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()));
+                        },
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              const SizedBox(height: 20),
-              // FutureBuilder<UserModel>(
-              //   future: _userModelFuture,
-              //   builder: (context, snapshot) {
-              //     if (snapshot.connectionState == ConnectionState.waiting) {
-              //       return const CircularProgressIndicator(); // Show loading indicator while fetching data
-              //     } else if (snapshot.hasError) {
-              //       return Text('Error: ${snapshot.error}');
-              //     } else {
-              //       final user = snapshot.data!;
-              //       return DetailContainer(
-              //         profilepic: user
-              //             .profilepath!, // Assuming profile pic URL is stored in user model
-              //         name: user.name,
-              //         email: user.age,
-              //         phone: user.phone,
-              //       );
-              //     }
-              //   },
-              // ),
-              const SizedBox(height: 20),
-              const CenterContainer(),
-              CustomDetailCard(
-                  boxcolor: Colors.purple,
-                  iconcolor: Colors.white,
-                  iconData: Icons.error,
-                  iconButtonIcon: Icons.arrow_forward_ios,
-                  text: 'About',
-                  onTap: () {}),
-              const SizedBox(height: 20),
-              Text(
-                'Account',
-                style: CustomTextStyle.buttonTextStyle,
-              ),
-              SizedBox(height: 20),
-              CustomDetailCard(
-                  iconcolor: Colors.red,
-                  iconData: Icons.logout_outlined,
-                  iconButtonIcon: Icons.arrow_forward_ios,
-                  text: 'logout',
-                  onTap: () {
-                    FirebaseAuth.instance.signOut();
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => LoginScreen()));
-                  }),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+            );
+          }
+        } //else {
+         // return const Center(child: CircularProgressIndicator());
+        //}
+     // },
+   // );
+  //}
+//}

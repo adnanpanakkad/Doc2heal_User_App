@@ -1,7 +1,6 @@
 import 'package:doc2heal/services/firebase/firebase_authentication.dart';
 import 'package:doc2heal/presentation/screens/login_screen.dart';
 import 'package:doc2heal/presentation/screens/user_detailes_screen.dart';
-import 'package:doc2heal/services/firebase/firestore.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:doc2heal/widgets/common/button.dart';
 import 'package:doc2heal/widgets/common/auth_button.dart';
@@ -11,17 +10,11 @@ import 'package:doc2heal/widgets/common/validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+class SignupScreen extends StatelessWidget {
+   SignupScreen({super.key});
 
-  @override
-  State<SignupScreen> createState() => _SignupScreenState();
-}
-
-class _SignupScreenState extends State<SignupScreen> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
@@ -42,9 +35,10 @@ class _SignupScreenState extends State<SignupScreen> {
                         width: 250,
                         height: 250,
                         decoration: const BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage(
-                                    'assets/Mobile login-pana.png'))),
+                          image: DecorationImage(
+                            image: AssetImage('assets/Mobile login-pana.png'),
+                          ),
+                        ),
                       ),
                       const Row(
                         children: [
@@ -59,9 +53,10 @@ class _SignupScreenState extends State<SignupScreen> {
                         ],
                       ),
                       CustomTextfield(
-                          validation: (value) => Validator.validateEmail(value),
-                          hintText: "Enter Your Email",
-                          controller: emailController),
+                        validation: (value) => Validator.validateEmail(value),
+                        hintText: "Enter Your Email",
+                        controller: emailController,
+                      ),
                       CustomTextfield(
                         validation: (value) =>
                             Validator.validatePassword(value),
@@ -70,18 +65,21 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       const SizedBox(height: 20),
                       CustomButton(
-                          text: 'Sign-up',
-                          onTap: () async {
-                            if (formKey.currentState!.validate()) {
-                              AuthenticationRepository().userSignup(
-                                emailController.text,
-                                passwordController.text,
-                              );
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) => PersonalDetails()));
-                            }
-                          }),
+                        text: 'Sign-up',
+                        onTap: () async {
+                          if (formKey.currentState!.validate()) {
+                            await AuthenticationRepository().userSignup(
+                              emailController.text,
+                              passwordController.text,
+                            );
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => PersonalDetails(),
+                              ),
+                            );
+                          }
+                        },
+                      ),
                       const SizedBox(height: 30),
                       const Text('OR'),
                       const SizedBox(height: 15),
@@ -89,15 +87,17 @@ class _SignupScreenState extends State<SignupScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           AuthButton(
-                              text: 'Sigin with Google',
-                              onTap: () async {
-                                await AuthenticationRepository().googleSignIn();
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            PersonalDetails()));
-                              },
-                              imagpath: 'assets/2702602.png'),
+                            text: 'Sign-in with Google',
+                            onTap: () async {
+                              await AuthenticationRepository().googleSignIn();
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => PersonalDetails(),
+                                ),
+                              );
+                            },
+                            imagpath: 'assets/2702602.png',
+                          ),
                         ],
                       ),
                     ],
@@ -115,13 +115,16 @@ class _SignupScreenState extends State<SignupScreen> {
                   children: [
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => LoginScreen()));
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
+                        );
                       },
                       child: richText(
-                          context: context,
-                          firstTxt: "Already have an Account?  ",
-                          secondTxt: "Login"),
+                        context: context,
+                        firstTxt: "Already have an Account?  ",
+                        secondTxt: "Login",
+                      ),
                     )
                   ],
                 ),

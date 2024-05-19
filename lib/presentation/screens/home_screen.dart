@@ -1,4 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:doc2heal/presentation/screens/category_screen.dart';
+import 'package:doc2heal/presentation/screens/doctorlist_screen.dart';
 import 'package:doc2heal/presentation/screens/login_screen.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -37,35 +39,29 @@ class HomeScreen extends StatelessWidget {
                 CarouselSlider(
                   options: CarouselOptions(
                     animateToClosest: true,
-                    autoPlayCurve: Curves
-                        .easeIn, // Adjusted to account for the ClipRRect padding
-                    aspectRatio:
-                        2.0, // Adjusted to account for the ClipRRect padding
+                    autoPlayCurve: Curves.easeIn,
+                    aspectRatio: 2.0,
                     enlargeCenterPage: true,
-                    autoPlay: true, // Enable automatic sliding
-                    autoPlayInterval:
-                        Duration(seconds: 5), // Duration between slides
+                    autoPlay: true,
+                    autoPlayInterval: Duration(seconds: 5),
                   ),
                   items: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(
-                          10), // Adjust the radius for desired curvature
+                      borderRadius: BorderRadius.circular(10),
                       child: Image.network(
                         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXFqXO2nFAxGgTn8Lzg0mNpZxXD8FhMn6wbA&s',
                         fit: BoxFit.cover,
                       ),
                     ),
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(
-                          20), // Adjust the radius for desired curvature
+                      borderRadius: BorderRadius.circular(20),
                       child: Image.network(
                         'https://cdn.dribbble.com/users/7541902/screenshots/17912507/media/3786ac1fc4fffcc009d1d8fb47c556b6.jpg?resize=400x0',
                         fit: BoxFit.cover,
                       ),
                     ),
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(
-                          20), // Adjust the radius for desired curvature
+                      borderRadius: BorderRadius.circular(20),
                       child: Image.network(
                         'https://img.freepik.com/premium-psd/medical-social-media-facebook-cover-web-banner-template_220159-141.jpg',
                         fit: BoxFit.cover,
@@ -73,16 +69,27 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'Category',
                       style: CustomTextStyle.buttonTextStyle,
                     ),
-                    Text(
-                      'seeall',
-                      style: TextStyle(color: Colors.blue),
+                    GestureDetector(
+                      onTap: () {
+                        // Handle "seeall" tap
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  CategoryScreen()), // Replace with your Category screen
+                        );
+                      },
+                      child: const Text(
+                        'seeall',
+                        style: TextStyle(color: Colors.blue),
+                      ),
                     ),
                   ],
                 ),
@@ -90,26 +97,35 @@ class HomeScreen extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4, // Number of columns
+                    crossAxisCount: 4,
                   ),
-                  itemCount:
-                      hospitalityIcons.length, // Number of items in the grid
+                  itemCount: hospitalityIcons.length,
                   itemBuilder: (BuildContext context, int index) {
-                    // Use the icon from the list based on the index
                     return Icon(hospitalityIcons[index], size: 70);
                   },
                 ),
                 const SizedBox(height: 10),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'Doctors',
                       style: CustomTextStyle.buttonTextStyle,
                     ),
-                    Text(
-                      'see All',
-                      style: TextStyle(color: Colors.blue),
+                    GestureDetector(
+                      onTap: () {
+                        // Handle "see All" tap
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  DoctorsListScreen()), // Replace with your Doctors screen
+                        );
+                      },
+                      child: const Text(
+                        'see All',
+                        style: TextStyle(color: Colors.blue),
+                      ),
                     ),
                   ],
                 ),
@@ -141,7 +157,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),

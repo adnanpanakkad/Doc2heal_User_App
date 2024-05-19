@@ -19,7 +19,7 @@ class BottombarScreensState extends State<BottombarScreens> {
     HomeScreen(),
     const ScheduleScreen(),
     const ChatScreen(),
-    const ProfileScreen(),
+     ProfileScreen(uid: '',),
   ];
 
   @override
