@@ -25,54 +25,54 @@ class ProfileScreen extends StatelessWidget {
     //         return Text('Error: ${snapshot.error}');
     //       } else {
     //         var userData = snapshot.data!;
-            return Scaffold(
-              body: SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // DetailContainer(
-                      //   profilepic: userData['profilePic'],
-                      //   name: userData['name'],
-                      //   email: userData['email'],
-                      //   phone: userData['phone'],
-                      // ),
-                      const SizedBox(height: 20),
-                      const CenterContainer(),
-                      CustomDetailCard(
-                        boxcolor: Colors.purple,
-                        iconcolor: Colors.white,
-                        iconData: Icons.error,
-                        iconButtonIcon: Icons.arrow_forward_ios,
-                        text: 'About',
-                        onTap: () {},
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        'Account',
-                        style: CustomTextStyle.buttonTextStyle,
-                      ),
-                      SizedBox(height: 20),
-                      CustomDetailCard(
-                        iconcolor: Colors.red,
-                        iconData: Icons.logout_outlined,
-                        iconButtonIcon: Icons.arrow_forward_ios,
-                        text: 'Logout',
-                        onTap: () {
-                          FirebaseAuth.instance.signOut();
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
-                        },
-                      ),
-                    ],
-                  ),
-                ),
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Schedules',
+                style: CustomTextStyle
+                    .highboldTxtStyle, // Assuming this is defined correctly
               ),
-            );
-          }
-        } //else {
+              SizedBox(height: 20),
+              DetailContainer(),
+              const SizedBox(height: 20),
+              const CenterContainer(),
+              CustomDetailCard(
+                boxcolor: Colors.purple,
+                iconcolor: Colors.white,
+                iconData: Icons.error,
+                iconButtonIcon: Icons.arrow_forward_ios,
+                text: 'About',
+                onTap: () {},
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Account',
+                style: CustomTextStyle.buttonTextStyle,
+              ),
+              SizedBox(height: 20),
+              CustomDetailCard(
+                iconcolor: Colors.red,
+                iconData: Icons.logout_outlined,
+                iconButtonIcon: Icons.arrow_forward_ios,
+                text: 'Logout',
+                onTap: () {
+                  FirebaseAuth.instance.signOut();
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+} //else {
          // return const Center(child: CircularProgressIndicator());
         //}
      // },

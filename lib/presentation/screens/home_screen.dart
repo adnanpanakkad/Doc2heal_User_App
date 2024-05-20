@@ -43,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                     aspectRatio: 2.0,
                     enlargeCenterPage: true,
                     autoPlay: true,
-                    autoPlayInterval: Duration(seconds: 5),
+                    autoPlayInterval: const Duration(seconds: 5),
                   ),
                   items: [
                     ClipRRect(
@@ -83,7 +83,7 @@ class HomeScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  CategoryScreen()), // Replace with your Category screen
+                                  const CategoryScreen()), // Replace with your Category screen
                         );
                       },
                       child: const Text(
@@ -119,7 +119,7 @@ class HomeScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  DoctorsListScreen()), // Replace with your Doctors screen
+                                  const DoctorsListScreen()), // Replace with your Doctors screen
                         );
                       },
                       child: const Text(
@@ -139,9 +139,31 @@ class HomeScreen extends StatelessWidget {
                         child: Container(
                           height: 250,
                           width: 150,
-                          child: Image.network(
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVAAtEKf0r5SivJpR8Ek-crrJ3fWtSMknuzg&s',
-                            fit: BoxFit.contain,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Image.network(
+                                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVAAtEKf0r5SivJpR8Ek-crrJ3fWtSMknuzg&s',
+                                fit: BoxFit.contain,
+                                height: 150, // Adjusted height for image
+                                width: double.infinity,
+                              ),
+                              const SizedBox(height: 8),
+                              const Text(
+                                'Doctor Name',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const Text(
+                                'Category',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -149,9 +171,34 @@ class HomeScreen extends StatelessWidget {
                         child: Container(
                           height: 250,
                           width: 150,
-                          child: Image.network(
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqVOA4o6ryqDlQRuk9JCJae16oojo9BLFl-A&s',
-                            fit: BoxFit.contain,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Image.network(
+                                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqVOA4o6ryqDlQRuk9JCJae16oojo9BLFl-A&s',
+                                fit: BoxFit.contain,
+                                height: 150, // Adjusted height for image
+                                width: double
+                                    .infinity, // Make image take full width of the container
+                              ),
+                              const SizedBox(
+                                  height:
+                                      8), // Add some space between image and text
+                              const Text(
+                                'Doctor Name',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const Text(
+                                'Category',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

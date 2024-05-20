@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DeatialAppbar extends StatelessWidget {
-  const DeatialAppbar({super.key, required this.text});
-  final text;
+  const DeatialAppbar({super.key, required this.text, this.onTap});
+  final String text;
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -24,12 +25,8 @@ class DeatialAppbar extends StatelessWidget {
           decoration: BoxDecoration(
               color: Appcolor.primaryColor,
               borderRadius: BorderRadius.circular(15)),
-          child: IconButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => SignupScreen()));
-              },
-              icon: const Icon(Icons.arrow_back)),
+          child:
+              IconButton(onPressed: onTap, icon: const Icon(Icons.arrow_back)),
         ),
       ),
     );

@@ -2,16 +2,7 @@ import 'package:doc2heal/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class DetailContainer extends StatelessWidget {
-  const DetailContainer(
-      {super.key,
-      required this.profilepic,
-      required this.name,
-      required this.email,
-      required this.phone});
-  final String name;
-  final String profilepic;
-  final String email;
-  final String phone;
+  const DetailContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +30,7 @@ class DetailContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                name,
+                "name",
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -48,7 +39,7 @@ class DetailContainer extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               Text(
-                email,
+                "email",
                 style: const TextStyle(
                   fontSize: 16,
                   color: Colors.white,
@@ -56,7 +47,7 @@ class DetailContainer extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               Text(
-                phone,
+                "phone",
                 style: const TextStyle(
                   fontSize: 16,
                   color: Colors.white,
