@@ -10,10 +10,10 @@ import 'package:flutter/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   final List<IconData> hospitalityIcons = [
-    Icons.restaurant,
-    Icons.hotel,
-    Icons.local_cafe,
-    Icons.local_pizza,
+    Icons.heart_broken_sharp,
+    Icons.child_care,
+    Icons.hearing_disabled_rounded,
+    Icons.healing,
   ];
 
   HomeScreen({Key? key}) : super(key: key);
