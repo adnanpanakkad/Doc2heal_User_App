@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:doc2heal/presentation/screens/category_screen.dart';
-import 'package:doc2heal/presentation/screens/doctorlist_screen.dart';
-import 'package:doc2heal/presentation/screens/login_screen.dart';
+import 'package:doc2heal/presentation/view/category_screen.dart';
+import 'package:doc2heal/presentation/view/doctorlist_screen.dart';
+import 'package:doc2heal/presentation/view/login_screen.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';

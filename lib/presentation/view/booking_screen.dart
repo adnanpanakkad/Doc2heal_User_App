@@ -1,4 +1,4 @@
-import 'package:doc2heal/presentation/screens/payment_screen.dart';
+import 'package:doc2heal/presentation/view/payment_screen.dart';
 import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/appbar/appbar.dart';
 import 'package:flutter/material.dart';

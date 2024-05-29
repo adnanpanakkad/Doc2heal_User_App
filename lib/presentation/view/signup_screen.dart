@@ -1,6 +1,6 @@
 import 'package:doc2heal/services/firebase/firebase_authentication.dart';
-import 'package:doc2heal/presentation/screens/login_screen.dart';
-import 'package:doc2heal/presentation/screens/user_detailes_screen.dart';
+import 'package:doc2heal/presentation/view/login_screen.dart';
+import 'package:doc2heal/presentation/view/user_detailes_screen.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:doc2heal/widgets/common/button.dart';
 import 'package:doc2heal/widgets/common/auth_button.dart';

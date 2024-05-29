@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:doc2heal/presentation/screens/login_screen.dart';
+import 'package:doc2heal/presentation/view/login_screen.dart';
 import 'package:doc2heal/widgets/profile/center_container.dart';
 import 'package:doc2heal/widgets/profile/detail-continer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
