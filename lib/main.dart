@@ -1,11 +1,11 @@
 import 'package:doc2heal/firebase_options.dart';
 import 'package:doc2heal/presentation/bloc/profile_bloc/profile_bloc.dart';
-import 'package:doc2heal/presentation/screens/splashscreen.dart';
+import 'package:doc2heal/presentation/view/splashscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main(List<String> args) async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

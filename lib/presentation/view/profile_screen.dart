@@ -33,7 +33,7 @@ class ProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Schedules',
+                'Settings',
                 style: CustomTextStyle
                     .highboldTxtStyle, // Assuming this is defined correctly
               ),

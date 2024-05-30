@@ -1,5 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:doc2heal/presentation/screens/login_screen.dart';
+import 'package:doc2heal/presentation/view/login_screen.dart';
 import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';

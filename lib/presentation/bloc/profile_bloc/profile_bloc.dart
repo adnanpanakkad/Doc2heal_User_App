@@ -24,5 +24,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(SucessfullyPicimageEvent(profilepath: url));
     }
   }
-  
+  Future<void> fecthUserData()async {
+           
+  }
 }
