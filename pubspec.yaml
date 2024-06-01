@@ -81,7 +81,10 @@ flutter:
     - assets\Mobile login-pana.png
     - assets\Ellipse 1.png
     - assets\2702602.png
-    - assets\facebook_5968764.png
+    - assets\eye.png
+    - assets\heart.png
+    - assets\pediatrics.png
+    - assets\tooth.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

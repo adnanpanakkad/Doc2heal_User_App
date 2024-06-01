@@ -7,7 +7,6 @@ import 'package:doc2heal/widgets/common/auth_button.dart';
 import 'package:doc2heal/widgets/common/rich_text.dart';
 import 'package:doc2heal/widgets/common/textfield.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignupScreen extends StatelessWidget {

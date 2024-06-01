@@ -1,26 +1,17 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:doc2heal/presentation/view/category_screen.dart';
 import 'package:doc2heal/presentation/view/doctorlist_screen.dart';
-import 'package:doc2heal/presentation/view/login_screen.dart';
-import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:doc2heal/widgets/home/carousel.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:doc2heal/widgets/home/category_row.dart';
+import 'package:doc2heal/widgets/home/home_appbar.dart';
+import 'package:doc2heal/widgets/home/section_title.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
-  final List<IconData> hospitalityIcons = [
-    Icons.heart_broken_sharp,
-    Icons.child_care,
-    Icons.hearing_disabled_rounded,
-    Icons.healing,
-  ];
-
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.only(top: 25, left: 10, right: 15),
@@ -28,79 +19,26 @@ class HomeScreen extends StatelessWidget {
           body: SingleChildScrollView(
             child: Column(
               children: [
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('hi hello'),
-                    CircleAvatar(
-                      radius: 20,
-                    ),
-                  ],
-                ),
-                CustomCarousel(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Category',
-                      style: CustomTextStyle.buttonTextStyle,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        // Handle "seeall" tap
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const CategoryScreen()), // Replace with your Category screen
-                        );
-                      },
-                      child: const Text(
-                        'seeall',
-                        style: TextStyle(color: Colors.blue),
-                      ),
-                    ),
-                  ],
-                ),
-                GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
-                  ),
-                  itemCount: hospitalityIcons.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Icon(hospitalityIcons[index], size: 70);
+                HomeAppBar(),
+                const CustomCarousel(),
+                SectionTitle(
+                  title: 'Categories',
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const CategoryScreen()));
                   },
                 ),
+                const HomeCategoryRow(),
                 const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Doctors',
-                      style: CustomTextStyle.buttonTextStyle,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        // Handle "see All" tap
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const DoctorsListScreen()), // Replace with your Doctors screen
-                        );
-                      },
-                      child: const Text(
-                        'see All',
-                        style: TextStyle(color: Colors.blue),
-                      ),
-                    ),
-                  ],
-                ),
+                SectionTitle(
+                    title: 'Doctors',
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const DoctorsListScreen()));
+                    }),
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

@@ -1,5 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
+import 'package:doc2heal/widgets/chat/appbar.dart';
+import 'package:flutter/material.dart';
+import 'package:doc2heal/services/firebase/firestore.dart'; // Make sure this is correctly implemented
+import 'package:doc2heal/widgets/common/appbar.dart'; // Ensure this custom app bar exists
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
@@ -9,36 +13,80 @@ class ChatScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.only(top: 30, left: 15, right: 15),
+          padding: const EdgeInsets.only(top: 20, left: 10, right: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Messages',
-                style: CustomTextStyle.highboldTxtStyle,
-              ),
+              const CustomAppbar(),
               Expanded(
-                child: ListView.builder(
-                  reverse: true, // To show the latest message at the bottom
-                  itemCount: 10, // Example: 10 messages
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text('Message ${index + 1}'),
-                      subtitle: Text('User ${index % 2 == 0 ? 'A' : 'B'}'),
+                child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                  stream: UserRepository()
+                      .getDoctors(), // Ensure getDoctors() is defined
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Center(child: Text('Something went wrong'));
+                    }
+
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+
+                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                      return const Center(child: Text('No doctors available'));
+                    }
+
+                    return ListView.builder(
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        Map<String, dynamic> doctorData =
+                            snapshot.data!.docs[index].data();
+
+                        return InkWell(
+                          onTap: () {
+                            //navigating massage ui screen
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 20,
+                                  backgroundImage: NetworkImage(
+                                      doctorData['imagepath'] ?? ''),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        doctorData['name'] ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        doctorData['specialization'] ?? '',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey[600],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
                     );
                   },
                 ),
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: 'Type a message...',
-                  border: OutlineInputBorder(),
-                ),
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                onChanged: (value) {
-                  // Handle message input
-                },
               ),
             ],
           ),

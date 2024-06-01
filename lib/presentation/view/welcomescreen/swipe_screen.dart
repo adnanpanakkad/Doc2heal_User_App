@@ -1,5 +1,5 @@
-import 'package:doc2heal/presentation/view/first_intro_screen.dart';
-import 'package:doc2heal/presentation/view/second_intro_screen.dart';
+import 'package:doc2heal/presentation/view/welcomescreen/first_intro_screen.dart';
+import 'package:doc2heal/presentation/view/welcomescreen/second_intro_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 

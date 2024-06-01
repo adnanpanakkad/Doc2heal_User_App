@@ -11,6 +11,7 @@ import 'package:doc2heal/widgets/common/rich_text.dart';
 import 'package:doc2heal/widgets/common/textfield.dart';
 import '../../../utils/app_text_styles.dart';
 
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 

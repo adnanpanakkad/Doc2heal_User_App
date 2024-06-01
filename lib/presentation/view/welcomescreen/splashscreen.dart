@@ -1,4 +1,4 @@
-import 'package:doc2heal/presentation/view/swipe_screen.dart';
+import 'package:doc2heal/presentation/view/welcomescreen/swipe_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
