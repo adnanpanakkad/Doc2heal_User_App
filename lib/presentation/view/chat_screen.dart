@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:doc2heal/widgets/chat/appbar.dart';
 import 'package:flutter/material.dart';
-import 'package:doc2heal/services/firebase/firestore.dart'; // Make sure this is correctly implemented
-import 'package:doc2heal/widgets/common/appbar.dart'; // Ensure this custom app bar exists
+import 'package:doc2heal/services/firebase/firestore.dart'; 
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
@@ -21,7 +19,7 @@ class ChatScreen extends StatelessWidget {
               Expanded(
                 child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                   stream: UserRepository()
-                      .getDoctors(), // Ensure getDoctors() is defined
+                      .getDoctors(), 
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return const Center(child: Text('Something went wrong'));
