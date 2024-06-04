@@ -1,6 +1,6 @@
 import 'package:doc2heal/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:doc2heal/presentation/view/chat_screen.dart';
+import 'package:doc2heal/presentation/view/messages.dart';
 import 'package:doc2heal/presentation/view/home_screen.dart';
 import 'package:doc2heal/presentation/view/profile_screen.dart';
 import 'package:doc2heal/presentation/view/schedule_screen.dart';
@@ -16,10 +16,12 @@ class BottombarScreens extends StatefulWidget {
 class BottombarScreensState extends State<BottombarScreens> {
   var currentIndex = 0;
   final List<Widget> _pages = [
-    HomeScreen(),
+    const HomeScreen(),
     const ScheduleScreen(),
-    const ChatScreen(),
-     ProfileScreen(uid: '',),
+    const MessageScreen(),
+    const ProfileScreen(
+      uid: '',
+    ),
   ];
 
   @override

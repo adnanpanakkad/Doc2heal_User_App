@@ -1,8 +1,7 @@
-import 'package:doc2heal/presentation/view/razorpay.dart';
+import 'package:doc2heal/razorpay.dart';
 import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/common/appbar.dart';
 import 'package:flutter/material.dart';
-
 
 class BookingScreen extends StatelessWidget {
   final Map<String, dynamic>? doctorData;
