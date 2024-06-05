@@ -30,7 +30,7 @@ class DetailContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "name",
+                "Adnan",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -39,7 +39,7 @@ class DetailContainer extends StatelessWidget {
               ),
               SizedBox(height: 5),
               Text(
-                "email",
+                "adnan@123email",
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.white,
@@ -47,7 +47,7 @@ class DetailContainer extends StatelessWidget {
               ),
               SizedBox(height: 5),
               Text(
-                "phone",
+                "9652013322",
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.white,
