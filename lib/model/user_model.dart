@@ -4,8 +4,8 @@ class UserModel {
   final String phone;
   final String gender;
   final String age;
-  final String address;
-  final String place;
+  final String email;
+  final String password;
   final String id;
 
   UserModel({
@@ -14,8 +14,8 @@ class UserModel {
     required this.phone,
     required this.gender,
     required this.age,
-    required this.address,
-    required this.place,
+    required this.email,
+    required this.password,
     required this.id,
   });
 
@@ -27,8 +27,8 @@ class UserModel {
       phone: json['phone'],
       gender: json['gender'],
       age: json['age'],
-      address: json['address'],
-      place: json['place'],
+      email: json['email'],
+      password: json['password'],
       id: json['id'],
     );
   }
@@ -39,8 +39,8 @@ class UserModel {
       'phone': phone,
       'gender': gender,
       'age': age,
-      'address': address,
-      'place': place,
+      'email': email,
+      'password': password,
       'id': id,
     };
   }

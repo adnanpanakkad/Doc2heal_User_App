@@ -11,3 +11,9 @@ class PicUserImgEvent extends ProfileEvent {
   String profilepath;
   PicUserImgEvent({required this.profilepath});
 }
+
+class AddUserData extends ProfileEvent {
+  final Map<String, dynamic> data;
+
+  AddUserData(this.data);
+}
