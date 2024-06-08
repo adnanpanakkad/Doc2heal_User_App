@@ -1,4 +1,4 @@
-part of 'auth_bloc_bloc.dart';
+part of 'auth_bloc.dart';
 
 @immutable
 sealed class AuthBlocEvent {}
@@ -13,10 +13,10 @@ class Loginevent extends AuthBlocEvent {
 }
 
 // Sign up event
-class singupevent extends AuthBlocEvent {
+class Singupevent extends AuthBlocEvent {
   final UserModel usermodel;
-  singupevent(UserModel user, {required this.usermodel});
+  Singupevent(UserModel user, {required this.usermodel});
 }
 
 // Logout event
-class logoutevent extends AuthBlocEvent {}
+class Logoutevent extends AuthBlocEvent {}

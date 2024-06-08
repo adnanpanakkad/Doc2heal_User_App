@@ -4,8 +4,8 @@ import 'package:doc2heal/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 
-part 'auth_bloc_event.dart';
-part 'auth_bloc_state.dart';
+part 'auth_event.dart';
+part 'auth_state.dart';
 
 String authuserId = '';
 
@@ -28,7 +28,7 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
       }
     });
 
-    on<singupevent>((event, emit) async {
+    on<Singupevent>((event, emit) async {
       emit(Authloading());
       try {
         UserCredential userCredential =
@@ -56,7 +56,7 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
       }
     });
 
-    on<logoutevent>((event, emit) async {
+    on<Logoutevent>((event, emit) async {
       try {
         await FirebaseAuth.instance.signOut();
         emit(UnAuthenticated());
@@ -83,4 +83,5 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
       }
     });
   }
+  
 }

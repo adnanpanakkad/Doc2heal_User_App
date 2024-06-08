@@ -1,5 +1,5 @@
 import 'package:doc2heal/firebase_options.dart';
-import 'package:doc2heal/presentation/bloc/auth_bloc/auth_bloc_bloc.dart';
+import 'package:doc2heal/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'package:doc2heal/presentation/bloc/profile_bloc/profile_bloc.dart';
 import 'package:doc2heal/presentation/view/welcomescreen/splashscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,8 +22,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => ProfileBloc()),
-        BlocProvider(create: (context) => AuthBloc())
+        BlocProvider(
+          create: (context) => AuthBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ProfileBloc(),
+        ),
       ],
       child: MaterialApp(
         theme: ThemeData.light(),

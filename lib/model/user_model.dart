@@ -1,5 +1,5 @@
 class UserModel {
-  String? profilepath;
+ final String? coverimag;
   final String name;
   final String phone;
   final String gender;
@@ -9,7 +9,7 @@ class UserModel {
   final String id;
 
   UserModel({
-    required this.profilepath,
+    required this.coverimag,
     required this.name,
     required this.phone,
     required this.gender,
@@ -22,7 +22,7 @@ class UserModel {
   // Factory constructor to create UserModel from JSON data
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      profilepath: json['imagepath'],
+      coverimag: json['coverimag'],
       name: json['name'],
       phone: json['phone'],
       gender: json['gender'],
@@ -34,7 +34,7 @@ class UserModel {
   }
   Map<String, dynamic> toJson() {
     return {
-      'imagepath': profilepath,
+      'coverimag': coverimag,
       'name': name,
       'phone': phone,
       'gender': gender,

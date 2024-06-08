@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:doc2heal/model/user_model.dart';
-import 'package:doc2heal/presentation/bloc/auth_bloc/auth_bloc_bloc.dart';
+import 'package:doc2heal/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'package:doc2heal/presentation/bloc/profile_bloc/profile_bloc.dart';
 import 'package:doc2heal/presentation/view/bottombar_screens.dart';
 import 'package:doc2heal/services/firebase/firestore.dart';
@@ -170,7 +170,7 @@ class SignupScreen extends StatelessWidget {
         onPressed: () async {
           if (formKey.currentState!.validate()) {
             UserModel user = UserModel(
-              profilepath: seletedImage!.path,
+              coverimag: seletedImage!.path,
               name: _nameController.text.trim(),
               phone: _phoneController.text.trim(),
               gender: _genderController.text.trim(),
@@ -180,7 +180,7 @@ class SignupScreen extends StatelessWidget {
               id: authUser!.uid,
             );
             BlocProvider.of<AuthBloc>(context)
-                .add(singupevent(user, usermodel: user));
+                .add(Singupevent(user, usermodel: user));
             await Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) => BottombarScreens(),
             ));

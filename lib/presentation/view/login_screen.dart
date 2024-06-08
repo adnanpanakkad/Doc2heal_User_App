@@ -1,6 +1,5 @@
-import 'package:doc2heal/presentation/bloc/auth_bloc/auth_bloc_bloc.dart';
+import 'package:doc2heal/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'package:doc2heal/presentation/view/user_detailes_screen.dart';
-import 'package:doc2heal/services/firebase/firebase_authentication.dart';
 import 'package:doc2heal/presentation/view/bottombar_screens.dart';
 import 'package:doc2heal/services/network.dart';
 import 'package:doc2heal/widgets/common/custom_snacbar.dart';
@@ -37,10 +36,16 @@ class _LoginScreenState extends State<LoginScreen> {
       body: BlocBuilder<AuthBloc, AuthBlocState>(
         builder: (context, state) {
           if (state is Authenticated) {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => const BottombarScreens()));
+            // Navigator.of(context).pushReplacement(MaterialPageRoute(
+            //   builder: (context) => const BottombarScreens(),
+            // ));
           } else if (state is AuthenticateError) {
-            
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              CustomSnackbar.show(
+                  context, 'Invalid email or password', Colors.red);
+            });
+          } else if (state is Authloading) {
+            return const Center(child: CircularProgressIndicator());
           }
           return SafeArea(
             child: ListView(
@@ -95,11 +100,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                           email: emailController.text.trim(),
                                           password:
                                               passwordController.text.trim()));
-                                  // Navigator.of(context).pushReplacement(
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) =>
-                                  //             const BottombarScreens()));
                                 }
+                                Navigator.of(context)
+                                    .pushReplacement(MaterialPageRoute(
+                                  builder: (context) =>
+                                      const BottombarScreens(),
+                                ));
                               }),
                         ],
                       ),
