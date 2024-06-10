@@ -15,7 +15,7 @@ class Loginevent extends AuthBlocEvent {
 // Sign up event
 class Singupevent extends AuthBlocEvent {
   final UserModel usermodel;
-  Singupevent(UserModel user, {required this.usermodel});
+  Singupevent({required this.usermodel});
 }
 
 // Logout event

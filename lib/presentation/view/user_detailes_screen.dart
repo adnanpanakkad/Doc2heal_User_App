@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// ignore: must_be_immutable
 class SignupScreen extends StatelessWidget {
   SignupScreen({super.key});
 
@@ -37,109 +38,111 @@ class SignupScreen extends StatelessWidget {
       appBar: const PreferredSize(
           preferredSize: Size(double.maxFinite, 70),
           child: DeatialAppbar(text: 'Personal Details')),
-      body: Form(
-        key: formKey,
-        child: ListView(
-          children: [
-            const SizedBox(
-              height: 50,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-              child: Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                  color: Color.fromARGB(255, 254, 254, 254),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color.fromARGB(44, 112, 112, 112),
-                      spreadRadius: 1,
-                      blurRadius: 10,
-                      offset: Offset(5, 10),
-                    ),
-                  ],
+      body: BlocBuilder<AuthBloc, AuthBlocState>(
+        builder: (context, state) {
+          return Form(
+            key: formKey,
+            child: ListView(
+              children: [
+                const SizedBox(
+                  height: 50,
                 ),
-                width: double.maxFinite,
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: Text(
-                            'Add your profile',
-                            style: GoogleFonts.urbanist(
-                                fontWeight: FontWeight.bold, fontSize: 15),
-                          ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      color: Color.fromARGB(255, 254, 254, 254),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromARGB(44, 112, 112, 112),
+                          spreadRadius: 1,
+                          blurRadius: 10,
+                          offset: Offset(5, 10),
                         ),
-                        const SizedBox(height: 20),
-                        BlocBuilder<ProfileBloc, ProfileState>(
-                          builder: (context, state) {
-                            return const ProfileAvathar();
-                          },
-                        ), //imge picker
                       ],
                     ),
-                    const SizedBox(height: 30),
-                    DetailTile(
-                      validator: (value) =>
-                          Validator().textFeildValidation(value),
-                      keyboardType: TextInputType.name,
-                      controllers: _nameController,
-                      sub: 'full name',
-                      hittext: 'Enter your full name',
+                    width: double.maxFinite,
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: Text(
+                                'Add your profile',
+                                style: GoogleFonts.urbanist(
+                                    fontWeight: FontWeight.bold, fontSize: 15),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            const ProfileAvathar(), //imge picker
+                          ],
+                        ),
+                        const SizedBox(height: 30),
+                        DetailTile(
+                          validator: (value) =>
+                              Validator().textFeildValidation(value),
+                          keyboardType: TextInputType.name,
+                          controllers: _nameController,
+                          sub: 'full name',
+                          hittext: 'Enter your full name',
+                        ),
+                        DetailTile(
+                          validator: (value) =>
+                              Validator().textFeildValidation(value),
+                          controllers: _phoneController,
+                          keyboardType: TextInputType.number,
+                          sub: 'Phone number',
+                          hittext: 'Enter your phone number',
+                        ),
+                        DetailTile(
+                          controllers: _genderController,
+                          validator: (value) =>
+                              Validator().textFeildValidation(value),
+                          sub: 'Gender',
+                          hittext: "Enter your Gender",
+                          keyboardType: TextInputType.name,
+                        ),
+                        DetailTile(
+                          validator: (value) =>
+                              Validator().textFeildValidation(value),
+                          controllers: _ageController,
+                          sub: 'Age',
+                          hittext: "Enter your Age",
+                          keyboardType: TextInputType.number,
+                        ),
+                        DetailTile(
+                          validator: (value) => Validator.validateEmail(value),
+                          keyboardType: TextInputType.emailAddress,
+                          controllers: _emailController,
+                          sub: 'email',
+                          hittext: 'Enter your  email',
+                        ),
+                        DetailTile(
+                          validator: (value) =>
+                              Validator.validatePassword(value),
+                          keyboardType: TextInputType.emailAddress,
+                          controllers: _passwordController,
+                          sub: 'Password',
+                          hittext: 'Enter your  Password',
+                        ),
+                      ],
                     ),
-                    DetailTile(
-                      validator: (value) =>
-                          Validator().textFeildValidation(value),
-                      controllers: _phoneController,
-                      keyboardType: TextInputType.number,
-                      sub: 'Phone number',
-                      hittext: 'Enter your phone number',
-                    ),
-                    DetailTile(
-                      controllers: _genderController,
-                      validator: (value) =>
-                          Validator().textFeildValidation(value),
-                      sub: 'Gender',
-                      hittext: "Enter your Gender",
-                      keyboardType: TextInputType.name,
-                    ),
-                    DetailTile(
-                      validator: (value) =>
-                          Validator().textFeildValidation(value),
-                      controllers: _ageController,
-                      sub: 'Age',
-                      hittext: "Enter your Age",
-                      keyboardType: TextInputType.number,
-                    ),
-                    DetailTile(
-                      validator: (value) => Validator.validateEmail(value),
-                      keyboardType: TextInputType.emailAddress,
-                      controllers: _emailController,
-                      sub: 'email',
-                      hittext: 'Enter your  email',
-                    ),
-                    DetailTile(
-                      validator: (value) => Validator.validatePassword(value),
-                      keyboardType: TextInputType.emailAddress,
-                      controllers: _passwordController,
-                      sub: 'Password',
-                      hittext: 'Enter your  Password',
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                const SizedBox(
+                  height: 60,
+                ),
+              ],
             ),
-            const SizedBox(
-              height: 60,
-            ),
-          ],
-        ),
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Appcolor.primaryColor,
@@ -152,12 +155,11 @@ class SignupScreen extends StatelessWidget {
               age: _ageController.text.trim(),
               email: _emailController.text.trim(),
               password: _passwordController.text.trim(),
-              id: authUser!.uid,
             );
             BlocProvider.of<AuthBloc>(context)
-                .add(Singupevent(user, usermodel: user));
+                .add(Singupevent(usermodel: user));
             await Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => BottombarScreens(),
+              builder: (context) => const BottombarScreens(),
             ));
           }
         },

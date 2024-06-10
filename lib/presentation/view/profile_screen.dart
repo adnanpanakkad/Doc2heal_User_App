@@ -11,7 +11,7 @@ class ProfileScreen extends StatelessWidget {
   final String uid;
   final Map<String, dynamic> userData;
 
-  const ProfileScreen({super.key, required this.uid, required this.userData});
+  const ProfileScreen({Key? key, required this.uid, required this.userData});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,19 @@ class ProfileScreen extends StatelessWidget {
                   style: CustomTextStyle.highboldTxtStyle,
                 ),
                 const SizedBox(height: 20),
-                DetailContainer(userData: userData),
+                StreamBuilder<User?>(
+                  stream: FirebaseAuth.instance.authStateChanges(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    }
+                    if (snapshot.hasData && snapshot.data != null) {
+                      return DetailContainer();
+                    } else {
+                      return const Text('User not logged in');
+                    }
+                  },
+                ),
                 const SizedBox(height: 20),
                 const CenterContainer(),
                 CustomDetailCard(
@@ -58,8 +70,10 @@ class ProfileScreen extends StatelessWidget {
                           onTap: () {
                             FirebaseAuth.instance.signOut();
                             Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => const LoginScreen()));
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                            );
                           },
                         );
                       },

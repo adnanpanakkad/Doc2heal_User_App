@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doc2heal/model/user_model.dart';
@@ -19,17 +20,10 @@ class UserRepository {
     return null;
   }
 
-  Future<DocumentSnapshot> getUserDetails(String id) async {
-    try {
-      DocumentSnapshot snapshot = await _db.collection("user").doc(id).get();
-      // final snapshot = await _db
-      //     .collection("doctor")
-      //     .doc(authenticationRepository.authUser!.uid)
-      //     .get();
-      return snapshot;
-    } catch (e) {
-      throw Exception(e);
-    }
+  Stream<Map<String, dynamic>> getUserDetails(String userId) {
+    return _db.collection('users').doc(userId).snapshots().map((snapshot) {
+      return snapshot.data() as Map<String, dynamic>;
+    });
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getDoctors() {
@@ -44,6 +38,5 @@ class UserRepository {
     final TaskSnapshot snapshot = await uploadTask.whenComplete(() {});
     final String imageUrl = await snapshot.ref.getDownloadURL();
     return imageUrl;
-    
   }
 }

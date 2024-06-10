@@ -6,7 +6,7 @@ class UserModel {
   final String age;
   final String email;
   final String password;
-  final String id;
+  final String? id;
 
   UserModel({
     this.coverimag,
@@ -16,7 +16,7 @@ class UserModel {
     required this.age,
     required this.email,
     required this.password,
-    required this.id,
+    this.id,
   });
 
   // Factory constructor to create UserModel from JSON data
