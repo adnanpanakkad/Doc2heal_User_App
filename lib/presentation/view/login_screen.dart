@@ -100,12 +100,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                           email: emailController.text.trim(),
                                           password:
                                               passwordController.text.trim()));
+                                  await Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const BottombarScreens()));
                                 }
-                                Navigator.of(context)
-                                    .pushReplacement(MaterialPageRoute(
-                                  builder: (context) =>
-                                      const BottombarScreens(),
-                                ));
                               }),
                         ],
                       ),

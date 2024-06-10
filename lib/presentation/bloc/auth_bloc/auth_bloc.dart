@@ -8,10 +8,20 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 String authuserId = '';
+Future<String> getUserId() async {
+  User? user = FirebaseAuth.instance.currentUser;
+  if (user == null) {
+    throw FirebaseAuthException(
+      code: 'user-not-authenticated',
+      message: 'User not authenticated',
+    );
+  }
+  return user.uid;
+}
 
 class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   AuthBloc() : super(AuthBlocInitial()) {
     on<Checklogin>((event, emit) async {
       User? user;
@@ -27,35 +37,6 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         emit(AuthenticateError(e.toString()));
       }
     });
-
-    on<Singupevent>((event, emit) async {
-      emit(Authloading());
-      try {
-        UserCredential userCredential =
-            await _auth.createUserWithEmailAndPassword(
-          email: event.usermodel.email.toString(),
-          password: event.usermodel.password.toString(),
-        );
-        final User? user = userCredential.user;
-        if (user != null) {
-          authuserId = user.uid;
-          await FirebaseFirestore.instance
-              .collection('users')
-              .doc(user.uid)
-              .set({
-            'name': event.usermodel.name,
-            'email': event.usermodel.email,
-            'uid': user.uid,
-            'phone': event.usermodel.phone,
-            'cratedate': DateTime.now(),
-          });
-        }
-        emit(Authenticated(userCredential.user!.uid));
-      } catch (e) {
-        emit(AuthenticateError(e.toString()));
-      }
-    });
-
     on<Logoutevent>((event, emit) async {
       try {
         await FirebaseAuth.instance.signOut();
@@ -82,6 +63,54 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         emit(AuthenticateError(e.toString()));
       }
     });
+
+    on<Singupevent>((event, emit) async {
+      emit(Authloading());
+      try {
+        UserCredential userCredential =
+            await _auth.createUserWithEmailAndPassword(
+          email: event.usermodel.email.toString(),
+          password: event.usermodel.password.toString(),
+        );
+        final User? user = userCredential.user;
+        if (user != null) {
+          authuserId = user.uid;
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .set({
+            'coverimag': event.usermodel.coverimag,
+            'name': event.usermodel.name,
+            'phone': event.usermodel.phone,
+            'gender': event.usermodel.gender,
+            'age': event.usermodel.age,
+            'email': event.usermodel.email,
+            'password': event.usermodel.password,
+            'id': user.uid,
+          });
+        }
+        emit(Authenticated(userCredential.user!.uid));
+      } catch (e) {
+        emit(AuthenticateError(e.toString()));
+      }
+    });
+
+    on<FetchUserEvent>((event, emit) async {
+      emit(Userdataloading());
+
+      try {
+        final String userId = await getUserId();
+
+        DocumentSnapshot userDoc =
+            await _firestore.collection('users').doc(userId).get();
+        if (userDoc.exists) {
+          emit(UserFetched(userDoc as Map<String, dynamic>));
+        } else {
+          emit(AuthenticateError('User not found'));
+        }
+      } catch (e) {
+        emit(AuthenticateError(e.toString()));
+      }
+    });
   }
-  
 }

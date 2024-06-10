@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:doc2heal/presentation/bloc/profile_bloc/profile_bloc.dart';
 import 'package:doc2heal/utils/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -66,20 +64,24 @@ class ProfileAvathar extends StatelessWidget {
                       ],
                       color: Appcolor.primaryColor,
                       borderRadius: BorderRadius.circular(10)),
-                  child: IconButton(
-                      onPressed: () async {
-                        final image = await ImagePicker()
-                            .pickImage(source: ImageSource.gallery);
-                        if (image != null) {
-                          context
-                              .read<ProfileBloc>()
-                              .add(PicUserImgEvent(profilepath: image.path));
-                        } else {}
-                      },
-                      icon: const Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                      )),
+                  child: BlocBuilder<ProfileBloc, ProfileState>(
+                    builder: (context, state) {
+                      return IconButton(
+                          onPressed: () async {
+                            final image = await ImagePicker()
+                                .pickImage(source: ImageSource.gallery);
+                            if (image != null) {
+                              // ignore: use_build_context_synchronously
+                              context.read<ProfileBloc>().add(
+                                  PicUserImgEvent(profilepath: image.path));
+                            }
+                          },
+                          icon: const Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                          ));
+                    },
+                  ),
                 ),
               )
             ],

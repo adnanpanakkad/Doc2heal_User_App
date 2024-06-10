@@ -21,3 +21,10 @@ class AuthenticateError extends AuthBlocState {
 }
 
 class UnAuthenticated extends AuthBlocState {}
+
+class UserFetched extends AuthBlocState {
+  final Map<String, dynamic> userData;
+  UserFetched(this.userData);
+}
+class Userdataloading extends AuthBlocState {}
+

@@ -20,6 +20,7 @@ class BottombarScreensState extends State<BottombarScreens> {
     const ScheduleScreen(),
     const MessageScreen(),
     const ProfileScreen(
+      userData: {},
       uid: '',
     ),
   ];

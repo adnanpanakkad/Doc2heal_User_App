@@ -20,3 +20,8 @@ class Singupevent extends AuthBlocEvent {
 
 // Logout event
 class Logoutevent extends AuthBlocEvent {}
+
+class FetchUserEvent extends AuthBlocEvent {
+  final String userId;
+  FetchUserEvent(this.userId);
+}

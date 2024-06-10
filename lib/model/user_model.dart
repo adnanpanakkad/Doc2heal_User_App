@@ -1,5 +1,5 @@
 class UserModel {
- final String? coverimag;
+  final String? coverimag;
   final String name;
   final String phone;
   final String gender;
@@ -9,7 +9,7 @@ class UserModel {
   final String id;
 
   UserModel({
-    required this.coverimag,
+    this.coverimag,
     required this.name,
     required this.phone,
     required this.gender,

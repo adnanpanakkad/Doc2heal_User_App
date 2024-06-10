@@ -44,5 +44,6 @@ class UserRepository {
     final TaskSnapshot snapshot = await uploadTask.whenComplete(() {});
     final String imageUrl = await snapshot.ref.getDownloadURL();
     return imageUrl;
+    
   }
 }

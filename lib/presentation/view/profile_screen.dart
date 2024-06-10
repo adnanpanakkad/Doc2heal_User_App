@@ -9,8 +9,9 @@ import 'package:doc2heal/widgets/profile/detail_tile.dart';
 
 class ProfileScreen extends StatelessWidget {
   final String uid;
+  final Map<String, dynamic> userData;
 
-  const ProfileScreen({super.key, required this.uid});
+  const ProfileScreen({super.key, required this.uid, required this.userData});
 
   @override
   Widget build(BuildContext context) {
@@ -18,53 +19,55 @@ class ProfileScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Settings',
-                style: CustomTextStyle.highboldTxtStyle,
-              ),
-              const SizedBox(height: 20),
-              const DetailContainer(),
-              const SizedBox(height: 20),
-              const CenterContainer(),
-              CustomDetailCard(
-                boxcolor: Colors.purple,
-                iconcolor: Colors.white,
-                iconData: Icons.error,
-                iconButtonIcon: Icons.arrow_forward_ios,
-                text: 'About',
-                onTap: () {},
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'Account',
-                style: CustomTextStyle.buttonTextStyle,
-              ),
-              const SizedBox(height: 20),
-              CustomDetailCard(
-                iconcolor: Colors.red,
-                iconData: Icons.logout_outlined,
-                iconButtonIcon: Icons.arrow_forward_ios,
-                text: 'Logout',
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return CustomPopup(
-                        onTap: () {
-                          FirebaseAuth.instance.signOut();
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginScreen()));
-                        },
-                      );
-                    },
-                  );
-                },
-              ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Settings',
+                  style: CustomTextStyle.highboldTxtStyle,
+                ),
+                const SizedBox(height: 20),
+                DetailContainer(userData: userData),
+                const SizedBox(height: 20),
+                const CenterContainer(),
+                CustomDetailCard(
+                  boxcolor: Colors.purple,
+                  iconcolor: Colors.white,
+                  iconData: Icons.error,
+                  iconButtonIcon: Icons.arrow_forward_ios,
+                  text: 'About',
+                  onTap: () {},
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  'Account',
+                  style: CustomTextStyle.buttonTextStyle,
+                ),
+                const SizedBox(height: 20),
+                CustomDetailCard(
+                  iconcolor: Colors.red,
+                  iconData: Icons.logout_outlined,
+                  iconButtonIcon: Icons.arrow_forward_ios,
+                  text: 'Logout',
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CustomPopup(
+                          onTap: () {
+                            FirebaseAuth.instance.signOut();
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginScreen()));
+                          },
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
