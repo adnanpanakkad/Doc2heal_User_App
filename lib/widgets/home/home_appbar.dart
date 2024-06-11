@@ -34,7 +34,7 @@ class HomeAppBar extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Adnan',
+                        '',
                         style: TextStyle(
                           color: Color(0xFF1D1617),
                           fontSize: 14,

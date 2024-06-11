@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 class CustomTextfield extends StatelessWidget {
   const CustomTextfield({
     super.key,
-    this.controller,
+    required this.controller,
     required this.hintText,
     this.validation,
     this.suffixIcon,
     this.keyboardType,
     this.readOnly,
-    this.onChanged,  
+    this.onChanged,
   });
   final TextEditingController? controller;
   final Widget? suffixIcon;
@@ -23,7 +23,7 @@ class CustomTextfield extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: TextFormField(
         onChanged: onChanged,
         readOnly: readOnly ?? false,

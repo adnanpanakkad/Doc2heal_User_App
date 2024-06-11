@@ -1,3 +1,4 @@
+import 'package:doc2heal/widgets/common/appbar.dart';
 import 'package:flutter/material.dart';
 
 class CategoryScreen extends StatelessWidget {
@@ -7,9 +8,11 @@ class CategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Categories')),
-      body: const Center(child: Text('Category Screen')),
+    return const Scaffold(
+      appBar: PreferredSize(
+          preferredSize: Size(double.maxFinite, 70),
+          child: DeatialAppbar(text: 'Category Details')),
+      body: Center(child: Text('Category Screen')),
     );
   }
 }
