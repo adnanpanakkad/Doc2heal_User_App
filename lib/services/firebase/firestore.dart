@@ -30,6 +30,14 @@ class UserRepository {
     return _db.collection("doctor").snapshots();
   }
 
+  Stream<QuerySnapshot<Map<String, dynamic>>> getDoctorsBySpecialization(
+      String specialization) {
+    return _db
+        .collection("doctor")
+        .where('specialization', isEqualTo: specialization)
+        .snapshots();
+  }
+
   Future<String> getImageUrl(File imageFile) async {
     String uniqueName = DateTime.now().millisecond.toString();
     final Reference storageReference =

@@ -9,3 +9,8 @@ final class SucessfullyPicimageEvent extends ProfileState {
   SucessfullyPicimageEvent({required this.profilepath});
 }
 
+
+final class DatePickedState extends ProfileState {
+  final String pickedDate;
+  DatePickedState({required this.pickedDate});
+}

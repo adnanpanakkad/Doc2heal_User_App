@@ -1,3 +1,4 @@
+import 'package:doc2heal/presentation/view/category_list.dart';
 import 'package:doc2heal/presentation/view/category_screen.dart';
 import 'package:doc2heal/presentation/view/doctorlist_screen.dart';
 import 'package:doc2heal/widgets/home/carousel.dart';
@@ -15,7 +16,7 @@ class HomeScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.only(top: 25, left: 10, right: 15),
+        padding: const EdgeInsets.only(top: 25, left: 15, right: 15),
         child: Scaffold(
           body: Column(
             children: [
@@ -25,7 +26,7 @@ class HomeScreen extends StatelessWidget {
                 title: 'Categories',
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const CategoryScreen()));
+                      builder: (context) => const CategoryListScreen()));
                 },
               ),
               const HomeCategoryRow(),

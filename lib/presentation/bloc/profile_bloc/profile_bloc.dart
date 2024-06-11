@@ -13,6 +13,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   ProfileBloc() : super(ProfileInitial()) {
     on<PicUserImgEvent>(picUserImgEvent);
+    on<DatePickedEvent>(datePickEvent);
   }
   Future getUserId() async {
     User? user = FirebaseAuth.instance.currentUser;
@@ -31,5 +32,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     if (url.isNotEmpty) {
       emit(SucessfullyPicimageEvent(profilepath: url));
     }
+  }
+
+  FutureOr<void> datePickEvent(
+      DatePickedEvent event, Emitter<ProfileState> emit) async {
+    emit(DatePickedState(pickedDate: event.pickedDate));
   }
 }

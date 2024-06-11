@@ -4,12 +4,12 @@ import 'package:doc2heal/utils/app_colors.dart';
 
 class HomeCategoryAvatar extends StatelessWidget {
   final String imagePath;
-  final String? text;
+  final String? category;
 
   const HomeCategoryAvatar({
     super.key,
     required this.imagePath,
-    this.text,
+    this.category,
   });
 
   @override
@@ -17,7 +17,11 @@ class HomeCategoryAvatar extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => CategoryScreen()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => CategoryScreen(
+                      category: category!,
+                    )));
       },
       child: Column(
         children: [
@@ -38,8 +42,11 @@ class HomeCategoryAvatar extends StatelessWidget {
             ),
           ),
           Text(
-            text!,
-            style: TextStyle(fontSize: 16),
+            category!,
+            style: const TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),

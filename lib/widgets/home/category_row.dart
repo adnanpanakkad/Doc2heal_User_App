@@ -13,19 +13,19 @@ class HomeCategoryRow extends StatelessWidget {
       children: [
         HomeCategoryAvatar(
           imagePath: 'assets/heart.png',
-          text: 'cardio',
+          category: 'Cardiology',
         ),
         HomeCategoryAvatar(
           imagePath: 'assets/tooth.png',
-          text: 'dental',
+          category: 'Dental',
         ),
         HomeCategoryAvatar(
           imagePath: 'assets/eye.png',
-          text: 'ortho',
+          category: 'Ophthalmology',
         ),
         HomeCategoryAvatar(
           imagePath: 'assets/pediatrics.png',
-          text: 'pediatrics',
+          category: 'Pediatrics',
         ),
       ],
     );

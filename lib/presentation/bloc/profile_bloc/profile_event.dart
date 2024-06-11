@@ -7,4 +7,7 @@ class PicUserImgEvent extends ProfileEvent {
   PicUserImgEvent({required this.profilepath});
 }
 
-
+class DatePickedEvent extends ProfileEvent {
+  String pickedDate;
+  DatePickedEvent({required this.pickedDate});
+}
