@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doc2heal/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,6 +9,18 @@ class UserRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? user = FirebaseAuth.instance.currentUser;
   User? get authUser => _auth.currentUser;
+
+  Future<String> getcurrentuser() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      throw FirebaseAuthException(
+        code: 'user-not-authenticated',
+        message: 'User not authenticated',
+      );
+    }
+    return user.uid;
+  }
+
   Future<UserModel?> saveUserData(UserModel user, String id) async {
     try {
       await _db.collection("user").doc(id).set(user.toJson());

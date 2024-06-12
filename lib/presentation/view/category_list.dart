@@ -11,7 +11,6 @@ class CategoryListScreen extends StatelessWidget {
     {'imagePath': 'assets/eye.png', 'category': 'Ophthalmology'},
     {'imagePath': 'assets/pediatrics.png', 'category': 'Pediatrics'},
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,8 +47,8 @@ class CategoryListScreen extends StatelessWidget {
               ),
             ),
           );
-        },
-      ),
+        }
+      )
     );
   }
 }

@@ -69,4 +69,5 @@ class AuthenticationRepository {
       throw Exception('User Email Login Error: $e');
     }
   }
+
 }

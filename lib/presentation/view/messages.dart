@@ -42,7 +42,7 @@ class MessageScreen extends StatelessWidget {
                         return InkWell(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => ChatScreen()));
+                                builder: (context) => ChatScreen(reciverEmail: doctorData['email'], reciverID: '',)));
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),

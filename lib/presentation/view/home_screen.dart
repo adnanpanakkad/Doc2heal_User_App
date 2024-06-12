@@ -1,5 +1,4 @@
 import 'package:doc2heal/presentation/view/category_list.dart';
-import 'package:doc2heal/presentation/view/category_screen.dart';
 import 'package:doc2heal/presentation/view/doctorlist_screen.dart';
 import 'package:doc2heal/widgets/home/carousel.dart';
 import 'package:doc2heal/widgets/home/category_row.dart';
@@ -20,7 +19,7 @@ class HomeScreen extends StatelessWidget {
         child: Scaffold(
           body: Column(
             children: [
-              HomeAppBar(),
+              const HomeAppBar(),
               const CustomCarousel(),
               SectionTitle(
                 title: 'Categories',
@@ -37,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const DoctorsListScreen()));
                   }),
-              DoctorGrid(),
+              const DoctorGrid(),
             ],
           ),
         ),
