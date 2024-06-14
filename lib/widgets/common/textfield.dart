@@ -12,6 +12,7 @@ class CustomTextfield extends StatelessWidget {
     this.keyboardType,
     this.readOnly,
     this.onChanged,
+    this.focusNode,
   });
   final TextEditingController? controller;
   final Widget? suffixIcon;
@@ -20,11 +21,12 @@ class CustomTextfield extends StatelessWidget {
   final FormFieldValidator? validation;
   final bool? readOnly;
   final void Function(String)? onChanged;
+  final FocusNode? focusNode;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      child: TextFormField(
+      child: TextFormField(focusNode: focusNode,
         onChanged: onChanged,
         readOnly: readOnly ?? false,
         keyboardType: keyboardType,

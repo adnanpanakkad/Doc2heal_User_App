@@ -1,11 +1,9 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:doc2heal/presentation/bloc/profile_bloc/profile_bloc.dart';
 import 'package:doc2heal/razorpay.dart';
 import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/booking/booking_button.dart';
 import 'package:doc2heal/widgets/booking/date_time.dart';
 import 'package:doc2heal/widgets/common/appbar.dart';
-import 'package:doc2heal/widgets/common/button.dart';
 import 'package:doc2heal/widgets/common/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

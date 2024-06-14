@@ -1,3 +1,4 @@
+import 'package:doc2heal/presentation/view/editprofilr_screen.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -119,7 +120,8 @@ class CenterContainer extends StatelessWidget {
                         icon: const Icon(Icons.arrow_forward_ios_outlined,
                             size: 16), // End icon button
                         onPressed: () {
-                          print('IconButton pressed');
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => EditProfileScreen()));
                         },
                       ),
                     ],

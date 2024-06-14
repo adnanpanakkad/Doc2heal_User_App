@@ -2,9 +2,7 @@ import 'dart:developer';
 import 'package:doc2heal/presentation/view/bottombar_screens.dart';
 import 'package:doc2heal/presentation/view/login_screen.dart';
 import 'package:doc2heal/services/firebase/firestore.dart';
-import 'package:doc2heal/widgets/common/custom_snacbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthenticationRepository {

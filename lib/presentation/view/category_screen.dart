@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doc2heal/presentation/view/booking_screen.dart';
 import 'package:doc2heal/presentation/view/bottombar_screens.dart';
-import 'package:doc2heal/presentation/view/home_screen.dart';
 import 'package:doc2heal/services/firebase/firestore.dart';
 import 'package:doc2heal/widgets/common/appbar.dart';
 import 'package:flutter/material.dart';
