@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doc2heal/model/user_model.dart';
@@ -55,6 +56,8 @@ class UserRepository {
     final UploadTask uploadTask = storageReference.putFile(imageFile);
     final TaskSnapshot snapshot = await uploadTask.whenComplete(() {});
     final String imageUrl = await snapshot.ref.getDownloadURL();
+    log(imageUrl);
+   // await _db.collection("user").doc(userId).update({'coverimag': imageUrl});
     return imageUrl;
   }
 }

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doc2heal/services/firebase/firebase_chat.dart';
-import 'package:doc2heal/services/firebase/firestore.dart';
+import 'package:doc2heal/services/firebase/firesbase_database.dart';
 import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/chat/chat_bubble.dart';
 import 'package:doc2heal/widgets/common/appbar.dart';

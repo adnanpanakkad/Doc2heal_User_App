@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:doc2heal/services/firebase/firestore.dart';
+import 'package:doc2heal/services/firebase/firesbase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 part 'profile_event.dart';

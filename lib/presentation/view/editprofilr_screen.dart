@@ -1,3 +1,5 @@
+import 'package:doc2heal/widgets/common/appbar.dart';
+import 'package:doc2heal/widgets/common/button.dart';
 import 'package:doc2heal/widgets/common/textfield.dart';
 import 'package:flutter/material.dart';
 
@@ -6,108 +8,102 @@ class EditProfileScreen extends StatelessWidget {
 
   final TextEditingController userNameEditController = TextEditingController();
   final TextEditingController ageEditController = TextEditingController();
+  final TextEditingController genderEditController = TextEditingController();
   final TextEditingController phoneEditController = TextEditingController();
   ImageProvider? _imageProvider;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back_ios_new),
-        ),
-        title: const Text(
-          'Edit Profile',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: size.height * .04),
-              Stack(
-                children: [
-                  CircleAvatar(
-                    radius: 80,
-                    backgroundColor: const Color.fromARGB(255, 143, 189, 198),
-                    backgroundImage: _imageProvider,
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: size.width * .05,
-                    child: Container(
-                      height: size.height * .04,
-                      width: size.width * .08,
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: IconButton(
-                        onPressed: () {
-                          pickImage(context);
-                        },
-                        icon: const Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                          size: 18,
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+            preferredSize: Size(double.maxFinite, 70),
+            child: DeatialAppbar(
+                text: 'Edit Profile',
+                onTap: () {
+                  Navigator.pop(context);
+                })),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: size.height * .04),
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 70,
+                      backgroundColor: const Color.fromARGB(255, 143, 189, 198),
+                      backgroundImage: _imageProvider,
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: size.width * .05,
+                      child: Container(
+                        height: size.height * .04,
+                        width: size.width * .08,
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: IconButton(
+                          onPressed: () {
+                            pickImage(context);
+                          },
+                          icon: const Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                            size: 18,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: size.height * .02),
-              SizedBox(
-                height: size.height * .45,
-                child: Form(
-                  child: Column(
-                    children: [
-                      CustomTextfield(
-                        controller: phoneEditController,
-                        hintText: 'name',
-                      ),
-                      SizedBox(height: size.height * .02),
-                      CustomTextfield(
-                        controller: phoneEditController,
-                        hintText: 'age',
-                      ),
-                      SizedBox(height: size.height * .02),
-                      CustomTextfield(
-                        controller: phoneEditController,
-                        hintText: 'Phone Number',
-                      ),
-                    ],
-                  ),
+                  ],
                 ),
-              ),
-              SizedBox(height: size.height * .02),
-              ElevatedButton(
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all(
-                    BeveledRectangleBorder(
-                      borderRadius: BorderRadius.circular(3),
+                SizedBox(height: size.height * .02),
+                SizedBox(
+                  height: size.height * .45,
+                  child: Form(
+                    child: Column(
+                      children: [
+                        CustomTextfield(
+                          controller: userNameEditController,
+                          hintText: 'Name',
+                        ),
+                        SizedBox(height: size.height * .02),
+                        CustomTextfield(
+                          controller: ageEditController,
+                          hintText: 'Age',
+                        ),
+                        SizedBox(height: size.height * .02),
+                        CustomTextfield(
+                          controller: genderEditController,
+                          hintText: 'Gender',
+                        ),
+                        SizedBox(height: size.height * .02),
+                        CustomTextfield(
+                          controller: phoneEditController,
+                          hintText: 'Phone Number',
+                        ),
+                      ],
                     ),
                   ),
-                  minimumSize: MaterialStateProperty.all(
-                    Size(size.width * .9, size.height * .058),
+                ),
+                SizedBox(height: size.height * .02),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+                  child: CustomButton(
+                    text: 'Update',
+                    onTap: () {
+                      // Handle update action
+                    },
                   ),
                 ),
-                onPressed: () {
-                  // Action on button press
-                },
-                child: const Text('UPDATE'),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -143,20 +139,6 @@ class EditProfileScreen extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-
-  // Custom text field widget
-  Widget CustomTextField({
-    required TextEditingController controller,
-    required String label,
-  }) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: label,
-        border: OutlineInputBorder(),
-      ),
     );
   }
 }

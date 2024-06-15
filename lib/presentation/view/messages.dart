@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doc2heal/presentation/view/chat_screen.dart';
 import 'package:doc2heal/widgets/chat/appbar.dart';
 import 'package:flutter/material.dart';
-import 'package:doc2heal/services/firebase/firestore.dart';
+import 'package:doc2heal/services/firebase/firesbase_database.dart';
 
 class MessageScreen extends StatelessWidget {
   const MessageScreen({super.key});

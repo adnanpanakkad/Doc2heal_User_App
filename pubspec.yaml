@@ -45,7 +45,7 @@ dependencies:
   cloud_firestore: ^4.16.0
   google_sign_in: ^6.2.1
   flutter_facebook_auth: ^6.2.0
-  flutter_bloc: ^8.1.5
+  flutter_bloc: ^8.1.6
   bloc: ^8.1.4
   awesome_dialog: ^3.1.0
   firebase_storage: ^11.7.5

@@ -1,4 +1,4 @@
-import 'package:doc2heal/services/firebase/firestore.dart';
+import 'package:doc2heal/services/firebase/firesbase_database.dart';
 import 'package:doc2heal/utils/app_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -37,13 +37,13 @@ class DetailContainer extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(left: 10),
                 child: CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage(
-                      'assets/Ellipse 1.png'), // Replace with your image
-                ),
+                    radius: 50,
+                    backgroundImage: NetworkImage(
+                        '${userData['coverimag']}') // Replace with your image
+                    ),
               ),
               const SizedBox(width: 30),
               Column(

@@ -1,4 +1,5 @@
 import 'package:doc2heal/presentation/view/login_screen.dart';
+import 'package:doc2heal/utils/app_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -20,11 +21,13 @@ class CustomPopup extends StatelessWidget {
           style: TextStyle(color: Colors.black)),
       actions: [
         ElevatedButton(
-          child: const Text('Cancel', style: TextStyle(color: Colors.blue)),
+          child: const Text('Cancel',
+              style: TextStyle(color: Appcolor.primaryColor)),
           onPressed: () {
             Navigator.of(context).pop(); // Dismiss the dialog
           },
         ),
+        SizedBox(width: 20),
         ElevatedButton(
           child: const Text('Logout', style: TextStyle(color: Colors.red)),
           onPressed: () {
