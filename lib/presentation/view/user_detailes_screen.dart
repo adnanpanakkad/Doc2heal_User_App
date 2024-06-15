@@ -17,7 +17,6 @@ import 'package:google_fonts/google_fonts.dart';
 class SignupScreen extends StatelessWidget {
   SignupScreen({super.key});
 
-  File? seletedImage;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _genderController = TextEditingController();
@@ -30,6 +29,7 @@ class SignupScreen extends StatelessWidget {
   User? get authUser => _auth.currentUser;
   final List<String> items = ['None', 'Male', 'Female'];
   final String selectGender = 'None';
+  String imageUrl = "";
 
   @override
   Widget build(BuildContext context) {
@@ -147,33 +147,41 @@ class SignupScreen extends StatelessWidget {
             );
           },
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: Appcolor.primaryColor,
-          onPressed: () async {
-            if (formKey.currentState!.validate()) {
-              UserModel user = UserModel(
-                name: _nameController.text.trim(),
-                phone: _phoneController.text.trim(),
-                gender: _genderController.text.trim(),
-                age: _ageController.text.trim(),
-                email: _emailController.text.trim(),
-                password: _passwordController.text.trim(),
-              );
-              BlocProvider.of<AuthBloc>(context)
-                  .add(Singupevent(usermodel: user));
-              await Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => const BottombarScreens(),
-              ));
+        floatingActionButton: BlocBuilder<ProfileBloc, ProfileState>(
+          builder: (context, state) {
+            if (state is SucessfullyPicimageEvent) {
+              imageUrl = state.profilepath;
             }
+            return FloatingActionButton.extended(
+              backgroundColor: Appcolor.primaryColor,
+              onPressed: () async {
+                if (formKey.currentState!.validate()) {
+                  UserModel user = UserModel(
+                    coverimag: imageUrl,
+                    name: _nameController.text.trim(),
+                    phone: _phoneController.text.trim(),
+                    gender: _genderController.text.trim(),
+                    age: _ageController.text.trim(),
+                    email: _emailController.text.trim(),
+                    password: _passwordController.text.trim(),
+                  );
+                  BlocProvider.of<AuthBloc>(context)
+                      .add(Singupevent(usermodel: user));
+                  await Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const BottombarScreens(),
+                  ));
+                }
+              },
+              label: const SizedBox(
+                child: Row(
+                  children: [
+                    Text('Continue'),
+                    Icon(Icons.keyboard_arrow_right_outlined)
+                  ],
+                ),
+              ),
+            );
           },
-          label: const SizedBox(
-            child: Row(
-              children: [
-                Text('Continue'),
-                Icon(Icons.keyboard_arrow_right_outlined)
-              ],
-            ),
-          ),
         ),
       ),
     );
