@@ -1,4 +1,6 @@
 import 'package:doc2heal/presentation/view/editprofilr_screen.dart';
+import 'package:doc2heal/presentation/view/privecy_policy_screen.dart';
+import 'package:doc2heal/presentation/view/terms_contition_screen.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -54,7 +56,9 @@ class CenterContainer extends StatelessWidget {
                           size: 16,
                         ), // End icon button
                         onPressed: () {
-                          print('IconButton pressed');
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const PrivacyPolicyScreen(),
+                          ));
                         },
                       ),
                     ],
@@ -87,6 +91,10 @@ class CenterContainer extends StatelessWidget {
                         icon: const Icon(Icons.arrow_forward_ios_outlined,
                             size: 16), // End icon button
                         onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                const TermsAndConditionsScreen(),
+                          ));
                           print('IconButton pressed');
                         },
                       ),

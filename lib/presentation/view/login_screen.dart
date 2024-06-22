@@ -1,5 +1,5 @@
 import 'package:doc2heal/presentation/bloc/auth_bloc/auth_bloc.dart';
-import 'package:doc2heal/presentation/view/user_detailes_screen.dart';
+import 'package:doc2heal/presentation/view/signup_screen.dart';
 import 'package:doc2heal/presentation/view/bottombar_screens.dart';
 import 'package:doc2heal/services/network.dart';
 import 'package:doc2heal/widgets/common/custom_snacbar.dart';

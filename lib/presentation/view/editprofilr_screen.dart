@@ -1,6 +1,7 @@
 import 'package:doc2heal/widgets/common/appbar.dart';
 import 'package:doc2heal/widgets/common/button.dart';
 import 'package:doc2heal/widgets/common/textfield.dart';
+import 'package:doc2heal/widgets/common/validator.dart';
 import 'package:flutter/material.dart';
 
 class EditProfileScreen extends StatelessWidget {
@@ -10,6 +11,7 @@ class EditProfileScreen extends StatelessWidget {
   final TextEditingController ageEditController = TextEditingController();
   final TextEditingController genderEditController = TextEditingController();
   final TextEditingController phoneEditController = TextEditingController();
+  final GlobalKey<FormState> editkey = GlobalKey<FormState>();
   ImageProvider? _imageProvider;
 
   @override
@@ -27,82 +29,82 @@ class EditProfileScreen extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: size.height * .04),
-                Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 70,
-                      backgroundColor: const Color.fromARGB(255, 143, 189, 198),
-                      backgroundImage: _imageProvider,
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      right: size.width * .05,
-                      child: Container(
-                        height: size.height * .04,
-                        width: size.width * .08,
-                        decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: IconButton(
-                          onPressed: () {
-                            pickImage(context);
-                          },
-                          icon: const Icon(
-                            Icons.edit,
-                            color: Colors.white,
-                            size: 18,
+            child: Form(
+              key: editkey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: size.height * .04),
+                  Stack(
+                    children: [
+                      CircleAvatar(
+                        radius: 70,
+                        backgroundColor: const Color.fromARGB(255, 143, 189, 198),
+                        backgroundImage: _imageProvider,
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: size.width * .05,
+                        child: Container(
+                          height: size.height * .04,
+                          width: size.width * .08,
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: IconButton(
+                            onPressed: () {
+                              pickImage(context);
+                            },
+                            icon: const Icon(
+                              Icons.edit,
+                              color: Colors.white,
+                              size: 18,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: size.height * .02),
-                SizedBox(
-                  height: size.height * .45,
-                  child: Form(
-                    child: Column(
-                      children: [
-                        CustomTextfield(
-                          controller: userNameEditController,
-                          hintText: 'Name',
-                        ),
-                        SizedBox(height: size.height * .02),
-                        CustomTextfield(
-                          controller: ageEditController,
-                          hintText: 'Age',
-                        ),
-                        SizedBox(height: size.height * .02),
-                        CustomTextfield(
-                          controller: genderEditController,
-                          hintText: 'Gender',
-                        ),
-                        SizedBox(height: size.height * .02),
-                        CustomTextfield(
-                          controller: phoneEditController,
-                          hintText: 'Phone Number',
-                        ),
-                      ],
+                    ],
+                  ),
+                  SizedBox(height: size.height * .02),
+                  CustomTextfield(
+                    validation: (value) => Validator().textFeildValidation(value),
+                    controller: userNameEditController,
+                    hintText: 'Name',
+                  ),
+                  SizedBox(height: size.height * .02),
+                  CustomTextfield(
+                    validation: (value) => Validator().textFeildValidation(value),
+                    controller: ageEditController,
+                    hintText: 'Age',
+                  ),
+                  SizedBox(height: size.height * .02),
+                  CustomTextfield(
+                    validation: (value) => Validator().textFeildValidation(value),
+                    controller: genderEditController,
+                    hintText: 'Gender',
+                  ),
+                  SizedBox(height: size.height * .02),
+                  CustomTextfield(
+                    validation: (value) => Validator().textFeildValidation(value),
+                    controller: phoneEditController,
+                    hintText: 'Phone Number',
+                  ),
+                  SizedBox(height: size.height * .02),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+                    child: CustomButton(
+                      text: 'Update',
+                      onTap: () {
+                        if (editkey.currentState!.validate()) {
+                          // Handle update action
+                          // You might want to save the updated user data here
+                        }
+                      },
                     ),
                   ),
-                ),
-                SizedBox(height: size.height * .02),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
-                  child: CustomButton(
-                    text: 'Update',
-                    onTap: () {
-                      // Handle update action
-                    },
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

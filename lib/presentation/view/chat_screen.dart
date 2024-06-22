@@ -5,6 +5,7 @@ import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/chat/chat_bubble.dart';
 import 'package:doc2heal/widgets/common/appbar.dart';
 import 'package:doc2heal/widgets/common/textfield.dart';
+import 'package:doc2heal/widgets/common/validator.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {

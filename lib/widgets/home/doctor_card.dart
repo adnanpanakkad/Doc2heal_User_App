@@ -34,7 +34,7 @@ class DoctorGrid extends StatelessWidget {
             final doctor = doctorDocs[index].data() as Map<String, dynamic>;
             final doctorName = 'Dr. ${(doctor['name'] ?? 'Doctor Name')}';
             final category = doctor['specialization'] ?? 'Category';
-            final imageUrl = doctor['imageUrl'] ??
+            final imageUrl = doctor['doctorimg'] ??
                 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVAAtEKf0r5SivJpR8Ek-crrJ3fWtSMknuzg&s';
 
             return InkWell(

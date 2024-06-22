@@ -26,7 +26,9 @@ class CustomTextfield extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      child: TextFormField(focusNode: focusNode,
+      child: TextFormField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        focusNode: focusNode,
         onChanged: onChanged,
         readOnly: readOnly ?? false,
         keyboardType: keyboardType,

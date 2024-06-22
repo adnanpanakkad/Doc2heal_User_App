@@ -1,3 +1,4 @@
+import 'package:doc2heal/presentation/view/about_us_screen.dart';
 import 'package:doc2heal/widgets/profile/detail-continer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,11 @@ class ProfileScreen extends StatelessWidget {
                   iconData: Icons.error,
                   iconButtonIcon: Icons.arrow_forward_ios,
                   text: 'About',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const AboutUsScreen(),
+                    ));
+                  },
                 ),
                 const SizedBox(height: 20),
                 const Text(

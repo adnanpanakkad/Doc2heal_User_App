@@ -42,7 +42,10 @@ class MessageScreen extends StatelessWidget {
                         return InkWell(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => ChatScreen(reciverEmail: doctorData['email'], reciverID: '',)));
+                                builder: (context) => ChatScreen(
+                                      reciverEmail: doctorData['email'],
+                                      reciverID: '',
+                                    )));
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
@@ -51,7 +54,7 @@ class MessageScreen extends StatelessWidget {
                                 CircleAvatar(
                                   radius: 20,
                                   backgroundImage: NetworkImage(
-                                      doctorData['imagepath'] ?? ''),
+                                      doctorData['doctorimg'] ?? ''),
                                 ),
                                 const SizedBox(width: 16),
                                 Expanded(

@@ -59,7 +59,7 @@ class CategoryScreen extends StatelessWidget {
                       CircleAvatar(
                         radius: 20,
                         backgroundImage:
-                            NetworkImage(doctorData['imagepath'] ?? ''),
+                            NetworkImage(doctorData['doctorimg'] ?? ''),
                       ),
                       const SizedBox(width: 16),
                       Expanded(
