@@ -38,15 +38,6 @@ class RazorPay {
 
   void _handlePaymentSuccess(
       BuildContext context, PaymentSuccessResponse response) async {
-    // Fluttertoast.showToast(
-    //   msg: "Success Payment: ${response.paymentId}",
-    //   toastLength: Toast.LENGTH_LONG,
-    //   gravity: ToastGravity.CENTER,
-    //   timeInSecForIosWeb: 4,
-    //   backgroundColor: Colors.green,
-    //   textColor: Colors.white,
-    //   fontSize: 16.0,
-    // );
     await archivePopup(context);
   }
 

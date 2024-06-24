@@ -13,13 +13,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 25, left: 15, right: 15),
+    return Padding(
+      padding: const EdgeInsets.only(top: 25, left: 15, right: 15),
+      child: SafeArea(
         child: Scaffold(
+          backgroundColor: Colors.white54,
           body: Column(
             children: [
-              const HomeAppBar(),
+              HomeAppBar(),
               const CustomCarousel(),
               SectionTitle(
                 title: 'Categories',
@@ -29,7 +30,7 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
               const HomeCategoryRow(),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               SectionTitle(
                   title: 'Doctors',
                   onTap: () {

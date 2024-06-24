@@ -14,3 +14,8 @@ final class DatePickedState extends ProfileState {
   final String pickedDate;
   DatePickedState({required this.pickedDate});
 }
+class TimeSlotSelectedState extends ProfileState {
+  final String selectedTimeSlot;
+
+  TimeSlotSelectedState({required this.selectedTimeSlot});
+}

@@ -19,6 +19,6 @@ class DatePickerFun {
       selectedDate = pickerDate;
       context.read<ProfileBloc>().add(
           DatePickedEvent(pickedDate: DateFormat.yMd().format(selectedDate)));
-    } 
+    }
   }
 }

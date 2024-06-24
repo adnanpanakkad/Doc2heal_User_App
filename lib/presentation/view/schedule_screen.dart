@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:doc2heal/utils/app_text_styles.dart'; // Ensure this path is correct
+import 'package:doc2heal/utils/app_text_styles.dart'; 
 
 class ScheduleScreen extends StatelessWidget {
-  const ScheduleScreen({super.key}); // Corrected constructor call
+  const ScheduleScreen({super.key}); 
 
   @override
   Widget build(BuildContext context) {

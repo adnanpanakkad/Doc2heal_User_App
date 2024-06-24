@@ -68,22 +68,24 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-          preferredSize: Size(double.maxFinite, 70),
-          child: DeatialAppbar(
-            text: widget.reciverEmail,
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-          )),
-      body: Column(
-        children: [
-          Expanded(
-            child: _buildMessageList(),
-          ),
-          buildUserinput(),
-        ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+            preferredSize: Size(double.maxFinite, 70),
+            child: DeatialAppbar(
+              text: widget.reciverEmail,
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+            )),
+        body: Column(
+          children: [
+            Expanded(
+              child: _buildMessageList(),
+            ),
+            buildUserinput(),
+          ],
+        ),
       ),
     );
   }

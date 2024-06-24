@@ -32,7 +32,8 @@ class DoctorGrid extends StatelessWidget {
           itemCount: 2,
           itemBuilder: (context, index) {
             final doctor = doctorDocs[index].data() as Map<String, dynamic>;
-            final doctorName = 'Dr. ${(doctor['name'] ?? 'Doctor Name')}';
+            final doctorName =
+                'Dr. ${doctor['name'][0].toUpperCase() + doctor['name'].substring(1)}';
             final category = doctor['specialization'] ?? 'Category';
             final imageUrl = doctor['doctorimg'] ??
                 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVAAtEKf0r5SivJpR8Ek-crrJ3fWtSMknuzg&s';
@@ -46,18 +47,25 @@ class DoctorGrid extends StatelessWidget {
                         )));
               },
               child: Card(
+                elevation: 5,
+                color: Colors.white,
                 child: Column(
                   children: [
-                    Container(
-                      child: Image.network(
-                        imageUrl,
-                        fit: BoxFit.contain,
-                        height: 180,
+                    Padding(
+                      padding: EdgeInsets.only(top: 5),
+                      child: Container(
+                        decoration: BoxDecoration(),
+                        child: Image.network(
+                          width: 150,
+                          imageUrl,
+                          fit: BoxFit.cover,
+                          height: 180,
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 5),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(5.0),
                       child: Text(
                         doctorName,
                         style: const TextStyle(

@@ -36,6 +36,7 @@ class BottombarScreensState extends State<BottombarScreens> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: IndexedStack(
         index: currentIndex,
         children: _pages,
