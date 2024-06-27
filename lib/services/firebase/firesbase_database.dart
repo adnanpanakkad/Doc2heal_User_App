@@ -1,7 +1,8 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:doc2heal/model/schedule_model.dart';
+import 'package:doc2heal/model/doctor_model.dart';
+import 'package:doc2heal/model/appoinment_model.dart';
 import 'package:doc2heal/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -58,17 +59,17 @@ class UserRepository {
     final TaskSnapshot snapshot = await uploadTask.whenComplete(() {});
     final String imageUrl = await snapshot.ref.getDownloadURL();
     log(imageUrl);
-    // await _db.collection("user").doc(userId).update({'coverimag': imageUrl});
     return imageUrl;
   }
 
-  //Apoinments
-  Future<ScheduleModel?> setAppoinment(
-      ScheduleModel schedule, String id) async {
+  Future<DoctorsModel?> getDoctorById(String id) async {
     try {
-      await _db.collection("appoinments").doc(id).set(schedule.toMap());
-    } catch (e) {
-      throw 'not saved';
+      final docSnapshot = await _db.collection('doctor').doc(id).get();
+      if (docSnapshot.exists) {
+        return DoctorsModel.fromSnapshot(docSnapshot);
+      }
+    } catch (error) {
+      log('Error fetching user by ID: $error');
     }
     return null;
   }

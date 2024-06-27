@@ -5,10 +5,13 @@ import 'package:doc2heal/widgets/home/category_row.dart';
 import 'package:doc2heal/widgets/home/doctor_card.dart';
 import 'package:doc2heal/widgets/home/home_appbar.dart';
 import 'package:doc2heal/widgets/home/section_title.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final String uid;
+  final Map<String, dynamic> userData;
+  const HomeScreen({super.key, required this.uid, required this.userData});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,19 @@ class HomeScreen extends StatelessWidget {
           backgroundColor: Colors.white54,
           body: Column(
             children: [
-              HomeAppBar(),
+               StreamBuilder<User?>(
+                  stream: FirebaseAuth.instance.authStateChanges(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    }
+                    if (snapshot.hasData && snapshot.data != null) {
+                      return HomeAppBar();
+                    } else {
+                      return const Text('User not logged in');
+                    }
+                  },
+                ),
               const CustomCarousel(),
               SectionTitle(
                 title: 'Categories',

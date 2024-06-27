@@ -75,13 +75,13 @@ class HomeAppBar extends StatelessWidget {
                             size: 30,
                           ),
                         ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.favorite_border_rounded,
-                            size: 28,
-                          ),
-                        ),
+                        // IconButton(
+                        //   onPressed: () {},
+                        //   icon: const Icon(
+                        //     Icons.favorite_border_rounded,
+                        //     size: 28,
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

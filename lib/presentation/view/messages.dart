@@ -43,7 +43,7 @@ class MessageScreen extends StatelessWidget {
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => ChatScreen(
-                                      reciverEmail: doctorData['email'],
+                                      reciverEmail: doctorData['name'],
                                       reciverID: '',
                                     )));
                           },

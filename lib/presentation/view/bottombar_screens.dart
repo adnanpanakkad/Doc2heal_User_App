@@ -16,7 +16,10 @@ class BottombarScreens extends StatefulWidget {
 class BottombarScreensState extends State<BottombarScreens> {
   var currentIndex = 0;
   final List<Widget> _pages = [
-    const HomeScreen(),
+    const HomeScreen(
+      uid: '',
+      userData: {},
+    ),
     const ScheduleScreen(),
     const MessageScreen(),
     const ProfileScreen(

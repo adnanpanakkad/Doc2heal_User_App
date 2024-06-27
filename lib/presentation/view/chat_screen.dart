@@ -5,7 +5,6 @@ import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/chat/chat_bubble.dart';
 import 'package:doc2heal/widgets/common/appbar.dart';
 import 'package:doc2heal/widgets/common/textfield.dart';
-import 'package:doc2heal/widgets/common/validator.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -34,10 +33,10 @@ class _ChatScreenState extends State<ChatScreen> {
     senderID = userepo.getcurrentuser();
     myfocusNode.addListener(() {
       if (myfocusNode.hasFocus) {
-        Future.delayed(Duration(milliseconds: 500), () => scrollDown());
+        Future.delayed(const Duration(milliseconds: 500), () => scrollDown());
       }
     });
-    Future.delayed(Duration(milliseconds: 500), () => scrollDown());
+    Future.delayed(const Duration(milliseconds: 500), () => scrollDown());
   }
 
   @override
@@ -48,12 +47,12 @@ class _ChatScreenState extends State<ChatScreen> {
     super.dispose();
   }
 
-  ScrollController _scrollcontroller = ScrollController();
+  final ScrollController _scrollcontroller = ScrollController();
 
   void scrollDown() {
     _scrollcontroller.animateTo(
       _scrollcontroller.position.maxScrollExtent,
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
       curve: Curves.fastOutSlowIn,
     );
   }
@@ -71,7 +70,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
-            preferredSize: Size(double.maxFinite, 70),
+            preferredSize: const Size(double.maxFinite, 70),
             child: DeatialAppbar(
               text: widget.reciverEmail,
               onTap: () {
@@ -135,8 +134,6 @@ class _ChatScreenState extends State<ChatScreen> {
             ChatBubble(message: data['message'], isCurrentUser: isCurrentUser)
           ],
         ));
-
-    // Adjust according to your message structure
   }
 
   Widget buildUserinput() {

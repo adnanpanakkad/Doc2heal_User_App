@@ -13,6 +13,7 @@ class DoctorsModel {
   final String? fees;
   final String? starttime;
   final String? endtime;
+  final String? uid;
 
   DoctorsModel({
     required this.doctorimg,
@@ -27,6 +28,7 @@ class DoctorsModel {
     required this.fees,
     this.starttime,
     this.endtime,
+    this.uid,
   });
 
   // Factory constructor to create UserModel from JSON data
@@ -47,6 +49,7 @@ class DoctorsModel {
       fees: data?['fees'] ?? '',
       starttime: data?['starttime'] ?? '',
       endtime: data?['endtime'] ?? '',
+      uid: data?['uid'] ?? '',
     );
   }
 
@@ -79,6 +82,7 @@ class DoctorsModel {
       'fees': fees,
       'starttime': starttime,
       'endtime': endtime,
+      'uid': uid,
     };
   }
 }
