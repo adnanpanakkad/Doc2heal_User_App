@@ -1,3 +1,4 @@
+import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -27,11 +28,11 @@ class SectionTitle extends StatelessWidget {
                 children: [
                   Text(
                     'seeall',
-                    style: TextStyle(color: Colors.blue),
+                    style: TextStyle(color: Appcolor.primaryColor),
                   ),
                   Icon(
-                    Icons.arrow_circle_right_outlined,
-                    color: Colors.blue,
+                    Icons.arrow_forward_ios_outlined,
+                    color: Appcolor.primaryColor,
                     size: 16.0,
                   ),
                 ],

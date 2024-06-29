@@ -1,5 +1,6 @@
 import 'package:doc2heal/presentation/view/category_list.dart';
 import 'package:doc2heal/presentation/view/doctorlist_screen.dart';
+import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/home/carousel.dart';
 import 'package:doc2heal/widgets/home/category_row.dart';
 import 'package:doc2heal/widgets/home/doctor_card.dart';
@@ -15,28 +16,28 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Padding(
-      padding: const EdgeInsets.only(top: 25, left: 15, right: 15),
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.white54,
-          body: Column(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Appcolor.lightbackground,
+        body: Padding(
+          padding: const EdgeInsets.only(top: 25, left: 15, right: 15),
+          child: Column(
             children: [
-               StreamBuilder<User?>(
-                  stream: FirebaseAuth.instance.authStateChanges(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    }
-                    if (snapshot.hasData && snapshot.data != null) {
-                      return HomeAppBar();
-                    } else {
-                      return const Text('User not logged in');
-                    }
-                  },
-                ),
+              StreamBuilder<User?>(
+                stream: FirebaseAuth.instance.authStateChanges(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  }
+                  if (snapshot.hasData && snapshot.data != null) {
+                    return HomeAppBar();
+                  } else {
+                    return const Text('User not logged in');
+                  }
+                },
+              ),
               const CustomCarousel(),
+              const SizedBox(height: 10),
               SectionTitle(
                 title: 'Categories',
                 onTap: () {

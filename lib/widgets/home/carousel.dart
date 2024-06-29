@@ -10,6 +10,7 @@ class CustomCarousel extends StatelessWidget {
       children: [
         CarouselSlider(
           options: CarouselOptions(
+            height: 160,
             animateToClosest: true,
             autoPlayCurve: Curves.easeIn,
             aspectRatio: 2.0,
@@ -19,11 +20,13 @@ class CustomCarousel extends StatelessWidget {
           ),
           items: [
             Container(
+              width: double.infinity,
               decoration: BoxDecoration(
+                border: Border.all(color: Colors.black12),
                 borderRadius: BorderRadius.circular(20),
                 image: const DecorationImage(
-                  image: NetworkImage(
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXFqXO2nFAxGgTn8Lzg0mNpZxXD8FhMn6wbA&s',
+                  image: AssetImage(
+                    'assets/Blue And Green Modern Pharmacy Banner (3).png',
                   ),
                   fit: BoxFit.fill,
                 ),
@@ -31,10 +34,11 @@ class CustomCarousel extends StatelessWidget {
             ),
             Container(
               decoration: BoxDecoration(
+                border: Border.all(color: Colors.black12),
                 borderRadius: BorderRadius.circular(20),
                 image: const DecorationImage(
-                  image: NetworkImage(
-                    'https://cdn.dribbble.com/users/7541902/screenshots/17912507/media/3786ac1fc4fffcc009d1d8fb47c556b6.jpg?resize=400x0',
+                  image: AssetImage(
+                    'assets/Blue And Green Modern Pharmacy Banner (2).png',
                   ),
                   fit: BoxFit.fill,
                 ),
@@ -42,10 +46,11 @@ class CustomCarousel extends StatelessWidget {
             ),
             Container(
               decoration: BoxDecoration(
+                border: Border.all(color: Colors.black12),
                 borderRadius: BorderRadius.circular(20),
                 image: const DecorationImage(
-                  image: NetworkImage(
-                    'https://img.freepik.com/premium-psd/medical-social-media-facebook-cover-web-banner-template_220159-141.jpg',
+                  image: AssetImage(
+                    'assets/Blue And Green Modern Pharmacy Banner (1).png',
                   ),
                   fit: BoxFit.fill,
                 ),

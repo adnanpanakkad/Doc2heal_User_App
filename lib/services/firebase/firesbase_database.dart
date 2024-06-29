@@ -32,13 +32,13 @@ class UserRepository {
     }
     return null;
   }
-
+  
   Stream<Map<String, dynamic>> getUserDetails(String userId) {
     return _db.collection('users').doc(userId).snapshots().map((snapshot) {
       return snapshot.data() as Map<String, dynamic>;
     });
   }
-
+  
   Stream<QuerySnapshot<Map<String, dynamic>>> getDoctors() {
     return _db.collection("doctor").snapshots();
   }
@@ -73,4 +73,6 @@ class UserRepository {
     }
     return null;
   }
+
+  
 }

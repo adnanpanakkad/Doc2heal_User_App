@@ -1,16 +1,12 @@
-import 'dart:math';
-import 'package:doc2heal/model/user_model.dart';
 import 'package:doc2heal/services/firebase/firebase_appoinment.dart';
+import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-
 import 'package:doc2heal/model/appoinment_model.dart';
 import 'package:doc2heal/presentation/bloc/profile_bloc/profile_bloc.dart';
-import 'package:doc2heal/presentation/view/bottombar_screens.dart';
 import 'package:doc2heal/razorpay.dart';
-import 'package:doc2heal/services/firebase/firesbase_database.dart';
 import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/booking/booking_button.dart';
 import 'package:doc2heal/widgets/booking/date_time.dart';
@@ -39,6 +35,7 @@ class BookingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Appcolor.lightbackground,
         appBar: PreferredSize(
           preferredSize: const Size(double.maxFinite, 70),
           child: DeatialAppbar(
@@ -57,13 +54,20 @@ class BookingScreen extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundImage: doctorData != null &&
-                                doctorData!['doctorimg'] != null
-                            ? NetworkImage(doctorData!['doctorimg'])
-                            : AssetImage('assets/Ellipse 1.png')
-                                as ImageProvider,
+                      Card(
+                        elevation: 5,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            doctorData != null &&
+                                    doctorData!['doctorimg'] != null
+                                ? doctorData!['doctorimg']
+                                : 'assets/Ellipse 1.png',
+                            height: 150,
+                            width: 120,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                       const SizedBox(width: 16),
                       Column(
@@ -71,10 +75,7 @@ class BookingScreen extends StatelessWidget {
                         children: [
                           Text(
                             'Dr. ${doctorData!['name'][0].toUpperCase() + doctorData!['name'].substring(1)}',
-                            style: const TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: CustomTextStyle.buttonTextStyle,
                           ),
                           Text(
                             doctorData!['specialization'],
@@ -89,10 +90,7 @@ class BookingScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   const Text(
                     'About',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: CustomTextStyle.buttonTextStyle,
                   ),
                   const SizedBox(height: 8),
                   const Text(
@@ -103,11 +101,8 @@ class BookingScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   const Text(
-                    'Availability',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    'Date',
+                    style: CustomTextStyle.buttonTextStyle,
                   ),
                   BlocListener<ProfileBloc, ProfileState>(
                     listener: (context, state) {
@@ -142,7 +137,10 @@ class BookingScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const Text(
+                    'Time',
+                    style: CustomTextStyle.buttonTextStyle,
+                  ),
                   BlocBuilder<ProfileBloc, ProfileState>(
                     builder: (context, state) {
                       if (doctorData == null ||
@@ -150,13 +148,11 @@ class BookingScreen extends StatelessWidget {
                           doctorData!['endtime'] == null) {
                         return const Text('No available time slots.');
                       }
-
                       // Generate time slots from start time to end time
                       final timeSlots = _generateTimeSlots(
                         doctorData!['starttime'],
                         doctorData!['endtime'],
                       );
-
                       return GridView.count(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
@@ -205,9 +201,6 @@ class BookingScreen extends StatelessWidget {
                             time: selectedTimeSlot!,
                             reason: reasonController.text,
                           );
-
-                          print(
-                              'Attempting to save appointment: ${apoinment.toJson()}');
 
                           await AppoinmentServices().addAppointment(apoinment);
                           print('Appointment saved successfully');

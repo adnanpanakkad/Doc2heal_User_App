@@ -9,7 +9,7 @@ class HomeCategoryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         HomeCategoryAvatar(
           imagePath: 'assets/heart.png',
@@ -26,6 +26,10 @@ class HomeCategoryRow extends StatelessWidget {
         HomeCategoryAvatar(
           imagePath: 'assets/pediatrics.png',
           category: 'Pediatrics',
+        ),
+        HomeCategoryAvatar(
+          imagePath: 'assets/pregnant.png',
+          category: 'Gynecology',
         ),
       ],
     );

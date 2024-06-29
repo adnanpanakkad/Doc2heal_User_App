@@ -1,5 +1,8 @@
 import 'package:doc2heal/model/appoinment_model.dart';
+import 'package:doc2heal/model/doctor_model.dart';
 import 'package:doc2heal/services/firebase/firebase_appoinment.dart';
+import 'package:doc2heal/services/firebase/firesbase_database.dart';
+import 'package:doc2heal/widgets/schedule/schedule_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
@@ -29,10 +32,15 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     }
   }
 
+  Future<DoctorsModel?> _fetchDoctor(String docid) {
+    return UserRepository().getDoctorById(docid);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
           child: Column(
@@ -60,104 +68,32 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                         itemCount: appointments.length,
                         itemBuilder: (context, index) {
                           final appointment = appointments[index];
-                          return Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            elevation: 4,
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const Row(
-                                    children: [
-                                      CircleAvatar(
-                                        radius: 30,
-                                        backgroundImage: NetworkImage(
-                                            'https://via.placeholder.com/150'), // Replace with actual image URL
-                                      ),
-                                      SizedBox(width: 10),
-                                      Expanded(
-                                        // Wrap the Column widget with Expanded to prevent overflow issues
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Dr. Marcus Horizon',
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            Text('Cardiologist'),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 20),
-                                  const Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(Icons.calendar_today, size: 16),
-                                          SizedBox(width: 5),
-                                          Text('26/06/2022'),
-                                          SizedBox(width: 20),
-                                          Icon(Icons.access_time, size: 16),
-                                          SizedBox(width: 5),
-                                          Text('10:30 AM'),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(Icons.circle,
-                                              color: Colors.green, size: 12),
-                                          SizedBox(width: 5),
-                                          Text('Confirmed'),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 20),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          // Handle Cancel action
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          foregroundColor: Colors.black,
-                                          backgroundColor: Colors.grey[300],
-                                        ),
-                                        child: const Text('Cancel'),
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          // Handle Reschedule action
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          foregroundColor: Colors.white,
-                                          backgroundColor: Colors.green,
-                                        ),
-                                        child: const Text('Reschedule'),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
+                          return FutureBuilder<DoctorsModel?>(
+                            future: _fetchDoctor(appointment.docid!),
+                            builder: (context, doctorSnapshot) {
+                              if (doctorSnapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              } else if (doctorSnapshot.hasError) {
+                                return const Center(
+                                    child: Text('Error loading doctor data'));
+                              } else if (!doctorSnapshot.hasData) {
+                                return const Center(
+                                    child: Text('Doctor not found'));
+                              } else {
+                                final doctor = doctorSnapshot.data!;
+                                return ScheduleCard(
+                                    docName: doctor.name,
+                                    docimgurl: doctor.doctorimg,
+                                    specialization: doctor.specialization,
+                                    time: appointment.time,
+                                    date: appointment.date);
+                              }
+                            },
                           );
                         },
-                        
                       );
-                      
                     }
                   },
                 ),

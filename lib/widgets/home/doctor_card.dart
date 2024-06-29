@@ -59,7 +59,7 @@ class DoctorGrid extends StatelessWidget {
                           width: 150,
                           imageUrl,
                           fit: BoxFit.cover,
-                          height: 180,
+                          height: 185,
                         ),
                       ),
                     ),

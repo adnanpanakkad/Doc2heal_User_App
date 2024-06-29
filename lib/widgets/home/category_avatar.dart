@@ -25,17 +25,21 @@ class HomeCategoryAvatar extends StatelessWidget {
       },
       child: Column(
         children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: Appcolor.primaryColor,
-            child: ClipOval(
-              child: Center(
-                child: SizedBox(
-                  width: 40,
-                  height: 47,
-                  child: Image.asset(
-                    imagePath,
-                    fit: BoxFit.contain,
+          Card(
+            elevation: 5,
+            color: Appcolor.primaryColor,
+            child: CircleAvatar(
+              radius: 30,
+              backgroundColor: Appcolor.primaryColor,
+              child: ClipOval(
+                child: Center(
+                  child: SizedBox(
+                    width: 40,
+                    height: 47,
+                    child: Image.asset(
+                      imagePath,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
               ),
