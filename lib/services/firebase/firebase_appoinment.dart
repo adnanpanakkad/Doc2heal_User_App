@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doc2heal/model/appoinment_model.dart';
+import 'package:doc2heal/widgets/schedule/shimmer_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AppoinmentServices {
@@ -22,8 +23,10 @@ class AppoinmentServices {
   }
 
   Future<List<AppointmentModel>> getUserAppointments(String userId) async {
-    final querySnapshot =
-        await appointment.where('uid', isEqualTo: userId).get();
+    final querySnapshot = await appointment
+        .where('uid', isEqualTo: userId)
+        .where('status', isEqualTo: false)
+        .get();
     return querySnapshot.docs.map((doc) => doc.data()).toList();
   }
 
@@ -72,9 +75,26 @@ class AppoinmentServices {
 
   Future<List<AppointmentModel>> getCanceledAppointments(String userId) async {
     final querySnapshot = await appointment
-        .where('userId', isEqualTo: userId)
-        .where('status', isEqualTo: 'canceled')
+        .where('uid', isEqualTo: userId)
+        .where('status', isEqualTo: true)
         .get();
     return querySnapshot.docs.map((doc) => doc.data()).toList();
+  }
+
+  Future<List<AppointmentModel>> getAppointmentsByDoctorId(
+      String doctorId) async {
+    final querySnapshot =
+        await appointment.where('docid', isEqualTo: doctorId).get();
+    return querySnapshot.docs.map((doc) => doc.data()).toList();
+  }
+
+  Future<void> updateAppointmentField(
+      String appointmentId, bool? newValue) async {
+    try {
+      await appointment.doc(appointmentId).update({'status': newValue!});
+      print("Appointment field updated successfully");
+    } catch (e) {
+      print("Error updating appointment field: $e");
+    }
   }
 }

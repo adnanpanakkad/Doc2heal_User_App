@@ -3,18 +3,19 @@ import 'package:doc2heal/model/doctor_model.dart';
 import 'package:doc2heal/services/firebase/firebase_appoinment.dart';
 import 'package:doc2heal/services/firebase/firesbase_database.dart';
 import 'package:doc2heal/widgets/schedule/schedule_card.dart';
+import 'package:doc2heal/widgets/schedule/shimmer_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:doc2heal/utils/app_text_styles.dart';
+import 'package:intl/intl.dart';
 
-class ScheduleScreen extends StatefulWidget {
-  const ScheduleScreen({super.key});
+class CompletedScreen extends StatefulWidget {
+  const CompletedScreen({super.key});
 
   @override
-  _ScheduleScreenState createState() => _ScheduleScreenState();
+  _CompletedScreenState createState() => _CompletedScreenState();
 }
 
-class _ScheduleScreenState extends State<ScheduleScreen> {
+class _CompletedScreenState extends State<CompletedScreen> {
   late Future<List<AppointmentModel>> _appointmentsFuture;
 
   @override
@@ -26,13 +27,23 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   void _fetchAppointments() {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      _appointmentsFuture = AppoinmentServices().getUserAppointments(user.uid);
+      _appointmentsFuture = AppoinmentServices()
+          .getCanceledAppointments(user.uid)
+          .then((appointments) {
+        DateTime now = DateTime.now();
+        return appointments.where((appointment) {
+          DateTime appointmentDate = DateFormat('yyyy-MM-dd HH:mm')
+              .parse('${appointment.date} ${appointment.time}');
+          return appointmentDate.isBefore(
+              now); // Filter appointments to only include past appointments
+        }).toList();
+      });
     } else {
       _appointmentsFuture = Future.value([]);
     }
   }
 
-  Future<DoctorsModel?> _fetchDoctor(String docid) {
+  Future<DoctorsModel?> _fetchDoctor(String docid) async {
     return UserRepository().getDoctorById(docid);
   }
 
@@ -46,22 +57,18 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Schedules',
-                style: CustomTextStyle.highboldTxtStyle,
-              ),
               const SizedBox(height: 20),
               Expanded(
                 child: FutureBuilder<List<AppointmentModel>>(
                   future: _appointmentsFuture,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
+                      return const ShimmerCard();
                     } else if (snapshot.hasError) {
                       return const Center(
                           child: Text('Error loading appointments'));
                     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                      return const Center(child: Text('No appointments found'));
+                      return const Center(child: Text('No appointments'));
                     } else {
                       final appointments = snapshot.data!;
                       return ListView.builder(
@@ -73,8 +80,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                             builder: (context, doctorSnapshot) {
                               if (doctorSnapshot.connectionState ==
                                   ConnectionState.waiting) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
+                                return const ShimmerCard();
                               } else if (doctorSnapshot.hasError) {
                                 return const Center(
                                     child: Text('Error loading doctor data'));
@@ -84,6 +90,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                               } else {
                                 final doctor = doctorSnapshot.data!;
                                 return ScheduleCard(
+                                    selected: true,
+                                    id: appointment.id,
                                     docName: doctor.name,
                                     docimgurl: doctor.doctorimg,
                                     specialization: doctor.specialization,

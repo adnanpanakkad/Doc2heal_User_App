@@ -1,6 +1,8 @@
-import 'package:doc2heal/utils/app_colors.dart';
+import 'package:doc2heal/presentation/view/bottombar_screens.dart';
+import 'package:doc2heal/services/firebase/firebase_appoinment.dart';
+import 'package:doc2heal/widgets/schedule/popup.dart';
+import 'package:doc2heal/widgets/schedule/shimmer_card.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
 class ScheduleCard extends StatelessWidget {
   final String? docName;
@@ -8,6 +10,8 @@ class ScheduleCard extends StatelessWidget {
   final String? specialization;
   final String? time;
   final String? date;
+  final String? id;
+  final bool? selected;
   const ScheduleCard({
     super.key,
     required this.docName,
@@ -15,6 +19,8 @@ class ScheduleCard extends StatelessWidget {
     required this.specialization,
     required this.time,
     required this.date,
+    required this.id,
+    this.selected,
   });
 
   @override
@@ -43,7 +49,7 @@ class ScheduleCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        docName!,
+                        'Dr.${docName![0].toUpperCase()}${docName!.substring(1)}',
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -70,13 +76,13 @@ class ScheduleCard extends StatelessWidget {
                     Text(time!),
                   ],
                 ),
-                const Row(
-                  children: [
-                    Icon(Icons.circle, color: Colors.green, size: 12),
-                    SizedBox(width: 5),
-                    Text('Confirmed'),
-                  ],
-                ),
+                // const Row(
+                //   children: [
+                //     Icon(Icons.circle, color: Colors.green, size: 12),
+                //     SizedBox(width: 5),
+                //     Text('Confirmed'),
+                //   ],
+                // ),
               ],
             ),
             const SizedBox(height: 20),
@@ -84,7 +90,21 @@ class ScheduleCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Popup(
+                          message: 'Are you sure',
+                          onTap: () async {
+                            AppoinmentServices()
+                                .updateAppointmentField(id!, true);
+                            Navigator.pop(context);
+                          },
+                        );
+                      },
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.black,
                     backgroundColor: Colors.grey[300],
@@ -92,7 +112,9 @@ class ScheduleCard extends StatelessWidget {
                   child: const Text('Cancel'),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    Navigator.pop(context);
+                  },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.green,

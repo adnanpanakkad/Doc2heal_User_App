@@ -1,9 +1,9 @@
+import 'package:doc2heal/presentation/view/appoinmentscreen/appoinment_tabs.dart';
 import 'package:doc2heal/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:doc2heal/presentation/view/messages.dart';
 import 'package:doc2heal/presentation/view/home_screen.dart';
 import 'package:doc2heal/presentation/view/profile_screen.dart';
-import 'package:doc2heal/presentation/view/schedule_screen.dart';
 import 'package:flutter/services.dart';
 
 class BottombarScreens extends StatefulWidget {

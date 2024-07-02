@@ -1,5 +1,3 @@
-import 'package:doc2heal/razorpay.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 

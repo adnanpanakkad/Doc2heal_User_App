@@ -1,20 +1,20 @@
 import 'package:doc2heal/model/appoinment_model.dart';
 import 'package:doc2heal/model/doctor_model.dart';
-import 'package:doc2heal/presentation/view/chat_screen.dart';
 import 'package:doc2heal/services/firebase/firebase_appoinment.dart';
 import 'package:doc2heal/services/firebase/firesbase_database.dart';
+import 'package:doc2heal/widgets/schedule/schedule_card.dart';
+import 'package:doc2heal/widgets/schedule/shimmer_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:doc2heal/utils/app_text_styles.dart';
 
-class MessageScreen extends StatefulWidget {
-  const MessageScreen({super.key});
+class CancelledScreen extends StatefulWidget {
+  const CancelledScreen({super.key});
 
   @override
-  _MessageScreenState createState() => _MessageScreenState();
+  _CancelledScreenState createState() => _CancelledScreenState();
 }
 
-class _MessageScreenState extends State<MessageScreen> {
+class _CancelledScreenState extends State<CancelledScreen> {
   late Future<List<AppointmentModel>> _appointmentsFuture;
 
   @override
@@ -26,7 +26,8 @@ class _MessageScreenState extends State<MessageScreen> {
   void _fetchAppointments() {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      _appointmentsFuture = AppoinmentServices().getUserAppointments(user.uid);
+      _appointmentsFuture =
+          AppoinmentServices().getCanceledAppointments(user.uid);
     } else {
       _appointmentsFuture = Future.value([]);
     }
@@ -46,22 +47,18 @@ class _MessageScreenState extends State<MessageScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Messages',
-                style: CustomTextStyle.highboldTxtStyle,
-              ),
               const SizedBox(height: 20),
               Expanded(
                 child: FutureBuilder<List<AppointmentModel>>(
                   future: _appointmentsFuture,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
+                      return const ShimmerCard();
                     } else if (snapshot.hasError) {
                       return const Center(
                           child: Text('Error loading appointments'));
                     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                      return const Center(child: Text('No appointments found'));
+                      return const Center(child: Text('No appointments'));
                     } else {
                       final appointments = snapshot.data!;
                       return ListView.builder(
@@ -73,8 +70,7 @@ class _MessageScreenState extends State<MessageScreen> {
                             builder: (context, doctorSnapshot) {
                               if (doctorSnapshot.connectionState ==
                                   ConnectionState.waiting) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
+                                return const ShimmerCard();
                               } else if (doctorSnapshot.hasError) {
                                 return const Center(
                                     child: Text('Error loading doctor data'));
@@ -83,23 +79,14 @@ class _MessageScreenState extends State<MessageScreen> {
                                     child: Text('Doctor not found'));
                               } else {
                                 final doctor = doctorSnapshot.data!;
-                                return ListTile(
-                                  leading: CircleAvatar(
-                                    backgroundImage:
-                                        NetworkImage(doctor.doctorimg ?? ''),
-                                  ),
-                                  title: Text(doctor.name ?? 'No Name'),
-                                  subtitle:
-                                      Text(doctor.specialization ?? 'No Date'),
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                            builder: (context) => ChatScreen(
-                                                  reciverEmail: doctor.name!,
-                                                  reciverID: '',
-                                                )));
-                                  },
-                                );
+                                return ScheduleCard(
+                                    selected: true,
+                                    id: appointment.id,
+                                    docName: doctor.name,
+                                    docimgurl: doctor.doctorimg,
+                                    specialization: doctor.specialization,
+                                    time: appointment.time,
+                                    date: appointment.date);
                               }
                             },
                           );
