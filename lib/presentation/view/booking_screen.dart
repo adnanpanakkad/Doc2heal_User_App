@@ -9,7 +9,7 @@ import 'package:doc2heal/presentation/bloc/profile_bloc/profile_bloc.dart';
 import 'package:doc2heal/razorpay.dart';
 import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/booking/booking_button.dart';
-import 'package:doc2heal/widgets/booking/date_time.dart';
+import 'package:doc2heal/widgets/booking/date_picker.dart';
 import 'package:doc2heal/widgets/common/appbar.dart';
 import 'package:doc2heal/widgets/common/textfield.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
@@ -26,10 +26,10 @@ class BookingScreen extends StatelessWidget {
   String? selectedTimeSlot;
 
   BookingScreen({
-    Key? key,
+    super.key,
     required this.doctorData,
     required this.userId,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

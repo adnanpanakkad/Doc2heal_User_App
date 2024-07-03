@@ -85,17 +85,19 @@ class _MessageScreenState extends State<MessageScreen> {
                                 final doctor = doctorSnapshot.data!;
                                 return ListTile(
                                   leading: CircleAvatar(
+                                    radius: 25,
                                     backgroundImage:
                                         NetworkImage(doctor.doctorimg ?? ''),
                                   ),
-                                  title: Text(doctor.name ?? 'No Name'),
-                                  subtitle:
-                                      Text(doctor.specialization ?? 'No Date'),
+                                  title: Text(
+                                      'Dr.${doctor.name![0].toUpperCase()}${doctor.name!.substring(1)}' ??
+                                          'No Name'),
                                   onTap: () {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
                                             builder: (context) => ChatScreen(
-                                                  reciverEmail: doctor.name!,
+                                                  reciverEmail:
+                                                      'Dr.${doctor.name![0].toUpperCase()}${doctor.name!.substring(1)}',
                                                   reciverID: '',
                                                 )));
                                   },

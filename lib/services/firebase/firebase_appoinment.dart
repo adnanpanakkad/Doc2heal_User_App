@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doc2heal/model/appoinment_model.dart';
 import 'package:doc2heal/widgets/schedule/shimmer_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class AppoinmentServices {
   String appointments = "appointment";
@@ -96,5 +97,13 @@ class AppoinmentServices {
     } catch (e) {
       print("Error updating appointment field: $e");
     }
+  }
+
+  Future<List<AppointmentModel>> getExpiredAppointments(String? userid) async {
+    final querySnapshot = await appointment
+        .where('date', isLessThan: DateTime.now())
+        .where('time', isLessThan: TimeOfDay.now())
+        .get();
+    return querySnapshot.docs.map((doc) => doc.data()).toList();
   }
 }

@@ -2,6 +2,7 @@ import 'package:doc2heal/model/appoinment_model.dart';
 import 'package:doc2heal/model/doctor_model.dart';
 import 'package:doc2heal/services/firebase/firebase_appoinment.dart';
 import 'package:doc2heal/services/firebase/firesbase_database.dart';
+import 'package:doc2heal/widgets/schedule/completeschedule_card.dart';
 import 'package:doc2heal/widgets/schedule/schedule_card.dart';
 import 'package:doc2heal/widgets/schedule/shimmer_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,14 +29,13 @@ class _CompletedScreenState extends State<CompletedScreen> {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       _appointmentsFuture = AppoinmentServices()
-          .getCanceledAppointments(user.uid)
+          .getUserAppointments(user.uid)
           .then((appointments) {
         DateTime now = DateTime.now();
         return appointments.where((appointment) {
-          DateTime appointmentDate = DateFormat('yyyy-MM-dd HH:mm')
+          DateTime appointmentDate = DateFormat('MM-dd-yyyy HH:mm')
               .parse('${appointment.date} ${appointment.time}');
-          return appointmentDate.isBefore(
-              now); // Filter appointments to only include past appointments
+          return appointmentDate.isBefore(now);
         }).toList();
       });
     } else {
@@ -66,7 +66,7 @@ class _CompletedScreenState extends State<CompletedScreen> {
                       return const ShimmerCard();
                     } else if (snapshot.hasError) {
                       return const Center(
-                          child: Text('Error loading appointments'));
+                          child: Text('No completed appointments'));
                     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                       return const Center(child: Text('No appointments'));
                     } else {
@@ -89,7 +89,7 @@ class _CompletedScreenState extends State<CompletedScreen> {
                                     child: Text('Doctor not found'));
                               } else {
                                 final doctor = doctorSnapshot.data!;
-                                return ScheduleCard(
+                                return CompletescheduleCard(
                                     selected: true,
                                     id: appointment.id,
                                     docName: doctor.name,

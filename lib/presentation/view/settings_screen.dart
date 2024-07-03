@@ -1,4 +1,5 @@
 import 'package:doc2heal/presentation/view/about_us_screen.dart';
+import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/profile/detail-continer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,16 +9,21 @@ import 'package:doc2heal/widgets/profile/center_container.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:doc2heal/widgets/profile/detail_tile.dart';
 
-class ProfileScreen extends StatelessWidget {
+class SettingScreen extends StatelessWidget {
   final String uid;
   final Map<String, dynamic> userData;
 
-  const ProfileScreen({Key? key, required this.uid, required this.userData});
+  const SettingScreen({
+    super.key,
+    required this.uid,
+    required this.userData,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Appcolor.lightbackground,
         body: Padding(
           padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
           child: SingleChildScrollView(

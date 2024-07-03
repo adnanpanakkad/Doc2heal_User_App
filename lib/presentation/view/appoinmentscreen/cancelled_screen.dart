@@ -2,6 +2,7 @@ import 'package:doc2heal/model/appoinment_model.dart';
 import 'package:doc2heal/model/doctor_model.dart';
 import 'package:doc2heal/services/firebase/firebase_appoinment.dart';
 import 'package:doc2heal/services/firebase/firesbase_database.dart';
+import 'package:doc2heal/widgets/schedule/cancelschedule_card.dart';
 import 'package:doc2heal/widgets/schedule/schedule_card.dart';
 import 'package:doc2heal/widgets/schedule/shimmer_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -79,14 +80,14 @@ class _CancelledScreenState extends State<CancelledScreen> {
                                     child: Text('Doctor not found'));
                               } else {
                                 final doctor = doctorSnapshot.data!;
-                                return ScheduleCard(
-                                    selected: true,
-                                    id: appointment.id,
+
+                                return CancelscheduleCard(
                                     docName: doctor.name,
                                     docimgurl: doctor.doctorimg,
                                     specialization: doctor.specialization,
                                     time: appointment.time,
-                                    date: appointment.date);
+                                    date: appointment.date,
+                                    id: appointment.id);
                               }
                             },
                           );

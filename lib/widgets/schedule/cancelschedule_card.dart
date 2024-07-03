@@ -1,10 +1,6 @@
-import 'package:doc2heal/presentation/view/bottombar_screens.dart';
-import 'package:doc2heal/services/firebase/firebase_appoinment.dart';
-import 'package:doc2heal/widgets/schedule/popup.dart';
-import 'package:doc2heal/widgets/schedule/shimmer_card.dart';
 import 'package:flutter/material.dart';
 
-class ScheduleCard extends StatelessWidget {
+class CancelscheduleCard extends StatelessWidget {
   final String? docName;
   final String? docimgurl;
   final String? specialization;
@@ -12,7 +8,7 @@ class ScheduleCard extends StatelessWidget {
   final String? date;
   final String? id;
   final bool? selected;
-  const ScheduleCard({
+  const CancelscheduleCard({
     super.key,
     required this.docName,
     required this.docimgurl,
@@ -78,9 +74,9 @@ class ScheduleCard extends StatelessWidget {
                 ),
                 const Row(
                   children: [
-                    Icon(Icons.circle, color: Colors.green, size: 12),
+                    Icon(Icons.circle, color: Colors.red, size: 12),
                     SizedBox(width: 5),
-                    Text('Upcoming'),
+                    Text('Cancelled'),
                   ],
                 ),
               ],
@@ -89,37 +85,17 @@ class ScheduleCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Popup(
-                          message: 'Are you sure',
-                          onTap: () async {
-                            AppoinmentServices()
-                                .updateAppointmentField(id!, true);
-                            Navigator.pop(context);
-                          },
-                        );
-                      },
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    backgroundColor: Colors.grey[300],
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      Navigator.pop(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.green,
+                    ),
+                    child: const Text('Reschedule'),
                   ),
-                  child: const Text('Cancel'),
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    Navigator.pop(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.green,
-                  ),
-                  child: const Text('Reschedule'),
                 ),
               ],
             ),
