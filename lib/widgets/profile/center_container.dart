@@ -1,6 +1,7 @@
-import 'package:doc2heal/presentation/view/editprofilr_screen.dart';
-import 'package:doc2heal/presentation/view/privecy_policy_screen.dart';
-import 'package:doc2heal/presentation/view/terms_contition_screen.dart';
+import 'package:doc2heal/presentation/view/profile/editprofilr_screen.dart';
+import 'package:doc2heal/presentation/view/profile/privecy_policy_screen.dart';
+import 'package:doc2heal/presentation/view/profile/profile_screen.dart';
+import 'package:doc2heal/presentation/view/profile/terms_contition_screen.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -29,6 +30,40 @@ class CenterContainer extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               child: Column(
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment
+                        .spaceBetween, // Space between children
+                    children: [
+                      Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(50)),
+                        child: const Icon(
+                          Icons.person_3,
+                          color: Colors.black,
+                          size: 25,
+                        ),
+                      ), // Start icon
+                      const Padding(
+                        padding: EdgeInsets.only(right: 90),
+                        child: Text('Your Profile',
+                            style: CustomTextStyle.buttonTextStyle),
+                      ), // Centered text
+                      IconButton(
+                        icon: const Icon(Icons.arrow_forward_ios_outlined,
+                            size: 16), // End icon button
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ProfileScreen()));
+                        },
+                      ),
+                    ],
+                  ),
+                  const Divider(
+                    thickness: 0.1,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment
                         .spaceBetween, // Space between children
@@ -96,40 +131,6 @@ class CenterContainer extends StatelessWidget {
                                 const TermsAndConditionsScreen(),
                           ));
                           print('IconButton pressed');
-                        },
-                      ),
-                    ],
-                  ),
-                  const Divider(
-                    thickness: 0.1,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment
-                        .spaceBetween, // Space between children
-                    children: [
-                      Container(
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(50)),
-                        child: const Icon(
-                          Icons.edit_square,
-                          color: Colors.black,
-                          size: 25,
-                        ),
-                      ), // Start icon
-                      const Padding(
-                        padding: EdgeInsets.only(right: 90),
-                        child: Text('Edit Profile',
-                            style: CustomTextStyle.buttonTextStyle),
-                      ), // Centered text
-                      IconButton(
-                        icon: const Icon(Icons.arrow_forward_ios_outlined,
-                            size: 16), // End icon button
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => EditProfileScreen()));
                         },
                       ),
                     ],

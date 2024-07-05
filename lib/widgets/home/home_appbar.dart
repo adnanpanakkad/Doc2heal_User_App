@@ -52,8 +52,7 @@ class HomeAppBar extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              userData['name'][0].toUpperCase() +
-                                  userData['name'].substring(1),
+                              userData['name'].toUpperCase(),
                               style: const TextStyle(
                                 color: Color(0xFF1D1617),
                                 fontSize: 14,

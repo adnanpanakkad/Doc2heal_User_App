@@ -3,9 +3,12 @@ import 'package:doc2heal/widgets/common/button.dart';
 import 'package:doc2heal/widgets/common/textfield.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 class EditProfileScreen extends StatelessWidget {
-  EditProfileScreen({super.key});
+  final Map<String, dynamic>? userData;
+
+  EditProfileScreen({super.key, required this.userData});
 
   final TextEditingController userNameEditController = TextEditingController();
   final TextEditingController ageEditController = TextEditingController();
@@ -39,8 +42,10 @@ class EditProfileScreen extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 70,
-                        backgroundColor: const Color.fromARGB(255, 143, 189, 198),
-                        backgroundImage: _imageProvider,
+                        backgroundColor:
+                            const Color.fromARGB(255, 143, 189, 198),
+                        backgroundImage: NetworkImage(userData!['coverimag'] ??
+                            AssetImage('assets/Ellipse 1.png')),
                       ),
                       Positioned(
                         bottom: 0,
@@ -68,31 +73,36 @@ class EditProfileScreen extends StatelessWidget {
                   ),
                   SizedBox(height: size.height * .02),
                   CustomTextfield(
-                    validation: (value) => Validator().textFeildValidation(value),
+                    validation: (value) =>
+                        Validator().textFeildValidation(value),
                     controller: userNameEditController,
-                    hintText: 'Name',
+                    hintText: userData!['name'] ?? 'Nmae',
                   ),
                   SizedBox(height: size.height * .02),
                   CustomTextfield(
-                    validation: (value) => Validator().textFeildValidation(value),
+                    validation: (value) =>
+                        Validator().textFeildValidation(value),
                     controller: ageEditController,
-                    hintText: 'Age',
+                    hintText: userData!['age'] ?? 'age',
                   ),
                   SizedBox(height: size.height * .02),
                   CustomTextfield(
-                    validation: (value) => Validator().textFeildValidation(value),
+                    validation: (value) =>
+                        Validator().textFeildValidation(value),
                     controller: genderEditController,
-                    hintText: 'Gender',
+                    hintText: userData!['gender'] ?? 'Gender',
                   ),
                   SizedBox(height: size.height * .02),
                   CustomTextfield(
-                    validation: (value) => Validator().textFeildValidation(value),
+                    validation: (value) =>
+                        Validator().textFeildValidation(value),
                     controller: phoneEditController,
-                    hintText: 'Phone Number',
+                    hintText: userData!['phone'] ?? 'Phone Number',
                   ),
                   SizedBox(height: size.height * .02),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 80, vertical: 10),
                     child: CustomButton(
                       text: 'Update',
                       onTap: () {

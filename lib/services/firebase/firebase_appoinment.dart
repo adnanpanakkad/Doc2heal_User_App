@@ -99,11 +99,27 @@ class AppoinmentServices {
     }
   }
 
-  Future<List<AppointmentModel>> getExpiredAppointments(String? userid) async {
-    final querySnapshot = await appointment
-        .where('date', isLessThan: DateTime.now())
-        .where('time', isLessThan: TimeOfDay.now())
-        .get();
-    return querySnapshot.docs.map((doc) => doc.data()).toList();
+  // Future<List<AppointmentModel>> getExpiredAppointments(String? userid) async {
+  //   final querySnapshot = await appointment
+  //       .where('date', isLessThan: DateTime.now())
+  //       .where('time', isLessThan: DateTime.now())
+  //       .get();
+  //   return querySnapshot.docs.map((doc) => doc.data()).toList();
+  // }
+  Future<List<AppointmentModel>> getExpiredAppointments(String? userId) async {
+    try {
+      final currentTime = Timestamp.now();
+      final currentDate = DateTime.now();
+      final querySnapshot = await appointment
+          .where('uid', isEqualTo: userId)
+          .where('time', isLessThan: currentTime)
+          .where('date', isLessThan: currentDate)
+          .get();
+
+      return querySnapshot.docs.map((doc) => doc.data()).toList();
+    } catch (e) {
+      log('Error fetching expired appointments: $e');
+      rethrow;
+    }
   }
 }

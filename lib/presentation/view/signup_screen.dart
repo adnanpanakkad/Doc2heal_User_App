@@ -36,9 +36,7 @@ class SignupScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 240, 240, 240),
-        appBar: const PreferredSize(
-            preferredSize: Size(double.maxFinite, 70),
-            child: DeatialAppbar(text: 'Personal Details')),
+        appBar: DeatialAppbar(text: 'Personal Details'),
         body: BlocBuilder<AuthBloc, AuthBlocState>(
           builder: (context, state) {
             return Form(

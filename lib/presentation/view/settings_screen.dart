@@ -1,6 +1,7 @@
-import 'package:doc2heal/presentation/view/about_us_screen.dart';
+import 'package:doc2heal/presentation/view/profile/about_us_screen.dart';
 import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/profile/detail-continer.dart';
+import 'package:doc2heal/widgets/schedule/shimmer_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:doc2heal/presentation/view/login_screen.dart';
@@ -39,7 +40,7 @@ class SettingScreen extends StatelessWidget {
                   stream: FirebaseAuth.instance.authStateChanges(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
+                      return const ShimmerCard();
                     }
                     if (snapshot.hasData && snapshot.data != null) {
                       return DetailContainer();
@@ -48,7 +49,7 @@ class SettingScreen extends StatelessWidget {
                     }
                   },
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 25),
                 const CenterContainer(),
                 CustomDetailCard(
                   boxcolor: Colors.purple,

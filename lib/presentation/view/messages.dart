@@ -3,6 +3,8 @@ import 'package:doc2heal/model/doctor_model.dart';
 import 'package:doc2heal/presentation/view/chat_screen.dart';
 import 'package:doc2heal/services/firebase/firebase_appoinment.dart';
 import 'package:doc2heal/services/firebase/firesbase_database.dart';
+import 'package:doc2heal/widgets/chat/shimmer_list.dart';
+import 'package:doc2heal/widgets/schedule/shimmer_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
@@ -32,8 +34,8 @@ class _MessageScreenState extends State<MessageScreen> {
     }
   }
 
-  Future<DoctorsModel?> _fetchDoctor(String docid) async {
-    return UserRepository().getDoctorById(docid);
+  Future<DoctorsModel?> _fetchDoctor(String docId) async {
+    return UserRepository().getDoctorById(docId);
   }
 
   @override
@@ -52,59 +54,83 @@ class _MessageScreenState extends State<MessageScreen> {
               ),
               const SizedBox(height: 20),
               Expanded(
-                child: FutureBuilder<List<AppointmentModel>>(
-                  future: _appointmentsFuture,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError) {
+                child: StreamBuilder<User?>(
+                  stream: FirebaseAuth.instance.authStateChanges(),
+                  builder: (context, authSnapshot) {
+                    if (authSnapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return const ShimmerList();
+                    } else if (authSnapshot.hasError) {
+                      return Center(
+                        child: Text('Error: ${authSnapshot.error}'),
+                      );
+                    } else if (!authSnapshot.hasData) {
                       return const Center(
-                          child: Text('Error loading appointments'));
-                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                      return const Center(child: Text('No appointments found'));
+                        child: Text('User not logged in'),
+                      );
                     } else {
-                      final appointments = snapshot.data!;
-                      return ListView.builder(
-                        itemCount: appointments.length,
-                        itemBuilder: (context, index) {
-                          final appointment = appointments[index];
-                          return FutureBuilder<DoctorsModel?>(
-                            future: _fetchDoctor(appointment.docid!),
-                            builder: (context, doctorSnapshot) {
-                              if (doctorSnapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              } else if (doctorSnapshot.hasError) {
-                                return const Center(
-                                    child: Text('Error loading doctor data'));
-                              } else if (!doctorSnapshot.hasData) {
-                                return const Center(
-                                    child: Text('Doctor not found'));
-                              } else {
-                                final doctor = doctorSnapshot.data!;
-                                return ListTile(
-                                  leading: CircleAvatar(
-                                    radius: 25,
-                                    backgroundImage:
-                                        NetworkImage(doctor.doctorimg ?? ''),
-                                  ),
-                                  title: Text(
-                                      'Dr.${doctor.name![0].toUpperCase()}${doctor.name!.substring(1)}' ??
-                                          'No Name'),
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                            builder: (context) => ChatScreen(
-                                                  reciverEmail:
-                                                      'Dr.${doctor.name![0].toUpperCase()}${doctor.name!.substring(1)}',
-                                                  reciverID: '',
-                                                )));
+                      return FutureBuilder<List<AppointmentModel>>(
+                        future: _appointmentsFuture,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const ShimmerList();
+                          } else if (snapshot.hasError) {
+                            return const Center(
+                              child: Text('Error loading appointments'),
+                            );
+                          } else if (!snapshot.hasData ||
+                              snapshot.data!.isEmpty) {
+                            return const Center(
+                                child: Text('No appointments found'));
+                          } else {
+                            final appointments = snapshot.data!;
+                            return ListView.builder(
+                              itemCount: appointments.length,
+                              itemBuilder: (context, index) {
+                                final appointment = appointments[index];
+                                return FutureBuilder<DoctorsModel?>(
+                                  future: _fetchDoctor(appointment.docid!),
+                                  builder: (context, doctorSnapshot) {
+                                    if (doctorSnapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const ShimmerList();
+                                    } else if (doctorSnapshot.hasError) {
+                                      return const Center(
+                                        child:
+                                            Text('Error loading doctor data'),
+                                      );
+                                    } else if (!doctorSnapshot.hasData) {
+                                      return const Center(
+                                          child: Text('Doctor not found'));
+                                    } else {
+                                      final doctor = doctorSnapshot.data!;
+                                      return ListTile(
+                                        leading: CircleAvatar(
+                                          radius: 25,
+                                          backgroundImage: NetworkImage(
+                                              doctor.doctorimg ?? ''),
+                                        ),
+                                        title: Text(
+                                            'Dr.${doctor.name![0].toUpperCase()}${doctor.name!.substring(1)}'),
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) => ChatScreen(
+                                                reciverEmail:
+                                                    'Dr.${doctor.name![0].toUpperCase()}${doctor.name!.substring(1)}',
+                                                reciverID: doctor.uid!,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    }
                                   },
                                 );
-                              }
-                            },
-                          );
+                              },
+                            );
+                          }
                         },
                       );
                     }

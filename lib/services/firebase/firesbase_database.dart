@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doc2heal/model/doctor_model.dart';
-import 'package:doc2heal/model/appoinment_model.dart';
 import 'package:doc2heal/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';

@@ -19,7 +19,7 @@ class ScheduleScreen extends StatelessWidget {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: const Color(0xFFFFFFFF),
-          title: Text(
+          title: const Text(
             'Appointment',
             style: CustomTextStyle.highboldTxtStyle,
           ),

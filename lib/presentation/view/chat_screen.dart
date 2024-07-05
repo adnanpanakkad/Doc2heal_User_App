@@ -5,6 +5,7 @@ import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/chat/chat_bubble.dart';
 import 'package:doc2heal/widgets/common/appbar.dart';
 import 'package:doc2heal/widgets/common/textfield.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -111,7 +112,7 @@ class _ChatScreenState extends State<ChatScreen> {
             return ListView(
               controller: _scrollcontroller,
               children: snapshot.data!.docs
-                  .map((doc) => _buildmessageitem(doc))
+                  .map((doc) => _buildMessageItem(doc))
                   .toList(),
             );
           },
@@ -120,20 +121,27 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Widget _buildmessageitem(DocumentSnapshot doc) {
+  Widget _buildMessageItem(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-    bool isCurrentUser = data['senderID'] == userepo.getcurrentuser();
+    final currentUser = FirebaseAuth.instance.currentUser;
+    bool isCurrentUser = data['senderID'] == currentUser!.uid;
+    var alignment =
+        isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
 
-    var aligment = isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
     return Container(
-        alignment: aligment,
-        child: Column(
-          crossAxisAlignment:
-              isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-          children: [
-            ChatBubble(message: data['message'], isCurrentUser: isCurrentUser)
-          ],
-        ));
+      alignment: alignment,
+      child: Column(
+        crossAxisAlignment:
+            isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        children: [
+          ChatBubble(
+            message: data['message'],
+            isCurrentUser: isCurrentUser,
+            timestamp: (data['timestamp'] as Timestamp).toDate(),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget buildUserinput() {
