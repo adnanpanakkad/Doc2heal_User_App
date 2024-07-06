@@ -3,11 +3,9 @@ import 'package:doc2heal/model/doctor_model.dart';
 import 'package:doc2heal/services/firebase/firebase_appoinment.dart';
 import 'package:doc2heal/services/firebase/firesbase_database.dart';
 import 'package:doc2heal/widgets/schedule/completeschedule_card.dart';
-import 'package:doc2heal/widgets/schedule/schedule_card.dart';
 import 'package:doc2heal/widgets/schedule/shimmer_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class CompletedScreen extends StatefulWidget {
   const CompletedScreen({super.key});
@@ -28,16 +26,8 @@ class _CompletedScreenState extends State<CompletedScreen> {
   void _fetchAppointments() {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      _appointmentsFuture = AppoinmentServices()
-          .getUserAppointments(user.uid)
-          .then((appointments) {
-        DateTime now = DateTime.now();
-        return appointments.where((appointment) {
-          DateTime appointmentDate = DateFormat('MM-dd-yyyy HH:mm')
-              .parse('${appointment.date} ${appointment.time}');
-          return appointmentDate.isBefore(now);
-        }).toList();
-      });
+      _appointmentsFuture =
+          AppoinmentServices().getExpiredAppointments(user.uid);
     } else {
       _appointmentsFuture = Future.value([]);
     }

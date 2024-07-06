@@ -75,7 +75,7 @@ class CompletescheduleCard extends StatelessWidget {
                 ),
                 const Row(
                   children: [
-                    Icon(Icons.check, color: Colors.green, size: 12),
+                    Icon(Icons.check_circle, color: Colors.green, size: 12),
                     SizedBox(width: 5),
                     Text('Completed'),
                   ],

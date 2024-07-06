@@ -1,3 +1,4 @@
+import 'package:doc2heal/presentation/view/booking_screen.dart';
 import 'package:flutter/material.dart';
 
 class CancelscheduleCard extends StatelessWidget {
@@ -74,7 +75,7 @@ class CancelscheduleCard extends StatelessWidget {
                 ),
                 const Row(
                   children: [
-                    Icon(Icons.circle, color: Colors.red, size: 12),
+                    Icon(Icons.cancel, color: Colors.red, size: 12),
                     SizedBox(width: 5),
                     Text('Cancelled'),
                   ],
@@ -88,7 +89,8 @@ class CancelscheduleCard extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () async {
-                      Navigator.pop(context);
+                  // Navigator.push(context, MaterialPageRoute(builder: (context)=>BookingScreen(doctorData: , userId: userId)))
+                     // Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,

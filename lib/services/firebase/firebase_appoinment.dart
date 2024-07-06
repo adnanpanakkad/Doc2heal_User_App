@@ -1,10 +1,7 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doc2heal/model/appoinment_model.dart';
-import 'package:doc2heal/widgets/schedule/shimmer_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 class AppoinmentServices {
   String appointments = "appointment";
@@ -23,12 +20,25 @@ class AppoinmentServices {
     });
   }
 
-  Future<List<AppointmentModel>> getUserAppointments(String userId) async {
-    final querySnapshot = await appointment
-        .where('uid', isEqualTo: userId)
-        .where('status', isEqualTo: false)
-        .get();
-    return querySnapshot.docs.map((doc) => doc.data()).toList();
+  Future<List<AppointmentModel>> getUpcomingAppointments(String userId) async {
+    try {
+      final querySnapshot = await appointment
+          .where('uid', isEqualTo: userId)
+          .where('status', isEqualTo: false)
+          .get();
+      List<AppointmentModel> expiredAppointments = [];
+      for (var doc in querySnapshot.docs) {
+        AppointmentModel appointment = doc.data();
+        if (isAppointmentOngoing(appointment.date!, appointment.time!)) {
+          expiredAppointments.add(appointment);
+        }
+      }
+
+      return expiredAppointments;
+    } catch (e) {
+      log('Error fetching expired appointments: $e');
+      rethrow;
+    }
   }
 
   Future<void> addAppointment(AppointmentModel data) async {
@@ -99,27 +109,80 @@ class AppoinmentServices {
     }
   }
 
-  // Future<List<AppointmentModel>> getExpiredAppointments(String? userid) async {
-  //   final querySnapshot = await appointment
-  //       .where('date', isLessThan: DateTime.now())
-  //       .where('time', isLessThan: DateTime.now())
-  //       .get();
-  //   return querySnapshot.docs.map((doc) => doc.data()).toList();
-  // }
   Future<List<AppointmentModel>> getExpiredAppointments(String? userId) async {
     try {
-      final currentTime = Timestamp.now();
-      final currentDate = DateTime.now();
       final querySnapshot = await appointment
           .where('uid', isEqualTo: userId)
-          .where('time', isLessThan: currentTime)
-          .where('date', isLessThan: currentDate)
+          .where('status', isEqualTo: false)
           .get();
+      List<AppointmentModel> expiredAppointments = [];
+      for (var doc in querySnapshot.docs) {
+        AppointmentModel appointment = doc.data();
+        if (isAppointmentCompleted(appointment.date!, appointment.time!)) {
+          expiredAppointments.add(appointment);
+        }
+      }
 
-      return querySnapshot.docs.map((doc) => doc.data()).toList();
+      return expiredAppointments;
     } catch (e) {
       log('Error fetching expired appointments: $e');
       rethrow;
     }
+  }
+
+  bool isAppointmentCompleted(String appointmentDate, String appointmentTime) {
+    // Split the time string into its components
+    List<String> timeParts = appointmentTime.split(RegExp(r'[:\s]'));
+    int appointmentHour = int.parse(timeParts[0]);
+    int appointmentMinute = int.parse(timeParts[1]);
+    bool isPM = timeParts[2].toUpperCase() == 'PM';
+
+    // Adjust the hour for AM/PM
+    if (isPM && appointmentHour != 12) {
+      appointmentHour += 12;
+    } else if (!isPM && appointmentHour == 12) {
+      appointmentHour = 0;
+    }
+    // Split the date string into its components (MM/DD/YYYY)
+    List<String> dateParts = appointmentDate.split('/');
+    int month = int.parse(dateParts[0]);
+    int day = int.parse(dateParts[1]);
+    int year = int.parse(dateParts[2]);
+
+    // Create a DateTime object for the appointment date and time
+    DateTime appointmentDateTime =
+        DateTime(year, month, day, appointmentHour, appointmentMinute);
+
+    // Compare the appointment date and time with the current date and time
+    DateTime now = DateTime.now();
+    return appointmentDateTime.isBefore(now);
+  }
+
+  bool isAppointmentOngoing(String appointmentDate, String appointmentTime) {
+    // Split the time string into its components
+    List<String> timeParts = appointmentTime.split(RegExp(r'[:\s]'));
+    int appointmentHour = int.parse(timeParts[0]);
+    int appointmentMinute = int.parse(timeParts[1]);
+    bool isPM = timeParts[2].toUpperCase() == 'PM';
+
+    // Adjust the hour for AM/PM
+    if (isPM && appointmentHour != 12) {
+      appointmentHour += 12;
+    } else if (!isPM && appointmentHour == 12) {
+      appointmentHour = 0;
+    }
+    // Split the date string into its components (MM/DD/YYYY)
+    List<String> dateParts = appointmentDate.split('/');
+    int month = int.parse(dateParts[0]);
+    int day = int.parse(dateParts[1]);
+    int year = int.parse(dateParts[2]);
+
+    // Create a DateTime object for the appointment date and time
+    DateTime appointmentDateTime =
+        DateTime(year, month, day, appointmentHour, appointmentMinute);
+
+    // Compare the appointment date and time with the current date and time
+    DateTime now = DateTime.now();
+    return appointmentDateTime.isAfter(now);
   }
 }

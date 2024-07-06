@@ -28,7 +28,7 @@ class _MessageScreenState extends State<MessageScreen> {
   void _fetchAppointments() {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      _appointmentsFuture = AppoinmentServices().getUserAppointments(user.uid);
+      _appointmentsFuture = AppoinmentServices().getUpcomingAppointments(user.uid);
     } else {
       _appointmentsFuture = Future.value([]);
     }
