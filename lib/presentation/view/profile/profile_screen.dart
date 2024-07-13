@@ -46,12 +46,12 @@ class ProfileScreen extends StatelessWidget {
                               as ImageProvider,
                     ),
                     const SizedBox(height: 16),
-                    Text(userdata['name'].toUpperCase() ?? 'Unknown User',
+                    Text(userdata['name'] ?? 'Unknown User',
                         style: CustomTextStyle.highboldTxtStyle),
                     const SizedBox(height: 8),
                     Text(
                       userdata['email'] ?? 'No Email Provided',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         color: Colors.grey,
                       ),

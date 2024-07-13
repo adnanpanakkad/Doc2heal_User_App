@@ -1,4 +1,3 @@
-import 'package:doc2heal/presentation/view/booking_screen.dart';
 import 'package:flutter/material.dart';
 
 class CancelscheduleCard extends StatelessWidget {
@@ -9,6 +8,8 @@ class CancelscheduleCard extends StatelessWidget {
   final String? date;
   final String? id;
   final bool? selected;
+  final void Function()? onTap;
+
   const CancelscheduleCard({
     super.key,
     required this.docName,
@@ -18,6 +19,7 @@ class CancelscheduleCard extends StatelessWidget {
     required this.date,
     required this.id,
     this.selected,
+    this.onTap,
   });
 
   @override
@@ -88,10 +90,7 @@ class CancelscheduleCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () async {
-                  // Navigator.push(context, MaterialPageRoute(builder: (context)=>BookingScreen(doctorData: , userId: userId)))
-                     // Navigator.pop(context);
-                    },
+                    onPressed: onTap,
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.green,

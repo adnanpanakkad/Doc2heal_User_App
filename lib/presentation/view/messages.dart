@@ -4,7 +4,6 @@ import 'package:doc2heal/presentation/view/chat_screen.dart';
 import 'package:doc2heal/services/firebase/firebase_appoinment.dart';
 import 'package:doc2heal/services/firebase/firesbase_database.dart';
 import 'package:doc2heal/widgets/chat/shimmer_list.dart';
-import 'package:doc2heal/widgets/schedule/shimmer_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
@@ -28,7 +27,8 @@ class _MessageScreenState extends State<MessageScreen> {
   void _fetchAppointments() {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      _appointmentsFuture = AppoinmentServices().getUpcomingAppointments(user.uid);
+      _appointmentsFuture =
+          AppoinmentServices().getUpcomingAppointments(user.uid);
     } else {
       _appointmentsFuture = Future.value([]);
     }

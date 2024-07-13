@@ -1,6 +1,5 @@
 import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class CustomDetailCard extends StatelessWidget {
   final IconData? iconData;

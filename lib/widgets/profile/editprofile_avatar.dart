@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ProfileAvathar extends StatelessWidget {
-  const ProfileAvathar({super.key});
+class EditProfileAvathar extends StatelessWidget {
+  String? image;
+  EditProfileAvathar({super.key, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +38,9 @@ class ProfileAvathar extends StatelessWidget {
                           backgroundImage: NetworkImage(state.profilepath),
                         );
                       }
-                      return const CircleAvatar(
+                      return CircleAvatar(
                         radius: 60,
-                        backgroundImage: AssetImage(
-                          'assets/Ellipse 1.png',
-                        ),
+                        backgroundImage: NetworkImage(image!),
                       );
                     },
                   ),
@@ -71,7 +70,6 @@ class ProfileAvathar extends StatelessWidget {
                             final image = await ImagePicker()
                                 .pickImage(source: ImageSource.gallery);
                             if (image != null) {
-                              
                               context.read<ProfileBloc>().add(
                                   PicUserImgEvent(profilepath: image.path));
                             }

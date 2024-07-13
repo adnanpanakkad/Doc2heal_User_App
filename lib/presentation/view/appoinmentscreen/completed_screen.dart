@@ -1,5 +1,6 @@
 import 'package:doc2heal/model/appoinment_model.dart';
 import 'package:doc2heal/model/doctor_model.dart';
+import 'package:doc2heal/presentation/view/booking_screen.dart';
 import 'package:doc2heal/services/firebase/firebase_appoinment.dart';
 import 'package:doc2heal/services/firebase/firesbase_database.dart';
 import 'package:doc2heal/widgets/schedule/completeschedule_card.dart';
@@ -80,13 +81,21 @@ class _CompletedScreenState extends State<CompletedScreen> {
                               } else {
                                 final doctor = doctorSnapshot.data!;
                                 return CompletescheduleCard(
-                                    selected: true,
-                                    id: appointment.id,
-                                    docName: doctor.name,
-                                    docimgurl: doctor.doctorimg,
-                                    specialization: doctor.specialization,
-                                    time: appointment.time,
-                                    date: appointment.date);
+                                  selected: true,
+                                  id: appointment.id,
+                                  docName: doctor.name,
+                                  docimgurl: doctor.doctorimg,
+                                  specialization: doctor.specialization,
+                                  time: appointment.time,
+                                  date: appointment.date,
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) => BookingScreen(
+                                                doctorData: doctor.toMap(),
+                                                userId: '')));
+                                  },
+                                );
                               }
                             },
                           );

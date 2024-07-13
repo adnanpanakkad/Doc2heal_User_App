@@ -1,4 +1,3 @@
-import 'package:doc2heal/presentation/view/profile/editprofilr_screen.dart';
 import 'package:doc2heal/presentation/view/profile/privecy_policy_screen.dart';
 import 'package:doc2heal/presentation/view/profile/profile_screen.dart';
 import 'package:doc2heal/presentation/view/profile/terms_contition_screen.dart';

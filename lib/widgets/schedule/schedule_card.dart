@@ -1,7 +1,5 @@
-import 'package:doc2heal/presentation/view/bottombar_screens.dart';
 import 'package:doc2heal/services/firebase/firebase_appoinment.dart';
 import 'package:doc2heal/widgets/schedule/popup.dart';
-import 'package:doc2heal/widgets/schedule/shimmer_card.dart';
 import 'package:flutter/material.dart';
 
 class ScheduleCard extends StatelessWidget {
@@ -98,7 +96,7 @@ class ScheduleCard extends StatelessWidget {
                           message: 'Are you sure',
                           onTap: () async {
                             AppoinmentServices()
-                                .updateAppointmentField(id!, true);
+                                .updateAppointmentStatus(id!, true);
                             Navigator.pop(context);
                           },
                         );

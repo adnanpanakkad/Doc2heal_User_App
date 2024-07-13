@@ -31,13 +31,13 @@ class UserRepository {
     }
     return null;
   }
-  
+
   Stream<Map<String, dynamic>> getUserDetails(String userId) {
     return _db.collection('users').doc(userId).snapshots().map((snapshot) {
       return snapshot.data() as Map<String, dynamic>;
     });
   }
-  
+
   Stream<QuerySnapshot<Map<String, dynamic>>> getDoctors() {
     return _db.collection("doctor").snapshots();
   }
@@ -73,5 +73,32 @@ class UserRepository {
     return null;
   }
 
-  
+  Future<UserModel?> updateUserProfile(
+      String userId, Map<String, dynamic> data) async {
+    try {
+      await _db.collection('users').doc(userId).update(data);
+    } catch (e) {
+      log('Error updating user profile: $e');
+      throw 'Error updating user profile';
+    }
+    return null;
+  }
+  // Future<UserModel?> updateUserProfile(
+  //     String userId, Map<String, dynamic> data) async {
+  //   try {
+  //     DocumentReference docRef = _db.collection('user').doc(userId);
+  //     DocumentSnapshot docSnapshot = await docRef.get();
+
+  //     if (docSnapshot.exists) {
+  //       await docRef.update(data);
+  //     } else {
+  //       log('User document not found: $userId');
+  //       throw 'User document not found';
+  //     }
+  //   } catch (e) {
+  //     log('Error updating user profile: $e');
+  //     throw 'Error updating user profile';
+  //   }
+  //   return null;
+  // }
 }

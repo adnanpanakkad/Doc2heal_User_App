@@ -1,155 +1,120 @@
+import 'dart:io';
+import 'package:doc2heal/presentation/bloc/profile_bloc/profile_bloc.dart';
+import 'package:doc2heal/services/firebase/firesbase_database.dart';
+import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/common/appbar.dart';
-import 'package:doc2heal/widgets/common/button.dart';
-import 'package:doc2heal/widgets/common/textfield.dart';
-import 'package:doc2heal/widgets/common/validator.dart';
+import 'package:doc2heal/widgets/common/custom_snacbar.dart';
+import 'package:doc2heal/widgets/profile/editprofile_avatar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class EditProfileScreen extends StatelessWidget {
+class EditProfileScreen extends StatefulWidget {
   final Map<String, dynamic>? userData;
 
-  EditProfileScreen({super.key, required this.userData});
+  EditProfileScreen({required this.userData});
 
-  final TextEditingController userNameEditController = TextEditingController();
-  final TextEditingController ageEditController = TextEditingController();
-  final TextEditingController genderEditController = TextEditingController();
-  final TextEditingController phoneEditController = TextEditingController();
-  final GlobalKey<FormState> editkey = GlobalKey<FormState>();
-  ImageProvider? _imageProvider;
+  @override
+  _EditProfileScreenState createState() => _EditProfileScreenState();
+}
+
+class _EditProfileScreenState extends State<EditProfileScreen> {
+  late TextEditingController _nameController;
+  late TextEditingController _phoneController;
+  late TextEditingController _genderController;
+  late TextEditingController _birthdayController;
+  String? _coverImagePath;
+
+  User? user = FirebaseAuth.instance.currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController =
+        TextEditingController(text: widget.userData!['name'] ?? '');
+    _phoneController =
+        TextEditingController(text: widget.userData!['phone'] ?? '');
+    _genderController =
+        TextEditingController(text: widget.userData!['gender'] ?? '');
+    _birthdayController =
+        TextEditingController(text: widget.userData!['age'] ?? '');
+  }
+
+  void _updateProfile() async {
+    Map<String, dynamic> newData = {
+      'coverimag': _coverImagePath ?? widget.userData!['coverimag'],
+      'name': _nameController.text.isNotEmpty ? _nameController.text : '',
+      'gender': _genderController.text.isNotEmpty ? _genderController.text : '',
+      'age':
+          _birthdayController.text.isNotEmpty ? _birthdayController.text : '',
+      'phone': _phoneController.text.isNotEmpty ? _phoneController.text : '',
+    };
+
+    try {
+      await UserRepository().updateUserProfile(user!.uid, newData);
+      Navigator.of(context).pop();
+      CustomSnackbar.show(context, 'Profile updated', Colors.green);
+    } catch (e) {
+      CustomSnackbar.show(context, 'Error updating profile: $e', Colors.red);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-        appBar: PreferredSize(
-            preferredSize: Size(double.maxFinite, 70),
-            child: DeatialAppbar(
-                text: 'Edit Profile',
-                onTap: () {
-                  Navigator.pop(context);
-                })),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: SingleChildScrollView(
-            child: Form(
-              key: editkey,
+        appBar: DeatialAppbar(
+          onTap: () => Navigator.pop(context),
+          text: 'Edit Profile',
+        ),
+        body: BlocBuilder<ProfileBloc, ProfileState>(
+          builder: (context, state) {
+            if (state is SucessfullyPicimageEvent) {
+              _coverImagePath = state.profilepath.toString();
+            }
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(height: size.height * .04),
-                  Stack(
-                    children: [
-                      CircleAvatar(
-                        radius: 70,
-                        backgroundColor:
-                            const Color.fromARGB(255, 143, 189, 198),
-                        backgroundImage: NetworkImage(userData!['coverimag'] ??
-                            AssetImage('assets/Ellipse 1.png')),
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: size.width * .05,
-                        child: Container(
-                          height: size.height * .04,
-                          width: size.width * .08,
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: IconButton(
-                            onPressed: () {
-                              pickImage(context);
-                            },
-                            icon: const Icon(
-                              Icons.edit,
-                              color: Colors.white,
-                              size: 18,
-                            ),
+                  EditProfileAvathar(
+                    image: widget.userData!['coverimag'],
+                  ),
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        TextField(
+                          controller: _nameController,
+                          decoration: InputDecoration(labelText: 'Name'),
+                        ),
+                        TextField(
+                          controller: _genderController,
+                          decoration: InputDecoration(labelText: 'Gender'),
+                        ),
+                        TextField(
+                          controller: _birthdayController,
+                          decoration: InputDecoration(labelText: 'Age'),
+                        ),
+                        TextField(
+                          controller: _phoneController,
+                          decoration: InputDecoration(labelText: 'Phone'),
+                        ),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: _updateProfile,
+                          child: Text('Update'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Appcolor.primaryColor,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: size.height * .02),
-                  CustomTextfield(
-                    validation: (value) =>
-                        Validator().textFeildValidation(value),
-                    controller: userNameEditController,
-                    hintText: userData!['name'] ?? 'Nmae',
-                  ),
-                  SizedBox(height: size.height * .02),
-                  CustomTextfield(
-                    validation: (value) =>
-                        Validator().textFeildValidation(value),
-                    controller: ageEditController,
-                    hintText: userData!['age'] ?? 'age',
-                  ),
-                  SizedBox(height: size.height * .02),
-                  CustomTextfield(
-                    validation: (value) =>
-                        Validator().textFeildValidation(value),
-                    controller: genderEditController,
-                    hintText: userData!['gender'] ?? 'Gender',
-                  ),
-                  SizedBox(height: size.height * .02),
-                  CustomTextfield(
-                    validation: (value) =>
-                        Validator().textFeildValidation(value),
-                    controller: phoneEditController,
-                    hintText: userData!['phone'] ?? 'Phone Number',
-                  ),
-                  SizedBox(height: size.height * .02),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 80, vertical: 10),
-                    child: CustomButton(
-                      text: 'Update',
-                      onTap: () {
-                        if (editkey.currentState!.validate()) {
-                          //
-                        }
-                      },
+                      ],
                     ),
                   ),
                 ],
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
-    );
-  }
-
-  Future<void> pickImage(BuildContext context) async {
-    await showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return SizedBox(
-          height: 150,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              ListTile(
-                leading: const Icon(Icons.camera_alt),
-                title: const Text('Camera'),
-                onTap: () {
-                  Navigator.pop(context);
-                  // Pick image from camera
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.image),
-                title: const Text('Gallery'),
-                onTap: () {
-                  Navigator.pop(context);
-                  // Pick image from gallery
-                },
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }

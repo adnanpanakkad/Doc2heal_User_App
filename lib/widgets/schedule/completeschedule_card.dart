@@ -1,4 +1,3 @@
-import 'package:doc2heal/widgets/schedule/popup.dart';
 import 'package:flutter/material.dart';
 
 class CompletescheduleCard extends StatelessWidget {
@@ -9,6 +8,8 @@ class CompletescheduleCard extends StatelessWidget {
   final String? date;
   final String? id;
   final bool? selected;
+  final void Function()? onTap;
+
   const CompletescheduleCard({
     super.key,
     required this.docName,
@@ -18,6 +19,7 @@ class CompletescheduleCard extends StatelessWidget {
     required this.date,
     required this.id,
     this.selected,
+    this.onTap,
   });
 
   @override
@@ -88,9 +90,7 @@ class CompletescheduleCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () async {
-                      Navigator.pop(context);
-                    },
+                    onPressed: onTap,
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.green,

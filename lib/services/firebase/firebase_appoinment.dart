@@ -99,7 +99,7 @@ class AppoinmentServices {
     return querySnapshot.docs.map((doc) => doc.data()).toList();
   }
 
-  Future<void> updateAppointmentField(
+  Future<void> updateAppointmentStatus(
       String appointmentId, bool? newValue) async {
     try {
       await appointment.doc(appointmentId).update({'status': newValue!});

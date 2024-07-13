@@ -85,4 +85,22 @@ class DoctorsModel {
       'uid': uid,
     };
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'doctorimg': doctorimg,
+      'expcerft': expcerft,
+      'name': name,
+      'phone': phone,
+      'gender': gender,
+      'birthday': birthday,
+      'specialization': specialization,
+      'email': email,
+      'password': password,
+      'fees': fees,
+      'starttime': starttime,
+      'endtime': endtime,
+      'uid': uid,
+    };
+  }
 }

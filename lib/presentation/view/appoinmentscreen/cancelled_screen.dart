@@ -1,5 +1,6 @@
 import 'package:doc2heal/model/appoinment_model.dart';
 import 'package:doc2heal/model/doctor_model.dart';
+import 'package:doc2heal/presentation/view/booking_screen.dart';
 import 'package:doc2heal/services/firebase/firebase_appoinment.dart';
 import 'package:doc2heal/services/firebase/firesbase_database.dart';
 import 'package:doc2heal/widgets/schedule/cancelschedule_card.dart';
@@ -82,12 +83,20 @@ class _CancelledScreenState extends State<CancelledScreen> {
                                 final doctor = doctorSnapshot.data!;
 
                                 return CancelscheduleCard(
-                                    docName: doctor.name,
-                                    docimgurl: doctor.doctorimg,
-                                    specialization: doctor.specialization,
-                                    time: appointment.time,
-                                    date: appointment.date,
-                                    id: appointment.id);
+                                  docName: doctor.name,
+                                  docimgurl: doctor.doctorimg,
+                                  specialization: doctor.specialization,
+                                  time: appointment.time,
+                                  date: appointment.date,
+                                  id: appointment.id,
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) => BookingScreen(
+                                                doctorData: doctor.toMap(),
+                                                userId: '')));
+                                  },
+                                );
                               }
                             },
                           );
