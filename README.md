@@ -1,6 +1,6 @@
 # doc2heal
 
-A new Flutter project.
+Welcome to Doc2heal, the ultimate solution for seamless and efficient online doctor consultations. Designed with both patients and healthcare providers in mind, Doc2heal offers a user-friendly platform to connect patients with trusted doctors from the comfort of their homes.
 
 ## Getting Started
 
