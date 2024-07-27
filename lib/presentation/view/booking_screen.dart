@@ -1,5 +1,6 @@
 import 'package:doc2heal/services/firebase/firebase_appoinment.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
+import 'package:doc2heal/widgets/common/custom_snacbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,6 +25,7 @@ class BookingScreen extends StatelessWidget {
   final TextEditingController dateController = TextEditingController();
   final TextEditingController reasonController = TextEditingController();
   String? selectedTimeSlot;
+  AppoinmentServices appoinmentServices = AppoinmentServices();
 
   BookingScreen({
     super.key,
@@ -116,8 +118,7 @@ class BookingScreen extends StatelessWidget {
                           readOnly: true,
                           validation: (value) =>
                               Validator().textFeildValidation(value),
-                          hintText:
-                              'pick your date', // Use DateTime.now() for hint text
+                          hintText: 'pick your date',
                           controller: dateController,
                           suffixIcon: IconButton(
                             onPressed: () async {
@@ -130,7 +131,7 @@ class BookingScreen extends StatelessWidget {
                             },
                             icon: const Icon(
                               Icons.calendar_month_outlined,
-                              color: Colors.red,
+                              color: Appcolor.primaryColor,
                             ),
                           ),
                         );
@@ -148,21 +149,47 @@ class BookingScreen extends StatelessWidget {
                           doctorData!['endtime'] == null) {
                         return const Text('No available time slots.');
                       }
-                      // Generate time slots from start time to end time
                       final timeSlots = _generateTimeSlots(
                         doctorData!['starttime'],
                         doctorData!['endtime'],
                       );
-                      return GridView.count(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        crossAxisCount: 3,
-                        childAspectRatio: 2,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 19,
-                        children: timeSlots
-                            .map((time) => _buildTimeSlot(context, time))
-                            .toList(),
+                      return FutureBuilder<List<AppointmentModel>>(
+                        future: appoinmentServices.getAppointmentsByDoctorId(
+                          doctorData!['uid'],
+                        ),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          }
+
+                          if (snapshot.hasError) {
+                            return const Text('Error loading appointments.');
+                          }
+
+                          final appointments = snapshot.data ?? [];
+
+                          return GridView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              childAspectRatio: 2,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 19,
+                            ),
+                            itemCount: timeSlots.length,
+                            itemBuilder: (context, index) {
+                              final time = timeSlots[index];
+                              return _buildTimeSlot(
+                                context,
+                                time,
+                                appointments,
+                              );
+                            },
+                          );
+                        },
                       );
                     },
                   ),
@@ -222,29 +249,54 @@ class BookingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTimeSlot(BuildContext context, String time) {
+  Widget _buildTimeSlot(
+      BuildContext context, String time, List<AppointmentModel> appointments) {
     final ProfileBloc profileBloc = context.read<ProfileBloc>();
+
+    final isBooked = _isTimeSlotBooked(time, appointments, dateController.text);
+    final isPast = _isTimeSlotPast(time);
 
     return GestureDetector(
       onTap: () {
-        profileBloc.add(TimeSlotSelectedEvent(timeSlot: time));
-        selectedTimeSlot = time; // Set the selected time slot
+        if (isBooked) {
+          CustomSnackbar.show(
+              context,
+              'This time slot is already booked. Please select another slot',
+              Colors.red);
+        } else if (isPast) {
+          CustomSnackbar.show(context,
+              'This slot is Expired.Please select another slot', Colors.red);
+        } else {
+          profileBloc.add(TimeSlotSelectedEvent(timeSlot: time));
+          selectedTimeSlot = time; // Set the selected time slot
+        }
       },
       child: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
           final isSelected =
               state is TimeSlotSelectedState && state.selectedTimeSlot == time;
-
           return Container(
             decoration: BoxDecoration(
-              color: isSelected ? Appcolor.primaryColor : Colors.grey[200],
+              color: isBooked
+                  ? Colors.redAccent
+                  : isPast
+                      ? Colors.green.shade50 // Yellow for past times
+                      : isSelected
+                          ? Appcolor.primaryColor
+                          : Colors.grey[200],
               borderRadius: BorderRadius.circular(50),
             ),
             child: Center(
               child: Text(
                 time,
                 style: TextStyle(
-                  color: isSelected ? Colors.white : Colors.black,
+                  color: isBooked
+                      ? Colors.white
+                      : isPast
+                          ? Colors.black // Black text for yellow background
+                          : isSelected
+                              ? Colors.white
+                              : Colors.black,
                 ),
               ),
             ),
@@ -254,12 +306,57 @@ class BookingScreen extends StatelessWidget {
     );
   }
 
-  List<String> _generateTimeSlots(String startTime, String endTime) {
+  bool _isTimeSlotBooked(
+      String time, List<AppointmentModel> appointments, String? selectedDate) {
+    return appointments.any((appointment) =>
+        appointment.time == time &&
+        appointment.date == selectedDate &&
+        (appointment.status == null || appointment.status != true));
+  }
+
+  bool _isTimeSlotPast(String time) {
+    try {
+      DateTime slotTime = _parseTime(time);
+      DateTime now = DateTime.now();
+
+      // Extract the selected date from the dateController
+      String selectedDateText = dateController.text;
+
+      // Debugging: Print the selected date text
+      debugPrint('Selected date text: $selectedDateText');
+
+      // Check if selectedDateText is not empty
+      if (selectedDateText.isEmpty) {
+        debugPrint('Selected date text is empty');
+        return false;
+      }
+
+      // Adjust the format based on actual data
+      DateTime selectedDate = DateFormat('M/d/yyyy').parse(selectedDateText);
+
+      // Create a DateTime for the slot within the current day
+      DateTime fullSlotTime = DateTime(
+        selectedDate.year,
+        selectedDate.month,
+        selectedDate.day,
+        slotTime.hour,
+        slotTime.minute,
+      );
+
+      // Check if the slot time is before the current time
+      return fullSlotTime.isBefore(now);
+    } catch (e) {
+      debugPrint('Error checking if time slot is past: $e');
+      return false;
+    }
+  }
+
+  List<String> _generateTimeSlots(String? startTime, String? endTime) {
     List<String> timeSlots = [];
 
     try {
-      DateTime start = _parseTime(startTime);
-      DateTime end = _parseTime(endTime);
+      DateTime start = _parseTime(startTime!);
+      DateTime end = _parseTime(endTime!);
 
       while (start.isBefore(end)) {
         timeSlots.add(_formatTime(start));
@@ -273,17 +370,24 @@ class BookingScreen extends StatelessWidget {
   }
 
   DateTime _parseTime(String time) {
-    final trimmedTime = time.trim();
+    final trimmedTime = time.replaceAll('\u202F', ' ').trim();
     final components = trimmedTime.split(' ');
+    if (components.length != 2) {
+      throw FormatException('Invalid time format: $time');
+    }
     final hourMinute = components[0].split(':');
+    if (hourMinute.length != 2) {
+      throw FormatException('Invalid time format: $time');
+    }
     final hour = int.tryParse(hourMinute[0]);
     final minute = int.tryParse(hourMinute[1]);
     final isPM = components[1].toUpperCase() == 'PM';
     if (hour != null && minute != null) {
-      final dateTime = DateTime(1, 1, 1, isPM ? hour + 12 : hour, minute);
+      final dateTime =
+          DateTime(1, 1, 1, isPM ? (hour % 12) + 12 : hour % 12, minute);
       return dateTime;
     }
-    throw const FormatException('Invalid time format');
+    throw FormatException('Invalid time format: $time');
   }
 
   String _formatTime(DateTime time) {
