@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Appcolor.lightbackground,
         body: Padding(
-          padding: const EdgeInsets.only(top: 25, left: 15, right: 15),
+          padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
           child: Column(
             children: [
               StreamBuilder<User?>(
@@ -37,7 +37,7 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
               const CustomCarousel(),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               SectionTitle(
                 title: 'Categories',
                 onTap: () {
@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
               const HomeCategoryRow(),
-              const SizedBox(height: 20),
+              const SizedBox(height: 25),
               SectionTitle(
                   title: 'Doctors',
                   onTap: () {
