@@ -27,7 +27,8 @@ class HomeScreen extends StatelessWidget {
                 stream: FirebaseAuth.instance.authStateChanges(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
+                    return const CircularProgressIndicator(
+                        color: Appcolor.primaryColor);
                   }
                   if (snapshot.hasData && snapshot.data != null) {
                     return HomeAppBar();

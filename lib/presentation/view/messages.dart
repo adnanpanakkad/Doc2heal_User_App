@@ -106,8 +106,10 @@ class _MessageScreenState extends State<MessageScreen> {
                                     } else {
                                       final doctor = doctorSnapshot.data!;
                                       return ListTile(
+                                        contentPadding:
+                                            const EdgeInsets.all(10),
                                         leading: CircleAvatar(
-                                          radius: 25,
+                                          radius: 30,
                                           backgroundImage: NetworkImage(
                                               doctor.doctorimg ?? ''),
                                         ),

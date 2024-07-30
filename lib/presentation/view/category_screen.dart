@@ -18,15 +18,13 @@ class CategoryScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Appcolor.lightbackground,
-        appBar: PreferredSize(
-            preferredSize: Size(double.maxFinite, 70),
-            child: DeatialAppbar(
-              text: category,
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => BottombarScreens()));
-              },
-            )),
+        appBar: DeatialAppbar(
+          text: category,
+          onTap: () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => BottombarScreens()));
+          },
+        ),
         body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
           stream: UserRepository().getDoctorsBySpecialization(category),
           builder: (context, snapshot) {
@@ -35,9 +33,15 @@ class CategoryScreen extends StatelessWidget {
             }
 
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                  child:
+                      CircularProgressIndicator(color: Appcolor.primaryColor));
             }
-
+            if (snapshot.hasData) {
+              if (snapshot.data!.docs.isEmpty) {
+                return const Center(child: Text('No doctors available'));
+              }
+            }
             return ListView.builder(
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {

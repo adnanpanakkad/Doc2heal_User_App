@@ -4,7 +4,6 @@ import 'package:doc2heal/presentation/view/booking_screen.dart';
 import 'package:doc2heal/services/firebase/firebase_appoinment.dart';
 import 'package:doc2heal/services/firebase/firesbase_database.dart';
 import 'package:doc2heal/widgets/schedule/cancelschedule_card.dart';
-import 'package:doc2heal/widgets/schedule/schedule_card.dart';
 import 'package:doc2heal/widgets/schedule/shimmer_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

@@ -7,14 +7,11 @@ class PrivacyPolicyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size(double.maxFinite, 70),
-        child: DeatialAppbar(
-          text: 'Privacy Policy',
-          onTap: () {
-            Navigator.pop(context);
-          },
-        ),
+      appBar: DeatialAppbar(
+        text: 'Privacy Policy',
+        onTap: () {
+          Navigator.pop(context);
+        },
       ),
       body: const SingleChildScrollView(
         padding: EdgeInsets.all(16.0),

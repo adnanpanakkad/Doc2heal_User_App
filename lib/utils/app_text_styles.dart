@@ -26,4 +26,7 @@ class CustomTextStyle {
       fontSize: 16,
       fontWeight: FontWeight.w500,
       fontFamily: "Urbanist");
+  String getDoctorDescription(String name, String specialization) {
+    return "Dr. $name is a highly skilled and dedicated $specialization. With a deep commitment to patient care, utilizes the latest advancements in $specialization. Dedicated to helping patients achieve and improve their overall quality of life.";
+  }
 }

@@ -11,6 +11,7 @@ class ShimmerList extends StatelessWidget {
       highlightColor: Colors.grey[100]!,
       child: ListTile(
         leading: const CircleAvatar(
+          radius: 30,
           backgroundColor: Colors.white,
         ),
         title: Container(

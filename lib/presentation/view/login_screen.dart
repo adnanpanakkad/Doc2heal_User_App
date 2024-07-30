@@ -1,9 +1,11 @@
 import 'package:doc2heal/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'package:doc2heal/presentation/view/signup_screen.dart';
 import 'package:doc2heal/presentation/view/bottombar_screens.dart';
+import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/utils/network.dart';
 import 'package:doc2heal/widgets/common/custom_snacbar.dart';
 import 'package:doc2heal/widgets/common/validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:doc2heal/widgets/common/button.dart';
 import 'package:doc2heal/widgets/common/rich_text.dart';
@@ -15,7 +17,6 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _LoginScreenState createState() => _LoginScreenState();
 }
 
@@ -34,108 +35,122 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: BlocBuilder<AuthBloc, AuthBlocState>(
-        builder: (context, state) {
+      body: BlocListener<AuthBloc, AuthBlocState>(
+        listener: (context, state) {
           if (state is Authenticated) {
-            // Navigator.of(context).pushReplacement(MaterialPageRoute(
-            //   builder: (context) => const BottombarScreens(),
-            // ));
-          } else if (state is AuthenticateError) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              CustomSnackbar.show(
-                  context, 'Invalid email or password', Colors.red);
-            });
-          } else if (state is Authloading) {
-            return const Center(child: CircularProgressIndicator());
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => const BottombarScreens(),
+            ));
           }
-          return SafeArea(
-            child: ListView(
-              children: [
-                SizedBox(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 25, vertical: 30),
-                    child: Form(
-                      key: formKey,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 250,
-                            height: 250,
-                            decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        'assets/undraw_Mobile_encryption_re_yw3o.png'))),
-                          ),
-                          const Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 30, horizontal: 10),
-                                child: Text(
-                                  "Login to your\nAccount",
-                                  style: CustomTextStyle.ultraBoldTextstyle,
+        },
+        child: BlocBuilder<AuthBloc, AuthBlocState>(
+          builder: (context, state) {
+            if (state is Authloading) {
+              return const Center(
+                  child:
+                      CircularProgressIndicator(color: Appcolor.primaryColor));
+            }
+            return SafeArea(
+              child: ListView(
+                children: [
+                  SizedBox(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25, vertical: 30),
+                      child: Form(
+                        key: formKey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 250,
+                              height: 250,
+                              decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          'assets/undraw_Mobile_encryption_re_yw3o.png'))),
+                            ),
+                            const Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 30, horizontal: 10),
+                                  child: Text(
+                                    "Login to your\nAccount",
+                                    style: CustomTextStyle.ultraBoldTextstyle,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          CustomTextfield(
+                              ],
+                            ),
+                            CustomTextfield(
+                                validation: (value) =>
+                                    Validator.validateEmail(value),
+                                hintText: "Enter Your Email",
+                                controller: emailController),
+                            CustomTextfield(
                               validation: (value) =>
-                                  Validator.validateEmail(value),
-                              hintText: "Enter Your Email",
-                              controller: emailController),
-                          CustomTextfield(
-                            validation: (value) =>
-                                Validator.validatePassword(value),
-                            hintText: "Enter Your Password",
-                            controller: passwordController,
-                          ),
-                          const SizedBox(height: 30),
-                          CustomButton(
+                                  Validator.validatePassword(value),
+                              hintText: "Enter Your Password",
+                              controller: passwordController,
+                            ),
+                            const SizedBox(height: 30),
+                            CustomButton(
                               text: 'Login',
                               onTap: () async {
                                 if (formKey.currentState!.validate()) {
-                                  BlocProvider.of<AuthBloc>(context).add(
+                                  String email = emailController.text;
+                                  String password = passwordController.text;
+                                  try {
+                                    await FirebaseAuth.instance
+                                        .signInWithEmailAndPassword(
+                                      email: email,
+                                      password: password,
+                                    );
+
+                                    // If successful, navigate to next screen
+                                    BlocProvider.of<AuthBloc>(context).add(
                                       Loginevent(
-                                          email: emailController.text.trim(),
-                                          password:
-                                              passwordController.text.trim()));
-                                  await Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const BottombarScreens()));
+                                          email: email, password: password),
+                                    );
+                                  } catch (e) {
+                                    CustomSnackbar.show(
+                                        context,
+                                        'Invalid email or password',
+                                        Colors.red);
+                                  }
                                 }
-                              }),
-                        ],
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => SignupScreen(),
-                          ));
-                        },
-                        child: richText(
-                            context: context,
-                            firstTxt: "Don't have an Account?  ",
-                            secondTxt: "Sign up"),
-                      )
-                    ],
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => SignupScreen(),
+                            ));
+                          },
+                          child: richText(
+                              context: context,
+                              firstTxt: "Don't have an Account?  ",
+                              secondTxt: "Sign up"),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          );
-        },
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

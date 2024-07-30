@@ -9,14 +9,11 @@ class TermsAndConditionsScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 238, 240, 242),
-      appBar: PreferredSize(
-        preferredSize: const Size(double.maxFinite, 70),
-        child: DeatialAppbar(
-          text: 'Terms & conditions',
-          onTap: () {
-            Navigator.pop(context);
-          },
-        ),
+      appBar: DeatialAppbar(
+        text: 'Terms & conditions',
+        onTap: () {
+          Navigator.pop(context);
+        },
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(

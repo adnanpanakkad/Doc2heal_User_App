@@ -182,6 +182,13 @@ class AboutUsScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
+              Text(
+                'App version: 1.0.1',
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey),
+              ),
             ]),
           ),
         ));

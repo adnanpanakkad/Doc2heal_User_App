@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:doc2heal/model/user_model.dart';
 import 'package:doc2heal/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'package:doc2heal/presentation/bloc/profile_bloc/profile_bloc.dart';

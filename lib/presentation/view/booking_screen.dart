@@ -38,12 +38,9 @@ class BookingScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Appcolor.lightbackground,
-        appBar: PreferredSize(
-          preferredSize: const Size(double.maxFinite, 70),
-          child: DeatialAppbar(
-            text: 'Doctor Details',
-            onTap: () => Navigator.pop(context),
-          ),
+        appBar: DeatialAppbar(
+          text: 'Doctor Details',
+          onTap: () => Navigator.pop(context),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -95,9 +92,9 @@ class BookingScreen extends StatelessWidget {
                     style: CustomTextStyle.buttonTextStyle,
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...',
-                    style: TextStyle(
+                  Text(
+                    "Dr. ${doctorData!['name']} is a highly skilled in ${doctorData!['specialization']}. With a deep commitment to patient care, utilizes the latest advancements in ${doctorData!['specialization']}. Dedicated to helping patients achieve and improve their overall quality of life.",
+                    style: const TextStyle(
                       color: Colors.grey,
                     ),
                   ),
@@ -160,7 +157,9 @@ class BookingScreen extends StatelessWidget {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return const CircularProgressIndicator();
+                            return const Center(
+                                child: CircularProgressIndicator(
+                                    color: Colors.green));
                           }
 
                           if (snapshot.hasError) {
@@ -278,7 +277,7 @@ class BookingScreen extends StatelessWidget {
           return Container(
             decoration: BoxDecoration(
               color: isBooked
-                  ? Colors.redAccent
+                  ? Colors.red.shade200
                   : isPast
                       ? Colors.green.shade50 // Yellow for past times
                       : isSelected
