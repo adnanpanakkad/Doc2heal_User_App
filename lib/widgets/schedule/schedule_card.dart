@@ -87,38 +87,40 @@ class ScheduleCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Popup(
-                          message: 'Are you sure',
-                          onTap: () async {
-                            AppoinmentServices()
-                                .updateAppointmentStatus(id!, true);
-                            Navigator.pop(context);
-                          },
-                        );
-                      },
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    backgroundColor: Colors.grey[300],
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Popup(
+                            message: 'Are you sure',
+                            onTap: () async {
+                              AppoinmentServices()
+                                  .updateAppointmentStatus(id!, true);
+                              Navigator.pop(context);
+                            },
+                          );
+                        },
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.grey[300],
+                    ),
+                    child: const Text('Cancel'),
                   ),
-                  child: const Text('Cancel'),
                 ),
-                ElevatedButton(
-                  onPressed: () async {
-                    Navigator.pop(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.green,
-                  ),
-                  child: const Text('Reschedule'),
-                ),
+                // ElevatedButton(
+                //   onPressed: () async {
+                //     Navigator.pop(context);
+                //   },
+                //   style: ElevatedButton.styleFrom(
+                //     foregroundColor: Colors.white,
+                //     backgroundColor: Colors.green,
+                //   ),
+                //   child: const Text('Reschedule'),
+                // ),
               ],
             ),
           ],
