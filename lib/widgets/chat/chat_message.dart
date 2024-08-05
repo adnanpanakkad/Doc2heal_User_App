@@ -40,6 +40,9 @@ class ChatMessages extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Text('Loading...');
             }
+            if (snapshot.data!.docs.isEmpty) {
+              return Center(child: const Text('No Messages'));
+            }
 
             var messages = snapshot.data!.docs;
             var groupedMessages = _groupMessagesByDate(messages);
@@ -54,7 +57,9 @@ class ChatMessages extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     DateHeader(date: date),
-                    ...dayMessages.map((doc) => _buildMessageItem(doc)).toList(),
+                    ...dayMessages
+                        .map((doc) => _buildMessageItem(doc))
+                        .toList(),
                   ],
                 );
               },

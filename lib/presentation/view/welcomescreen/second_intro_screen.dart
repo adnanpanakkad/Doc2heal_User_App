@@ -10,6 +10,7 @@ class SecondIntroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Appcolor.lightbackground,
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(right: 10, bottom: 30),
         child: FloatingActionButton.extended(

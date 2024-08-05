@@ -1,11 +1,11 @@
 import 'package:doc2heal/presentation/view/profile/about_us_screen.dart';
 import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/profile/detail-continer.dart';
+import 'package:doc2heal/widgets/schedule/popup.dart';
 import 'package:doc2heal/widgets/schedule/shimmer_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:doc2heal/presentation/view/login_screen.dart';
-import 'package:doc2heal/widgets/common/custom_popup.dart';
 import 'package:doc2heal/widgets/profile/center_container.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:doc2heal/widgets/profile/detail_tile.dart';
@@ -78,7 +78,7 @@ class SettingScreen extends StatelessWidget {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return CustomPopup(
+                        return Popup(
                           onTap: () {
                             FirebaseAuth.instance.signOut();
                             Navigator.of(context).pushReplacement(
@@ -87,6 +87,7 @@ class SettingScreen extends StatelessWidget {
                               ),
                             );
                           },
+                          message: 'Are you sure you want to logout?',
                         );
                       },
                     );

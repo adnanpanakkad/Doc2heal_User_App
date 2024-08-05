@@ -10,7 +10,7 @@ class ChatRepository {
     final currentUserID = auth.currentUser!.uid;
     final currentUserEmail = auth.currentUser!.email;
     final Timestamp timestamp = Timestamp.now();
-    Message newMessage = Message(
+    MessageModel newMessage = MessageModel(
       senderID: currentUserID,
       senderemail: currentUserEmail!,
       reciverID: resiverID,
@@ -42,5 +42,26 @@ class ChatRepository {
         .collection('messages')
         .orderBy("timestamp", descending: false)
         .snapshots();
+  }
+    Stream<MessageModel?> getLastMessageStream(String userId, String doctorId) {
+    // Construct the chat room ID
+    List<String> ids = [userId, doctorId];
+    ids.sort();
+    String chatRoomID = ids.join('_');
+    
+    // Return a stream of the last message in the chat room
+    return _firestore
+        .collection('chat')
+        .doc(chatRoomID)
+        .collection('messages')
+        .orderBy('timestamp', descending: true)
+        .limit(1)
+        .snapshots()
+        .map((snapshot) {
+          if (snapshot.docs.isEmpty) {
+            return null; // No messages
+          }
+          return MessageModel.fromMap(snapshot.docs.first.data() as Map<String, dynamic>);
+        });
   }
 }

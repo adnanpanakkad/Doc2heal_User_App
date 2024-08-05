@@ -30,29 +30,30 @@ class CenterContainer extends StatelessWidget {
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment
-                        .spaceBetween, // Space between children
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
                         height: 40,
                         width: 40,
                         decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color: Colors.amber,
                             borderRadius: BorderRadius.circular(50)),
                         child: const Icon(
-                          Icons.person_3,
-                          color: Colors.black,
-                          size: 25,
+                          Icons.account_circle_rounded,
+                          color: Colors.white,
+                          size: 30,
                         ),
-                      ), // Start icon
+                      ),
                       const Padding(
                         padding: EdgeInsets.only(right: 90),
-                        child: Text('Your Profile',
-                            style: CustomTextStyle.buttonTextStyle),
-                      ), // Centered text
+                        child: Text(
+                          'Your Profile',
+                          style: CustomTextStyle.buttonTextStyle,
+                        ),
+                      ),
                       IconButton(
                         icon: const Icon(Icons.arrow_forward_ios_outlined,
-                            size: 16), // End icon button
+                            size: 16),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => ProfileScreen()));
@@ -64,31 +65,30 @@ class CenterContainer extends StatelessWidget {
                     thickness: 0.1,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment
-                        .spaceBetween, // Space between children
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
                         height: 40,
                         width: 40,
                         decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(30)),
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(50)),
                         child: const Icon(
-                          Icons.privacy_tip_rounded,
+                          Icons.privacy_tip_sharp,
                           color: Colors.white,
                           size: 25,
                         ),
-                      ), // St/ Start icon
+                      ),
                       const Padding(
                         padding: EdgeInsets.only(right: 60),
                         child: Text('Privacy & policy',
                             style: CustomTextStyle.buttonTextStyle),
-                      ), // Centered text
+                      ),
                       IconButton(
                         icon: const Icon(
                           Icons.arrow_forward_ios_outlined,
                           size: 16,
-                        ), // End icon button
+                        ),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const PrivacyPolicyScreen(),
@@ -101,29 +101,28 @@ class CenterContainer extends StatelessWidget {
                     thickness: 0.1,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment
-                        .spaceBetween, // Space between children
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
                         height: 40,
                         width: 40,
                         decoration: BoxDecoration(
-                            color: Colors.yellow,
-                            borderRadius: BorderRadius.circular(30)),
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(50)),
                         child: const Icon(
-                          Icons.description_rounded,
+                          Icons.assignment,
                           color: Colors.white,
                           size: 25,
                         ),
-                      ), // St Start icon
+                      ),
                       const Padding(
                         padding: EdgeInsets.only(right: 50),
                         child: Text('Terms & conditon',
                             style: CustomTextStyle.buttonTextStyle),
-                      ), //
+                      ),
                       IconButton(
                         icon: const Icon(Icons.arrow_forward_ios_outlined,
-                            size: 16), // End icon button
+                            size: 16),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) =>

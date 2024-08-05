@@ -114,9 +114,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                     );
                                   } catch (e) {
                                     CustomSnackbar.show(
-                                        context,
-                                        'Invalid email or password',
-                                        Colors.red);
+                                      context: context,
+                                      title: 'Login Failed',
+                                      subtitle:
+                                          'The email or password you entered is incorrect',
+                                      color: Colors.red.shade600,
+                                      icon: Icons.error_outline,
+                                    );
                                   }
                                 }
                               },

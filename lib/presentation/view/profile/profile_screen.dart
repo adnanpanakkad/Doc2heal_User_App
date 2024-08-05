@@ -38,12 +38,23 @@ class ProfileScreen extends StatelessWidget {
                 var userdata = snapshot.data ?? {};
                 return Column(
                   children: [
-                    CircleAvatar(
-                      radius: 70,
-                      backgroundImage: userdata['coverimag'] != null
-                          ? NetworkImage(userdata['coverimag'])
-                          : AssetImage('assets/default_profile_picture.png')
-                              as ImageProvider,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Container(
+                        width: 130,
+                        height: 130,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            fit: BoxFit.cover, // Adjust image fit
+                            image: userdata['coverimag'] != null
+                                ? NetworkImage(userdata['coverimag'])
+                                : AssetImage(
+                                        'assets/default_profile_picture.png')
+                                    as ImageProvider,
+                          ),
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 16),
                     Text(userdata['name'] ?? 'Unknown User',
@@ -67,7 +78,7 @@ class ProfileScreen extends StatelessWidget {
                                 'No Phone Number Provided'),
                           ),
                           ListTile(
-                            leading: Icon(Icons.account_box),
+                            leading: Icon(Icons.wc),
                             title: Text('Gender'),
                             subtitle: Text(
                                 userdata['gender'] ?? 'No Gender Provided'),

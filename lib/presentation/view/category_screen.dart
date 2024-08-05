@@ -77,9 +77,8 @@ class CategoryScreen extends StatelessWidget {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
                                 child: Image.network(
-                                  doctorData != null &&
-                                          doctorData!['doctorimg'] != null
-                                      ? doctorData!['doctorimg']
+                                  doctorData['doctorimg'] != null
+                                      ? doctorData['doctorimg']
                                       : 'assets/Ellipse 1.png',
                                   width: 100,
                                   height: 100,

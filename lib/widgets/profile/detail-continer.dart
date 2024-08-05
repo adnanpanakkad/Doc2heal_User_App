@@ -39,12 +39,21 @@ class DetailContainer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: CircleAvatar(
-                    radius: 50,
-                    backgroundImage: NetworkImage(
-                        '${userData['coverimag']}') // Replace with your image
+                padding: const EdgeInsets.only(left: 10),
+                child: Container(
+                  width: 100, // Adjust width
+                  height: 100, // Adjust height
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.cover, // Adjust image fit
+                      image: userData['coverimag'] != null
+                          ? NetworkImage(userData['coverimag'])
+                          : AssetImage('assets/default_profile_picture.png')
+                              as ImageProvider,
                     ),
+                  ),
+                ),
               ),
               const SizedBox(width: 30),
               Column(

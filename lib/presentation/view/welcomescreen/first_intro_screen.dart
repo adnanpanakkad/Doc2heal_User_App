@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,7 @@ class FirstIntroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Appcolor.lightbackground,
       body: SafeArea(
         child: Column(
           children: [

@@ -9,7 +9,8 @@ class CustomDetailCard extends StatelessWidget {
   final String? text;
   final void Function()? onTap;
 
-  const CustomDetailCard({
+  const 
+  CustomDetailCard({
     super.key,
     required this.iconData,
     required this.iconButtonIcon, // Use this for the IconButton icon
@@ -44,7 +45,7 @@ class CustomDetailCard extends StatelessWidget {
               height: 40,
               width: 40,
               decoration: BoxDecoration(
-                  color: boxcolor, borderRadius: BorderRadius.circular(30)),
+                  color: boxcolor, borderRadius: BorderRadius.circular(50)),
               child: Icon(
                 iconData,
                 color: iconcolor,

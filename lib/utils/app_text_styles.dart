@@ -5,6 +5,11 @@ import 'app_colors.dart';
 class CustomTextStyle {
   static const TextStyle buttonTextStyle = TextStyle(
       fontSize: 17, fontWeight: FontWeight.w600, fontFamily: "Urbanist");
+  static const TextStyle containerTextStyle = TextStyle(
+      color: Colors.grey,
+      fontSize: 17,
+      fontWeight: FontWeight.w600,
+      fontFamily: "Urbanist");
 
   static const TextStyle highboldTxtStyle = TextStyle(
       fontSize: 29,

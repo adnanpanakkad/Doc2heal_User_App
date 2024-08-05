@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:doc2heal/presentation/bloc/profile_bloc/profile_bloc.dart';
 import 'package:doc2heal/services/firebase/firesbase_database.dart';
 import 'package:doc2heal/utils/app_colors.dart';
@@ -53,9 +52,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     try {
       await UserRepository().updateUserProfile(user!.uid, newData);
       Navigator.of(context).pop();
-      CustomSnackbar.show(context, 'Profile updated', Colors.green);
+      CustomSnackbar.show(
+        context: context,
+        title: 'Profile updated',
+        subtitle: 'Your profile successfully updated.',
+        color: Colors.greenAccent.shade400,
+        icon: Icons.check_circle,
+      );
     } catch (e) {
-      CustomSnackbar.show(context, 'Error updating profile: $e', Colors.red);
+      CustomSnackbar.show(
+        context: context,
+        title: 'Error',
+        subtitle: 'Your profile updation Failed.',
+        color: Colors.red.shade600,
+        icon: Icons.error_outline,
+      );
     }
   }
 
@@ -63,6 +74,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Appcolor.lightbackground,
         appBar: DeatialAppbar(
           onTap: () => Navigator.pop(context),
           text: 'Edit Profile',
@@ -99,11 +111,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           decoration: InputDecoration(labelText: 'Phone'),
                         ),
                         const SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: _updateProfile,
-                          child: Text('Update'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Appcolor.primaryColor,
+                        Padding(
+                          padding: const EdgeInsets.all(30),
+                          child: ElevatedButton(
+                            onPressed: _updateProfile,
+                            child: Text('Update'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Appcolor.primaryColor,
+                            ),
                           ),
                         ),
                       ],

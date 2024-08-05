@@ -2,6 +2,7 @@ import 'package:doc2heal/model/appoinment_model.dart';
 import 'package:doc2heal/model/doctor_model.dart';
 import 'package:doc2heal/presentation/view/chat_screen.dart';
 import 'package:doc2heal/services/firebase/firebase_appoinment.dart';
+import 'package:doc2heal/services/firebase/firebase_chat.dart';
 import 'package:doc2heal/services/firebase/firesbase_database.dart';
 import 'package:doc2heal/widgets/chat/shimmer_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,6 +18,7 @@ class MessageScreen extends StatefulWidget {
 
 class _MessageScreenState extends State<MessageScreen> {
   late Future<List<AppointmentModel>> _appointmentsFuture;
+  final ChatRepository _chatRepository = ChatRepository();
 
   @override
   void initState() {
@@ -32,6 +34,13 @@ class _MessageScreenState extends State<MessageScreen> {
     } else {
       _appointmentsFuture = Future.value([]);
     }
+  }
+
+  Stream<String> _getLastMessageStream(String doctorId) {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    return _chatRepository
+        .getLastMessageStream(userId, doctorId)
+        .map((lastMessage) => lastMessage?.message ?? '');
   }
 
   Future<DoctorsModel?> _fetchDoctor(String docId) async {
@@ -52,7 +61,6 @@ class _MessageScreenState extends State<MessageScreen> {
                 'Messages',
                 style: CustomTextStyle.highboldTxtStyle,
               ),
-              const SizedBox(height: 20),
               Expanded(
                 child: StreamBuilder<User?>(
                   stream: FirebaseAuth.instance.authStateChanges(),
@@ -105,26 +113,51 @@ class _MessageScreenState extends State<MessageScreen> {
                                           child: Text('Doctor not found'));
                                     } else {
                                       final doctor = doctorSnapshot.data!;
-                                      return ListTile(
-                                        contentPadding:
-                                            const EdgeInsets.all(10),
-                                        leading: CircleAvatar(
-                                          radius: 30,
-                                          backgroundImage: NetworkImage(
-                                              doctor.doctorimg ?? ''),
-                                        ),
-                                        title: Text(
-                                            'Dr.${doctor.name![0].toUpperCase()}${doctor.name!.substring(1)}'),
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (context) => ChatScreen(
-                                                reciverEmail:
-                                                    'Dr.${doctor.name![0].toUpperCase()}${doctor.name!.substring(1)}',
-                                                reciverID: doctor.uid!,
+                                      return StreamBuilder<String>(
+                                        stream:
+                                            _getLastMessageStream(doctor.uid!),
+                                        builder: (context, messageSnapshot) {
+                                          if (messageSnapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return const ShimmerList();
+                                          } else if (messageSnapshot.hasError) {
+                                            return const Center(
+                                              child:
+                                                  Text('Error loading message'),
+                                            );
+                                          } else {
+                                            final lastMessage =
+                                                messageSnapshot.data ??
+                                                    'No messages';
+                                            return ListTile(
+                                              contentPadding:
+                                                  const EdgeInsets.all(10),
+                                              leading: CircleAvatar(
+                                                radius: 30,
+                                                backgroundImage: NetworkImage(
+                                                    doctor.doctorimg ?? ''),
                                               ),
-                                            ),
-                                          );
+                                              title: Text(
+                                                  'Dr.${doctor.name![0].toUpperCase()}${doctor.name!.substring(1)}'),
+                                              subtitle: Text(
+                                                lastMessage,
+                                                style: TextStyle(
+                                                    color: Colors.grey),
+                                              ),
+                                              onTap: () {
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ChatScreen(
+                                                      reciverEmail:
+                                                          'Dr.${doctor.name![0].toUpperCase()}${doctor.name!.substring(1)}',
+                                                      reciverID: doctor.uid!,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          }
                                         },
                                       );
                                     }

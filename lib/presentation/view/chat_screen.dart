@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 class ChatScreen extends StatefulWidget {
   final String reciverEmail;
   final String reciverID;
-
   const ChatScreen({
     super.key,
     required this.reciverEmail,

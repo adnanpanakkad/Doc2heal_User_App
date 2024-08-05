@@ -259,12 +259,19 @@ class BookingScreen extends StatelessWidget {
       onTap: () {
         if (isBooked) {
           CustomSnackbar.show(
-              context,
-              'This time slot is already booked. Please select another slot',
-              Colors.red);
+            context: context,
+            title: 'Slot is Booked',
+            subtitle: 'Please select another available slot',
+            color: Colors.red.shade600,
+            icon: Icons.free_cancellation_outlined,
+          );
         } else if (isPast) {
-          CustomSnackbar.show(context,
-              'This slot is Expired.Please select another slot', Colors.red);
+          CustomSnackbar.show(
+              context: context,
+              title: 'Session Timeout',
+              subtitle: 'Please select another available slot',
+              color: Colors.red.shade600,
+              icon: Icons.timer_off_outlined);
         } else {
           profileBloc.add(TimeSlotSelectedEvent(timeSlot: time));
           selectedTimeSlot = time; // Set the selected time slot

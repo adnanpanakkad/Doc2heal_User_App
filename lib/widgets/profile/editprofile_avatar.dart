@@ -47,8 +47,8 @@ class EditProfileAvathar extends StatelessWidget {
                 ),
               ),
               Positioned(
-                bottom: 5,
-                right: 5,
+                bottom: 1,
+                right: 1,
                 child: Container(
                   height: 40,
                   width: 40,

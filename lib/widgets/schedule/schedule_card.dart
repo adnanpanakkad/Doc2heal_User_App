@@ -94,7 +94,7 @@ class ScheduleCard extends StatelessWidget {
                         context: context,
                         builder: (BuildContext context) {
                           return Popup(
-                            message: 'Are you sure',
+                            message: 'You want to cancel this appointment',
                             onTap: () async {
                               AppoinmentServices()
                                   .updateAppointmentStatus(id!, true);
@@ -111,16 +111,6 @@ class ScheduleCard extends StatelessWidget {
                     child: const Text('Cancel'),
                   ),
                 ),
-                // ElevatedButton(
-                //   onPressed: () async {
-                //     Navigator.pop(context);
-                //   },
-                //   style: ElevatedButton.styleFrom(
-                //     foregroundColor: Colors.white,
-                //     backgroundColor: Colors.green,
-                //   ),
-                //   child: const Text('Reschedule'),
-                // ),
               ],
             ),
           ],
