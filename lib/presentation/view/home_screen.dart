@@ -21,41 +21,43 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Appcolor.lightbackground,
         body: Padding(
           padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-          child: Column(
-            children: [
-              StreamBuilder<User?>(
-                stream: FirebaseAuth.instance.authStateChanges(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator(
-                        color: Appcolor.primaryColor);
-                  }
-                  if (snapshot.hasData && snapshot.data != null) {
-                    return HomeAppBar();
-                  } else {
-                    return const Text('User not logged in');
-                  }
-                },
-              ),
-              const CustomCarousel(),
-              const SizedBox(height: 15),
-              SectionTitle(
-                title: 'Categories',
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const CategoryListScreen()));
-                },
-              ),
-              const HomeCategoryRow(),
-              const SizedBox(height: 25),
-              SectionTitle(
-                  title: 'Doctors',
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                StreamBuilder<User?>(
+                  stream: FirebaseAuth.instance.authStateChanges(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator(
+                          color: Appcolor.primaryColor);
+                    }
+                    if (snapshot.hasData && snapshot.data != null) {
+                      return HomeAppBar();
+                    } else {
+                      return const Text('User not logged in');
+                    }
+                  },
+                ),
+                const CustomCarousel(),
+                const SizedBox(height: 15),
+                SectionTitle(
+                  title: 'Categories',
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const DoctorsListScreen()));
-                  }),
-              const DoctorGrid(),
-            ],
+                        builder: (context) => const CategoryListScreen()));
+                  },
+                ),
+                const HomeCategoryRow(),
+                const SizedBox(height: 25),
+                SectionTitle(
+                    title: 'Doctors',
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const DoctorsListScreen()));
+                    }),
+                const DoctorGrid(),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:doc2heal/utils/app_colors.dart';
 import 'package:doc2heal/widgets/chat/chat_message.dart';
 import 'package:doc2heal/widgets/chat/user_input.dart';
 import 'package:doc2heal/services/firebase/firebase_chat.dart';
@@ -66,6 +67,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Appcolor.lightbackground,
         appBar: DeatialAppbar(
           text: widget.reciverEmail,
           onTap: () {

@@ -38,7 +38,7 @@ class UserInput extends StatelessWidget {
             child: IconButton(
               onPressed: sendMessage,
               icon: const Icon(
-                Icons.arrow_upward_rounded,
+                Icons.send,
                 color: Colors.white,
               ),
             ),

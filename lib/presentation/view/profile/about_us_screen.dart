@@ -1,5 +1,7 @@
 import 'package:doc2heal/widgets/common/appbar.dart';
+import 'package:doc2heal/widgets/profile/custom_row.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutUsScreen extends StatelessWidget {
   const AboutUsScreen({super.key});
@@ -9,19 +11,16 @@ class AboutUsScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 238, 240, 242),
-        appBar: PreferredSize(
-          preferredSize: const Size(double.maxFinite, 70),
-          child: DeatialAppbar(
-            text: 'About Us',
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
+        appBar: DeatialAppbar(
+          text: 'About Us',
+          onTap: () {
+            Navigator.pop(context);
+          },
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(
               horizontal: size.width * .03, vertical: size.height * .02),
-          child: const SingleChildScrollView(
+          child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -44,69 +43,6 @@ class AboutUsScreen extends StatelessWidget {
               ),
               Text(
                 'At Doc2heal, our mission is to enhance the healthcare experience by providing a user-friendly platform that connects patients with healthcare providers seamlessly. We aim to simplify the appointment process, making it easier for you to access the medical attention you need, when you need it.',
-                style: TextStyle(fontWeight: FontWeight.w600),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Key Features',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Doctor Scheduling:',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Text(
-                'Easily book appointments with your preferred healthcare professionals. Our intuitive scheduling system allows you to find and secure appointments that fit your schedule.',
-                style: TextStyle(fontWeight: FontWeight.w600),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Manage Your Appointments:',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Text(
-                'Keep track of all your medical appointments in one place. View your upcoming, completed, and cancelled appointments with ease, so you never miss an important visit.',
-                style: TextStyle(fontWeight: FontWeight.w600),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Payment Options:',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Text(
-                'Pay for your appointments directly or online. We offer flexible payment methods to ensure your convenience and peace of mind.',
-                style: TextStyle(fontWeight: FontWeight.w600),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Notifications:',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Text(
-                'Stay informed with our local notifications feature. Receive reminders for your upcoming appointments one hour in advance, ensuring you are always prepared. Additionally, get notified when new doctors are appointed, keeping you updated on the latest additions to our healthcare network.',
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
               SizedBox(
@@ -161,24 +97,34 @@ class AboutUsScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              Text(
-                'Join Our Community',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Become a part of the MedHeal community and take control of your healthcare journey. Download the MedHeal Doctor Appointment App today and experience the future of medical appointment management.',
-                style: TextStyle(fontWeight: FontWeight.w600),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Thank you for choosing MedHeal. Your health is our priority.',
-                style: TextStyle(fontWeight: FontWeight.w600),
-              ),
+              CustomRow(
+                  leadingIcon: Icons.mail_outline_outlined,
+                  text: 'doc2healsupport@gmail.com',
+                  trailingIcon: Icons.abc,
+                  onTrailingIconPressed: () async {
+                    String? encodeQueryParameters(Map<String, String> params) {
+                      return params.entries
+                          .map((MapEntry<String, String> e) =>
+                              '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+                          .join('&');
+                    }
+
+                    final Uri emailLaunchUri = Uri(
+                      scheme: 'mailto',
+                      path: 'doc2healsupport@gmail.com',
+                      query: encodeQueryParameters(<String, String>{
+                        'subject': 'Error on Doc2heal app',
+                        'body': 'if have any queries fell free to connect'
+                      }),
+                    );
+
+                    launchUrl(emailLaunchUri);
+                  }),
+              CustomRow(
+                  leadingIcon: Icons.abc,
+                  text: 'text',
+                  trailingIcon: Icons.abc,
+                  onTrailingIconPressed: () {}),
               SizedBox(
                 height: 20,
               ),
