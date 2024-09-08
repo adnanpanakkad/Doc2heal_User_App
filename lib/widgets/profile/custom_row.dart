@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 class CustomRow extends StatelessWidget {
   final IconData leadingIcon;
   final String text;
-  final IconData trailingIcon;
   final VoidCallback onTrailingIconPressed;
 
   const CustomRow({
     Key? key,
     required this.leadingIcon,
     required this.text,
-    required this.trailingIcon,
     required this.onTrailingIconPressed,
   }) : super(key: key);
 
@@ -26,9 +24,15 @@ class CustomRow extends StatelessWidget {
             Text(text),
           ],
         ),
-        IconButton(
-          onPressed: onTrailingIconPressed,
-          icon: Icon(trailingIcon),
+        GestureDetector(
+          onTap: onTrailingIconPressed,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 70),
+            child: Text(
+              'Click here',
+              style: TextStyle(color: Colors.blue),
+            ),
+          ),
         ),
       ],
     );

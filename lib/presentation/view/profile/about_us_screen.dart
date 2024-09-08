@@ -97,10 +97,16 @@ class AboutUsScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
+              Text(
+                'Customer-Support:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 20,
+              ),
               CustomRow(
                   leadingIcon: Icons.mail_outline_outlined,
                   text: 'doc2healsupport@gmail.com',
-                  trailingIcon: Icons.abc,
                   onTrailingIconPressed: () async {
                     String? encodeQueryParameters(Map<String, String> params) {
                       return params.entries
@@ -120,11 +126,11 @@ class AboutUsScreen extends StatelessWidget {
 
                     launchUrl(emailLaunchUri);
                   }),
-              CustomRow(
-                  leadingIcon: Icons.abc,
-                  text: 'text',
-                  trailingIcon: Icons.abc,
-                  onTrailingIconPressed: () {}),
+              // CustomRow(
+              //     leadingIcon: Icons.abc,
+              //     text: 'text',
+              //     trailingIcon: Icons.abc,
+              //     onTrailingIconPressed: () {}),
               SizedBox(
                 height: 20,
               ),
